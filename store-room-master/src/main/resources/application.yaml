@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /ims/api/v1/store-room-master
+spring:
+  application:
+    name: store-room-master
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:mysql://localhost:${MYSQL_SERVER_PORT}/${MYSQL_DATABASE}
+    username: ${MYSQL_ROOT_USER}
+    password: ${MYSQL_ROOT_PASSWORD}
+  jpa:
+    show-sql: true
+  profiles:
+    active: local

@@ -1,0 +1,20 @@
+server:
+  port: 8050
+  servlet:
+    context-path: /ims/api/v1/master-department
+spring:
+  application:
+    name: master-department
+  datasource:
+    url: jdbc:mysql://mysql:3306/inventory
+    username: root
+    password: Y91permhjwb%
+  jpa:
+    show-sql: true
+  zipkin:
+    base-url: http://zipkin:9411
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    enabled: false

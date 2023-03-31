@@ -1,0 +1,22 @@
+server:
+  port: 8020
+  servlet:
+    context-path: /ims/api/v1/departments
+spring:
+  application:
+    name: departments
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:mysql://localhost:${MYSQL_SERVER_PORT}/${MYSQL_DATABASE}
+    username: ${MYSQL_ROOT_USER}
+    password: ${MYSQL_ROOT_PASSWORD}
+  jpa:
+    show-sql: true
+  zipkin:
+    base-url: http://localhost:9411
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    enabled: true

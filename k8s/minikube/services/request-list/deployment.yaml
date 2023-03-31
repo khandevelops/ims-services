@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: request-list
+  labels:
+    app: request-list
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: request-list
+      labels:
+        app: request-list
+    spec:
+      containers:
+        - name: request-list
+          image: batsaikhan84/request-list:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8060
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: request-list

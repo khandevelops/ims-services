@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: departments
+  labels:
+    app: departments
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: departments
+      labels:
+        app: departments
+    spec:
+      containers:
+        - name: departments
+          image: batsaikhan84/departments:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8020
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: departments

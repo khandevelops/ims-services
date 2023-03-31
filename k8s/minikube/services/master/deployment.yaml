@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: master
+  labels:
+    app: master
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: master
+      labels:
+        app: master
+    spec:
+      containers:
+        - name: master
+          image: batsaikhan84/master:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8040
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+            - name: MYSQL_ROOT_USER
+              value: root
+            - name: MYSQL_ROOT_PASSWORD
+              value: Y91permhjwb%
+            - name: MYSQL_DATABASE
+              value: inventory
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: master

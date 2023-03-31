@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: request-make
+  labels:
+    app: request-make
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: request-make
+      labels:
+        app: request-make
+    spec:
+      containers:
+        - name: master
+          image: batsaikhan84/request-make:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8070
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: request-make

@@ -1,0 +1,59 @@
+server:
+  port: 8000
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: api-gateway
+  zipkin:
+    base-url: http://localhost:9411
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: department-master
+          uri: lb://DEPARTMENT-MASTER
+          predicates:
+            - Path=/ims/api/v1/department-master/**
+        - id: store-room-master
+          uri: lb://STORE-ROOM-MASTER
+          predicates:
+            - Path=/ims/api/v1/store-room-master/**
+        - id: store-room
+          uri: lb://STORE-ROOM
+          predicates:
+              - Path=/ims/api/v1/store-room/**
+        - id: departments
+          uri: lb://DEPARTMENTS
+          predicates:
+            - Path=/ims/api/v1/departments/**
+        - id: email
+          uri: lb://EMAIL
+          predicates:
+            - Path=/ims/api/v1/email/**
+        - id: master
+          uri: lb://MASTER
+          predicates:
+            - Path=/ims/api/v1/master/**
+        - id: master-department
+          uri: lb://MASTER-DEPARTMENT
+          predicates:
+            - Path=/ims/api/v1/master-department/**
+        - id: request-master
+          uri: lb://REQUEST-MASTER
+          predicates:
+            - Path=/ims/api/v1/request-master/**
+        - id: request
+          uri: lb://REQUEST
+          predicates:
+            - Path=/ims/api/v1/request/**
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    enabled: true

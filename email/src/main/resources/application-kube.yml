@@ -1,0 +1,25 @@
+server:
+  port: 8030
+  servlet:
+    context-path: /ims/api/v1/email
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: usdtlit@gmail.com
+    password: cgtsmlrcubxdncbw
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            auto: true
+  application:
+    name: email
+  zipkin:
+    base-url: http://zipkin:9411
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    enabled: false

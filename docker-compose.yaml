@@ -1,0 +1,181 @@
+services:
+  department-master:
+    image: khandevelops/department-master:latest
+    container_name: department-master
+    env_file: .env
+    ports:
+      - "8010:8010"
+    environment:
+      - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
+      - MYSQL_ROOT_USER=$MYSQL_ROOT_USER
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_LOCAL_PORT=$MYSQL_LOCAL_PORT
+      - MYSQL_DOCKER_PORT=$MYSQL_DOCKER_PORT
+    networks:
+      - spring
+      - mysql
+    depends_on:
+      - zipkin
+      - mysql
+  departments:
+    image: khandevelops/departments:latest
+    container_name: departments
+    env_file: .env
+    ports:
+      - "8020:8020"
+    environment:
+      - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
+      - MYSQL_ROOT_USER=$MYSQL_ROOT_USER
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_LOCAL_PORT=$MYSQL_LOCAL_PORT
+      - MYSQL_DOCKER_PORT=$MYSQL_DOCKER_PORT
+    networks:
+      - spring
+      - mysql
+    depends_on:
+      - zipkin
+      - mysql
+  email:
+    image: khandevelops/email:latest
+    container_name: email
+    ports:
+      - "8030:8030"
+    environment:
+      - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
+    networks:
+      - spring
+      - mysql
+    depends_on:
+      - zipkin
+      - mysql
+  master:
+    image: khandevelops/master:latest
+    container_name: master
+    env_file: .env
+    ports:
+      - "8040:8040"
+    environment:
+      - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
+      - MYSQL_ROOT_USER=$MYSQL_ROOT_USER
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_LOCAL_PORT=$MYSQL_LOCAL_PORT
+      - MYSQL_DOCKER_PORT=$MYSQL_DOCKER_PORT
+    networks:
+      - spring
+      - mysql
+    depends_on:
+      - zipkin
+      - mysql
+  master-department:
+    image: khandevelops/master-department:latest
+    container_name: master-department
+    env_file: .env
+    ports:
+      - "8050:8050"
+    environment:
+      - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
+      - MYSQL_ROOT_USER=$MYSQL_ROOT_USER
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_LOCAL_PORT=$MYSQL_LOCAL_PORT
+      - MYSQL_DOCKER_PORT=$MYSQL_DOCKER_PORT
+    networks:
+      - spring
+      - mysql
+    depends_on:
+      - zipkin
+      - mysql
+  request-list:
+    image: khandevelops/request-list:latest
+    container_name: request-list
+    env_file: .env
+    ports:
+      - "8060:8060"
+    environment:
+      - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
+      - MYSQL_ROOT_USER=$MYSQL_ROOT_USER
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_LOCAL_PORT=$MYSQL_LOCAL_PORT
+      - MYSQL_DOCKER_PORT=$MYSQL_DOCKER_PORT
+    networks:
+      - spring
+      - mysql
+    depends_on:
+      - zipkin
+      - mysql
+  request-make:
+    image: khandevelops/request-make:latest
+    container_name: request-make
+    env_file: .env
+    ports:
+      - "8070:8070"
+    environment:
+      - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
+      - MYSQL_ROOT_USER=$MYSQL_ROOT_USER
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_LOCAL_PORT=$MYSQL_LOCAL_PORT
+      - MYSQL_DOCKER_PORT=$MYSQL_DOCKER_PORT
+    networks:
+      - spring
+      - mysql
+    depends_on:
+      - zipkin
+      - mysql
+  eureka-server:
+    image: khandevelops/eureka-server:latest
+    container_name: eureka-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
+    ports:
+      - 8761:8761
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+  api-gateway:
+    image: khandevelops/api-gateway:latest
+    container_name: api-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
+    ports:
+      - 8000:8000
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - eureka-server
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - 9411:9411
+    networks:
+      - spring
+  mysql:
+    container_name: mysql
+    image: mysql
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MYSQL_ROOT_USER=$MYSQL_ROOT_USER
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+
+    ports:
+      - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - mysql
+volumes:
+  mysql:
+networks:
+  mysql:
+    driver: bridge
+  spring:
+    driver: bridge
