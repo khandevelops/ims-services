@@ -22,8 +22,6 @@ public class RequestMasterStoreRoomEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "order_quantity")
-    private Integer order_quantity;
     @Column(name = "quantity")
     private Integer quantity;
     @Column(name = "detail")
@@ -43,8 +41,6 @@ public class RequestMasterStoreRoomEntity {
     private Confirmation confirmation;
     @Column(name = "user")
     private String user;
-    @Column(name = "comment")
-    private String comment;
     @Column(name = "custom_text")
     private String custom_text;
     @ManyToOne

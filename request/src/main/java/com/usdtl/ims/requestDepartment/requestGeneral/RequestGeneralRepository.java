@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RequestGeneralRepository extends PagingAndSortingRepository<RequestGeneralEntity, Integer> {
-    Page<RequestGeneralEntity> findByConfirmation(Confirmation confirmation, Pageable pageable);
 }

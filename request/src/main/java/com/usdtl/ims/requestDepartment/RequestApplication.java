@@ -7,9 +7,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableFeignClients(
-        basePackages = "com.usdtl.ims.clients"
-)
 public class RequestApplication {
     public static void main(String[] args) {
         SpringApplication.run(RequestApplication.class, args);

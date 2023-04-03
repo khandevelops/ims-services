@@ -19,7 +19,7 @@ public record RequestItemRequest(
         Date time_updated,
         Confirmation confirmation,
         String user,
-        String comment,
+        String detail,
         String custom_text,
         MasterItemRequest masterItem
 ) {

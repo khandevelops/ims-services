@@ -1,14 +1,17 @@
 package com.usdtl.ims.requestMaster.requestMasterOfficeSupply;
 
 import com.usdtl.ims.clients.ConfirmationEmailClient;
+import com.usdtl.ims.clients.MasterItemRequest;
 import com.usdtl.ims.clients.RequestItemRequest;
 import com.usdtl.ims.common.constants.Confirmation;
 import com.usdtl.ims.common.constants.Status;
 import com.usdtl.ims.common.exceptions.NotFoundException;
 import com.usdtl.ims.requestMaster.master.MasterEntity;
 import com.usdtl.ims.requestMaster.master.MasterRepository;
-import com.usdtl.ims.requestMaster.request.RequestMasterTransformedAdminRequest;
+import com.usdtl.ims.requestMaster.request.RequestMasterTransformedAdminResponse;
 import com.usdtl.ims.requestMaster.request.RequestMasterTransformedDepartmentRequest;
+import com.usdtl.ims.requestMaster.request.RequestMasterTransformedDepartmentResponse;
+import com.usdtl.ims.requestMaster.request.RequestMasterTransformedResponse;
 import com.usdtl.ims.requestMaster.requestMasterGeneral.RequestMasterGeneralEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,73 +32,90 @@ public class RequestMasterOfficeSupplyService {
     private final MasterRepository masterRepository;
     private ConfirmationEmailClient confirmationEmailClient;
 
-    public Page<RequestMasterOfficeSupplyEntity> getRequestItemsByPage(Integer page) {
-        PageRequest pageRequest = PageRequest.of(page, 10);
-        return repository.findAll(pageRequest);
+    public List<RequestMasterTransformedDepartmentResponse> updateRequestItems(List<RequestMasterTransformedDepartmentRequest> requestItems) {
+        List<RequestMasterTransformedDepartmentResponse> requestTransformedResponseItems = new ArrayList<>();
+        requestItems.forEach(requestTransformedItem -> {
+            RequestMasterOfficeSupplyEntity requestItem = repository.findById(requestTransformedItem.request_item_id()).orElseThrow(() -> new NotFoundException("cannot find this item"));
+            requestItem.setQuantity(requestTransformedItem.quantity());
+            requestItem.setDepartment(requestTransformedItem.department());
+            requestItem.setStatus(requestTransformedItem.status());
+            requestItem.setLocation(requestTransformedItem.location());
+            requestItem.setTime_updated(new Date());
+            requestItem.setConfirmation(requestTransformedItem.confirmation());
+            requestItem.setUser(requestTransformedItem.user());
+            requestItem.setDetail(requestTransformedItem.detail());
+            requestItem.setCustom_text(requestTransformedItem.custom_text());
+            repository.save(requestItem);
+
+        });
+
+        return requestTransformedResponseItems;
     }
 
-    public Page<RequestMasterOfficeSupplyEntity> getRequestCompletedItemsByPage(Integer page) {
-        Pageable pageRequest = PageRequest.of(page, 10);
-        Page<RequestMasterOfficeSupplyEntity> requestResponse = repository.findByConfirmation(Confirmation.COMPLETE, pageRequest);
-        return requestResponse;
-    }
-
-    public Page<RequestMasterOfficeSupplyEntity> getRequestPendingItemsByPage(Integer page) {
-        Pageable pageRequest = PageRequest.of(page, 10);
-        Page<RequestMasterOfficeSupplyEntity> requestResponse = repository.findByConfirmation(Confirmation.WAITING, pageRequest);
-        return requestResponse;
-    }
-
-    public RequestMasterOfficeSupplyEntity updateRequestItemById(RequestMasterOfficeSupplyEntity request) {
-        RequestMasterOfficeSupplyEntity storeRoomRequestItem = repository.findById(request.getId())
-                .orElseThrow(() ->  new NotFoundException("Item associated with id: " + request.getId() + " not found"));
-        return storeRoomRequestItem;
-    }
-
-    public String createRequestItem(List<RequestMasterOfficeSupplyEntity> requests) {
-
-        requests.forEach(request -> {
+    public List<RequestMasterTransformedResponse> createRequestItem(List<RequestMasterTransformedDepartmentRequest> requestItems) {
+        List<RequestMasterTransformedResponse> requestTransformedItemsResponse = new ArrayList<>();
+        requestItems.forEach(requestItem -> {
             MasterEntity masterItem = masterRepository
-                    .findById(request.getMasterItem()
-                            .getId()).orElseThrow(() -> new NotFoundException("Could not find the item"));
+                    .findById(requestItem.master_item_id()).orElseThrow(() -> new NotFoundException("Could not find the item"));
             RequestMasterOfficeSupplyEntity storeRoomRequest = RequestMasterOfficeSupplyEntity.builder()
-                    .order_quantity(request.getOrder_quantity())
-                    .department(request.getDepartment())
+                    .quantity(requestItem.quantity())
+                    .department(requestItem.department())
+                    .user(requestItem.user())
+                    .detail(requestItem.detail())
+                    .custom_text(requestItem.custom_text())
+                    .location(requestItem.location())
                     .status(Status.PENDING)
-                    .location(request.getLocation())
                     .time_requested(new Date())
-                    .time_updated(null)
+                    .time_updated(new Date())
                     .confirmation(Confirmation.WAITING)
-                    .user(request.getUser())
-                    .comment(request.getComment())
                     .build();
             storeRoomRequest.setMasterItem(masterItem);
-            RequestMasterOfficeSupplyEntity storeRoomRequestItem = repository.save(storeRoomRequest);
+            repository.save(storeRoomRequest);
         });
-        return "SUCCESS";
+
+        return requestTransformedItemsResponse;
     }
 
-    public RequestMasterOfficeSupplyEntity updateRequestItem(RequestMasterOfficeSupplyEntity request) {
-        RequestMasterOfficeSupplyEntity requestItem = repository.findById(request.getId()).orElseThrow(() -> new NotFoundException("cannot find this item"));
-        requestItem.setOrder_quantity(request.getOrder_quantity());
-        requestItem.setDepartment(request.getDepartment());
-        requestItem.setStatus(request.getStatus());
-        requestItem.setLocation(request.getLocation());
-        requestItem.setTime_updated(new Date());
-        requestItem.setConfirmation(request.getConfirmation());
-        requestItem.setUser(request.getUser());
-        requestItem.setComment(request.getComment());
-        requestItem.setCustom_text(request.getCustom_text());
-        repository.save(requestItem);
-        return requestItem;
+    public RequestMasterOfficeSupplyEntity updateRequestItem(Integer id, RequestMasterTransformedDepartmentRequest requestItem) {
+        RequestMasterOfficeSupplyEntity requestMasterItem = repository.findById(requestItem.request_item_id()).orElseThrow(() -> new NotFoundException("cannot find this item"));
+        requestMasterItem.setQuantity(requestItem.quantity());
+        requestMasterItem.setDepartment(requestItem.department());
+        requestMasterItem.setStatus(requestItem.status());
+        requestMasterItem.setLocation(requestItem.location());
+        requestMasterItem.setTime_updated(new Date());
+        requestMasterItem.setConfirmation(requestItem.confirmation());
+        requestMasterItem.setUser(requestItem.user());
+        requestMasterItem.setDetail(requestItem.detail());
+        requestMasterItem.setCustom_text(requestItem.custom_text());
+        repository.save(requestMasterItem);
+        return requestMasterItem;
     }
 
-    public List<RequestItemRequest> confirmRequestItems(List<RequestItemRequest> request) {
+    public List<RequestItemRequest> confirmRequestItems(List<RequestMasterGeneralEntity> request) {
         List<RequestItemRequest> requestClientItems = new ArrayList<>();
 
         request.forEach(item -> {
-            RequestMasterOfficeSupplyEntity requestItem = repository.findById(item.masterItem().id()).orElseThrow(() -> new NotFoundException("cannot find this item"));
+            RequestMasterOfficeSupplyEntity requestItem = repository.findById(item.getId()).orElseThrow(() -> new NotFoundException("cannot find this item"));
             requestItem.setConfirmation(Confirmation.COMPLETE);
+
+            MasterItemRequest masterItem = MasterItemRequest.builder()
+                    .id(item.getMasterItem().getId())
+                    .item(item.getMasterItem().getItem())
+                    .manufacturer(item.getMasterItem().getManufacturer())
+                    .part_number(item.getMasterItem().getPart_number())
+                    .recent_cn(item.getMasterItem().getRecent_cn())
+                    .recent_vendor(item.getMasterItem().getRecent_vendor())
+                    .fisher_cn(item.getMasterItem().getFisher_cn())
+                    .vwr_cn(item.getMasterItem().getVwr_cn())
+                    .lab_source_cn(item.getMasterItem().getLab_source_cn())
+                    .next_advance_cn(item.getMasterItem().getLab_source_cn())
+                    .purchase_unit(item.getMasterItem().getPurchase_unit())
+                    .average_unit_price(item.getMasterItem().getAverage_unit_price())
+                    .category(item.getMasterItem().getCategory())
+                    .comment(item.getMasterItem().getComment())
+                    .type(item.getMasterItem().getType())
+                    .group(item.getMasterItem().getGroup())
+                    .build();
 
             RequestItemRequest requestClientItem = RequestItemRequest.builder()
                     .order_quantity(requestItem.getId())
@@ -105,7 +125,9 @@ public class RequestMasterOfficeSupplyService {
                     .time_updated(new Date())
                     .confirmation(requestItem.getConfirmation())
                     .user(requestItem.getUser())
-                    .comment(requestItem.getComment())
+                    .detail(requestItem.getDetail())
+                    .custom_text(requestItem.getCustom_text())
+                    .masterItem(masterItem)
                     .build();
 
             repository.save(requestItem);
@@ -117,19 +139,20 @@ public class RequestMasterOfficeSupplyService {
         return requestClientItems;
     }
 
-    public Page<RequestMasterTransformedAdminRequest> getRequestMasterTransformedItemsByPage(Integer page) {
+    public Page<RequestMasterTransformedResponse> getRequestMasterTransformedItemsByPage(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        List<RequestMasterTransformedAdminRequest> requestMasterTransformedItems = new ArrayList<>();
+        List<RequestMasterTransformedResponse> requestMasterTransformedItems = new ArrayList<>();
 
         Long requestMasterItemsCount = repository.count();
         List<RequestMasterOfficeSupplyEntity> requestMasterItems = repository.findAll(pageRequest).getContent();
 
         requestMasterItems.forEach(item -> {
-            RequestMasterTransformedAdminRequest requestMasterTransformedItem = RequestMasterTransformedAdminRequest.builder()
+            RequestMasterTransformedResponse requestMasterTransformedItem = RequestMasterTransformedResponse.builder()
                     .item(item.getMasterItem().getItem())
                     .master_item_id(item.getMasterItem().getId())
                     .request_item_id(item.getId())
                     .recent_cn(item.getMasterItem().getRecent_cn())
+                    .purchase_unit(item.getMasterItem().getPurchase_unit())
                     .department(item.getDepartment())
                     .status(item.getStatus())
                     .quantity(item.getQuantity())
@@ -144,15 +167,15 @@ public class RequestMasterOfficeSupplyService {
         return new PageImpl<>(requestMasterTransformedItems, pageRequest, requestMasterItemsCount);
     }
 
-    public Page<RequestMasterTransformedDepartmentRequest> getRequestMasterTransformedDepartmentItemsByPage(Integer page) {
+    public Page<RequestMasterTransformedDepartmentResponse> getRequestMasterCompleteTransformedItemsByPage(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        List<RequestMasterTransformedDepartmentRequest> requestMasterTransformedItems = new ArrayList<>();
+        List<RequestMasterTransformedDepartmentResponse> requestMasterTransformedItems = new ArrayList<>();
 
-        Long requestMasterItemsCount = repository.count();
-        List<RequestMasterOfficeSupplyEntity> requestMasterItems = repository.findAll(pageRequest).getContent();
+        Long requestMasterItemsCount = repository.findByConfirmation(Confirmation.COMPLETE, pageRequest).getTotalElements();
+        List<RequestMasterOfficeSupplyEntity> requestMasterItems = repository.findByConfirmation(Confirmation.COMPLETE, pageRequest).getContent();
 
         requestMasterItems.forEach(item -> {
-            RequestMasterTransformedDepartmentRequest requestMasterTransformedItem = RequestMasterTransformedDepartmentRequest.builder()
+            RequestMasterTransformedDepartmentResponse requestMasterTransformedItem = RequestMasterTransformedDepartmentResponse.builder()
                     .item(item.getMasterItem().getItem())
                     .master_item_id(item.getMasterItem().getId())
                     .request_item_id(item.getId())
@@ -164,11 +187,41 @@ public class RequestMasterOfficeSupplyService {
                     .quantity(item.getQuantity())
                     .time_requested(item.getTime_requested())
                     .time_update(item.getTime_updated())
+                    .custom_text(item.getCustom_text())
                     .build();
+
             requestMasterTransformedItems.add(requestMasterTransformedItem);
         });
 
         return new PageImpl<>(requestMasterTransformedItems, pageRequest, requestMasterItemsCount);
     }
 
+    public Page<RequestMasterTransformedDepartmentResponse> getRequestMasterPendingTransformedItemsByPage(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        List<RequestMasterTransformedDepartmentResponse> requestMasterTransformedItems = new ArrayList<>();
+
+        Long requestMasterItemsCount = repository.findByConfirmation(Confirmation.WAITING, pageRequest).getTotalElements();
+        List<RequestMasterOfficeSupplyEntity> requestMasterItems = repository.findByConfirmation(Confirmation.WAITING, pageRequest).getContent();
+
+        requestMasterItems.forEach(item -> {
+            RequestMasterTransformedDepartmentResponse requestMasterTransformedItem = RequestMasterTransformedDepartmentResponse.builder()
+                    .item(item.getMasterItem().getItem())
+                    .master_item_id(item.getMasterItem().getId())
+                    .request_item_id(item.getId())
+                    .recent_cn(item.getMasterItem().getRecent_cn())
+                    .purchase_unit(item.getMasterItem().getPurchase_unit())
+                    .part_number(item.getMasterItem().getPart_number())
+                    .detail(item.getDetail())
+                    .status(item.getStatus())
+                    .quantity(item.getQuantity())
+                    .time_requested(item.getTime_requested())
+                    .time_update(item.getTime_updated())
+                    .custom_text(item.getCustom_text())
+                    .build();
+
+            requestMasterTransformedItems.add(requestMasterTransformedItem);
+        });
+
+        return new PageImpl<>(requestMasterTransformedItems, pageRequest, requestMasterItemsCount);
+    }
 }

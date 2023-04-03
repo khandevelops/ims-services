@@ -73,7 +73,7 @@ public class RdMasterService {
                     .total_price(departmentItems.getMasterItem().getAverage_unit_price() * getTotalQuantity(departmentItems.getMasterItem().getId()))
                     .lot_number(departmentItems.getLot_number())
                     .category(departmentItems.getMasterItem().getCategory())
-                    .comments(departmentItems.getMasterItem().getComments())
+                    .comment(departmentItems.getMasterItem().getComment())
                     .build();
             departmentMasterItems.add(experienceResponse);
         });

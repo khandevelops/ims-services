@@ -15,7 +15,7 @@ public record MasterDepartmentResponse(
         String purchase_unit,
         Double average_unit_price,
         String category,
-        String comments,
+        String comment,
         String type,
         String group,
         List<DepartmentResponse> extractionsItems,

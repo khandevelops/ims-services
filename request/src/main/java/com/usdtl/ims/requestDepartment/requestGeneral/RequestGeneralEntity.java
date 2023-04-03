@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Entity
 @Builder
-@Table(name = "general_request")
+@Table(name = "general")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,27 +22,6 @@ public class RequestGeneralEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "order_quantity")
-    private Integer order_quantity;
-    @Column(name = "department")
-    private Department department;
-    @Column(name = "status")
-    private Status status;
-    @Column(name = "location")
-    private String location;
-    @CreationTimestamp
-    @Column(name = "time_requested")
-    private Date time_requested;
-    @Column(name = "time_updated")
-    private Date time_updated;
-    @Column(name = "confirmation")
-    private Confirmation confirmation;
-    @Column(name = "user")
-    private String user;
-    @Column(name = "comment")
-    private String comment;
-    @Column(name = "custom_text")
-    private String custom_text;
     @ManyToOne
     @JoinColumn(name = "item_id")
     private MasterEntity masterItem;

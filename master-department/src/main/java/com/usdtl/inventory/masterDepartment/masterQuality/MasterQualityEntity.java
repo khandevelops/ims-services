@@ -41,8 +41,8 @@ public class MasterQualityEntity {
     private Double average_unit_price;
     @Column(name = "category")
     private String category;
-    @Column(name = "comments")
-    private String comments;
+    @Column(name = "comment")
+    private String comment;
     @Column(name = "[type]")
     private String type;
     @Column(name = "[group]")

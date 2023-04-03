@@ -21,6 +21,6 @@ public record DepartmentTransformedRequest(
         Double total_price,
         String lot_number,
         String category,
-        String comments
+        String comment
 ) {
 }

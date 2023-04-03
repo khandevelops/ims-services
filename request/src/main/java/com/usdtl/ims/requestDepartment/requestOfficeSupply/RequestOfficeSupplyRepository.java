@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RequestOfficeSupplyRepository extends PagingAndSortingRepository<RequestOfficeSupplyEntity, Integer> {
-    Page<RequestOfficeSupplyEntity> findByConfirmation(Confirmation confirmation, Pageable pageable);
 }

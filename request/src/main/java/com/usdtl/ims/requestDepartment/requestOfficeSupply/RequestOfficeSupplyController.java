@@ -1,6 +1,7 @@
 package com.usdtl.ims.requestDepartment.requestOfficeSupply;
 
 import com.usdtl.ims.clients.RequestItemRequest;
+import com.usdtl.ims.requestDepartment.request.RequestDepartmentResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -16,33 +17,18 @@ public class RequestOfficeSupplyController {
 
     private RequestOfficeSupplyService service;
 
-    @GetMapping("list")
-    public Page<RequestOfficeSupplyEntity> getRequestItemsByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return service.getRequestItemsByPage(page, size);
+    @GetMapping("list/transformed")
+    public Page<RequestDepartmentResponse> getRequestTranformedItemsByPage(@RequestParam Integer page) {
+        return service.getRequestTranformedItemsByPage(page);
     }
 
-    @GetMapping("list/completed")
-    public Page<RequestOfficeSupplyEntity> getRequestCompletedItemsByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return service.getRequestCompletedItemsByPage(page, size);
-    }
-
-    @GetMapping("list/pending")
-    public Page<RequestOfficeSupplyEntity> getRequestPendingItemsByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return service.getRequestPendingItemsByPage(page, size);
-    }
-
-    @PostMapping("create")
-    public ResponseEntity<String> createRequestItem(@RequestBody List<RequestOfficeSupplyEntity> requests) {
-        return new ResponseEntity<>(service.createRequestItem(requests), HttpStatus.CREATED);
-    }
-
-    @PutMapping(path = "update")
-    public RequestOfficeSupplyEntity updateRequestItem(@RequestBody RequestOfficeSupplyEntity request) {
-        return service.updateRequestItem(request);
-    }
-
-    @PutMapping(path = "confirm")
-    public List<RequestItemRequest> confirmRequestItems(@RequestBody List<RequestItemRequest> request) {
-        return service.confirmRequestItems(request);
-    }
+//    @PostMapping("create")
+//    public ResponseEntity<String> createRequestItem(@RequestBody List<RequestOfficeSupplyEntity> requests) {
+//        return new ResponseEntity<>(service.createRequestItem(requests), HttpStatus.CREATED);
+//    }
+//
+//    @PutMapping(path = "update")
+//    public RequestOfficeSupplyEntity updateRequestItem(@RequestBody RequestOfficeSupplyEntity request) {
+//        return service.updateRequestItem(request);
+//    }
 }

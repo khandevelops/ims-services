@@ -74,7 +74,7 @@ public class QualityMasterService {
                     .total_price(extractionsItem.getMasterItem().getAverage_unit_price() * getTotalQuantity(extractionsItem.getMasterItem().getId()))
                     .lot_number(extractionsItem.getLot_number())
                     .category(extractionsItem.getMasterItem().getCategory())
-                    .comments(extractionsItem.getMasterItem().getComments())
+                    .comment(extractionsItem.getMasterItem().getComment())
                     .build();
             departmentMasterItems.add(experienceResponse);
         });

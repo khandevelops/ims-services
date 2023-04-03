@@ -1,5 +1,7 @@
 package com.usdtl.ims.requestMaster.request;
 
+import com.usdtl.ims.common.constants.Confirmation;
+import com.usdtl.ims.common.constants.Department;
 import com.usdtl.ims.common.constants.Status;
 import lombok.Builder;
 
@@ -7,17 +9,15 @@ import java.util.Date;
 
 @Builder
 public record RequestMasterTransformedDepartmentRequest(
-        String item,
-        Integer request_item_id,
-        Integer master_item_id,
-        String recent_cn,
-        String purchase_unit,
-        String part_number,
-        String detail,
-        Status status,
         Integer quantity,
-        Date time_requested,
-        Date time_update,
-        String custom_text
+        Department department,
+        String user,
+        Status status,
+        String detail,
+        String custom_text,
+        Confirmation confirmation,
+        String location,
+        Integer master_item_id,
+        Integer request_item_id
 ) {
 }

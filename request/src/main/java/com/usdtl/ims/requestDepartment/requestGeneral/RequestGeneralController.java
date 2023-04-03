@@ -1,6 +1,7 @@
 package com.usdtl.ims.requestDepartment.requestGeneral;
 
 import com.usdtl.ims.clients.RequestItemRequest;
+import com.usdtl.ims.requestDepartment.request.RequestDepartmentResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -16,33 +17,18 @@ public class RequestGeneralController {
 
     private RequestGeneralService service;
 
-    @GetMapping("list")
-    public Page<RequestGeneralEntity> getRequestItemsByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return service.getRequestItemsByPage(page, size);
+    @GetMapping("list/transformed")
+    public Page<RequestDepartmentResponse> getRequestItemsByPage(@RequestParam Integer page) {
+        return service.getRequestItemsByPage(page);
     }
 
-    @GetMapping("list/completed")
-    public Page<RequestGeneralEntity> getRequestCompletedItemsByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return service.getRequestCompletedItemsByPage(page, size);
-    }
-
-    @GetMapping("list/pending")
-    public Page<RequestGeneralEntity> getRequestPendingItemsByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return service.getRequestPendingItemsByPage(page, size);
-    }
-
-    @PostMapping("create")
-    public ResponseEntity<String> createRequestItem(@RequestBody List<RequestGeneralEntity> requests) {
-        return new ResponseEntity<>(service.createRequestItem(requests), HttpStatus.CREATED);
-    }
-
-    @PutMapping(path = "update")
-    public RequestGeneralEntity updateRequestItem(@RequestBody RequestGeneralEntity request) {
-        return service.updateRequestItem(request);
-    }
-
-    @PutMapping(path = "confirm")
-    public List<RequestItemRequest> confirmRequestItems(@RequestBody List<RequestGeneralEntity> request) {
-        return service.confirmRequestItems(request);
-    }
+//    @PostMapping("create")
+//    public ResponseEntity<String> createRequestItem(@RequestBody List<RequestGeneralEntity> requests) {
+//        return new ResponseEntity<>(service.createRequestItem(requests), HttpStatus.CREATED);
+//    }
+//
+//    @PutMapping(path = "update")
+//    public RequestGeneralEntity updateRequestItem(@RequestBody RequestGeneralEntity request) {
+//        return service.updateRequestItem(request);
+//    }
 }

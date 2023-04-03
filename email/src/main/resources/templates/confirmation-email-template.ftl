@@ -13,7 +13,7 @@
                 <th>Recent CN</th>
                 <th>Recent Vendor</th>
                 <th>Order Quantity</th>
-                <th>Comments</th>
+                <th>Comment</th>
             </tr>
         </thead>
         <tbody>

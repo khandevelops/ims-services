@@ -75,7 +75,7 @@ public class ExtractionsMasterService {
                     .total_price(extractionsItem.getMasterItem().getAverage_unit_price() * getTotalQuantity(extractionsItem.getMasterItem().getId()))
                     .lot_number(extractionsItem.getLot_number())
                     .category(extractionsItem.getMasterItem().getCategory())
-                    .comments(extractionsItem.getMasterItem().getComments())
+                    .comment(extractionsItem.getMasterItem().getComment())
                     .build();
             departmentExtractionsItems.add(experienceResponse);
         });
@@ -134,7 +134,7 @@ public class ExtractionsMasterService {
                         .total_price(item.getMasterItem().getAverage_unit_price() * getTotalQuantity(item.getMasterItem().getId()))
                         .lot_number(item.getLot_number())
                         .category(item.getMasterItem().getCategory())
-                        .comments(item.getMasterItem().getComments())
+                        .comment(item.getMasterItem().getComment())
                         .build();
                 transformedItems.add(response);
             }

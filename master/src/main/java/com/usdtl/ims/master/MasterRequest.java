@@ -14,7 +14,7 @@ public record MasterRequest(
         String purchase_unit,
         Double average_unit_price,
         String category,
-        String comments,
+        String comment,
         String type,
         String group
 ) {
