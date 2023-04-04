@@ -1,6 +1,6 @@
 package com.usdtl.ims.storeRoomMaster;
 
-import com.usdtl.ims.storeRoomMaster.requestAndResponse.StoreRoomMasterResponse;
+import com.usdtl.ims.clients.StoreRoomMasterTransformedResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,15 +21,15 @@ public class StoreRoomMasterService {
         return repository.findAll(pageRequest);
     }
 
-    public Page<StoreRoomMasterResponse> getStoreRoomMasterItemsByPage(Integer page) {
-        List<StoreRoomMasterResponse> storeRoomMasterResponseItems = new ArrayList<>();
+    public Page<StoreRoomMasterTransformedResponse> getStoreRoomMasterItemsByPage(Integer page) {
+        List<StoreRoomMasterTransformedResponse> storeRoomMasterResponseItems = new ArrayList<>();
 
         PageRequest pageRequest = PageRequest.of(page, 10);
         Long storeRoomMasterItemCount = repository.count();
         List<StoreRoomMasterEntity> storeRoomMasterItems = repository.findAll(pageRequest).getContent();
 
         storeRoomMasterItems.forEach(storeRoomMasterItem -> {
-            StoreRoomMasterResponse storeRoomMasterResponse = StoreRoomMasterResponse.builder()
+            StoreRoomMasterTransformedResponse storeRoomMasterResponse = StoreRoomMasterTransformedResponse.builder()
                     .store_room_item_id(storeRoomMasterItem.getId())
                     .master_item_id(storeRoomMasterItem.getMasterItem().getId())
                     .item(storeRoomMasterItem.getMasterItem().getItem())
@@ -44,7 +44,7 @@ public class StoreRoomMasterService {
                     .order_quantity(getOrderQuantity(storeRoomMasterItem.getMax_quantity(), storeRoomMasterItem.getMin_quantity(), storeRoomMasterItem.getQuantity()))
                     .unit_price(storeRoomMasterItem.getMasterItem().getAverage_unit_price())
                     .total_price(storeRoomMasterItem.getMasterItem().getAverage_unit_price() * storeRoomMasterItem.getQuantity())
-                    .comments(storeRoomMasterItem.getMasterItem().getComments())
+                    .comment(storeRoomMasterItem.getMasterItem().getComment())
                     .build();
 
             storeRoomMasterResponseItems.add(storeRoomMasterResponse);

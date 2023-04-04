@@ -1,6 +1,6 @@
 package com.usdtl.ims.storeRoom;
 
-import com.usdtl.ims.storeRoomMaster.requestAndResponse.StoreRoomResponse;
+import com.usdtl.ims.clients.StoreRoomTransformedResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class StoreRoomController {
     }
 
     @GetMapping("list/transformed")
-    public Page<StoreRoomResponse> getStoreRoommasterItemsByPage(@RequestParam Integer page) {
+    public Page<StoreRoomTransformedResponse> getStoreRoommasterItemsByPage(@RequestParam Integer page) {
         return service.getStoreRoomMasterItemsByPage(page);
     }
 }

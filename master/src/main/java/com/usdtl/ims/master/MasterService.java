@@ -67,8 +67,8 @@ public class MasterService {
 
     }
 
-    public Page<MasterEntity> getItemsByPage(Integer page, Integer size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+    public Page<MasterEntity> getItemsByPage(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAll(pageRequest);
 
     }
@@ -78,8 +78,8 @@ public class MasterService {
         return masterItem;
     }
 
-    public Page<MasterEntity> getItemsFiltered(String item, Integer page, Integer size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+    public Page<MasterEntity> getItemsFiltered(String item, Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAllByItemContainingIgnoreCase(item, pageRequest);
     }
 }

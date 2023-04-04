@@ -15,13 +15,13 @@ public class MasterController {
     private MasterService service;
 
     @GetMapping("list/filter")
-    public Page<MasterEntity> getItemsFiltered(@RequestParam String item, @RequestParam Integer page, @RequestParam Integer size) {
-        return service.getItemsFiltered(item, page, size);
+    public Page<MasterEntity> getItemsFiltered(@RequestParam String item, @RequestParam Integer page) {
+        return service.getItemsFiltered(item, page);
     }
 
     @GetMapping("list")
-    public Page<MasterEntity> getItemsByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return service.getItemsByPage(page, size);
+    public Page<MasterEntity> getItemsByPage(@RequestParam Integer page) {
+        return service.getItemsByPage(page);
     }
 
     @GetMapping(path = "{id}")

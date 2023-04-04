@@ -1,5 +1,6 @@
 package com.usdtl.ims.clients;
 
+
 public record StoreRoomResponse(
         Integer id,
         String location,
@@ -9,3 +10,6 @@ public record StoreRoomResponse(
         String usage_level
 
 ) { }
+
+
+

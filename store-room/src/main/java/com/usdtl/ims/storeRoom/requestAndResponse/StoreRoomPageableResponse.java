@@ -1,5 +1,6 @@
-package com.usdtl.ims.storeRoomMaster.requestAndResponse;
+package com.usdtl.ims.storeRoom.requestAndResponse;
 
+import com.usdtl.ims.clients.StoreRoomResponse;
 import lombok.Builder;
 
 import java.util.List;
