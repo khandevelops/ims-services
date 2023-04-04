@@ -25,7 +25,7 @@ public class MasterService {
                 .purchase_unit(request.purchase_unit())
                 .average_unit_price(request.average_unit_price())
                 .category(request.category())
-                .comments(request.comment())
+                .comment(request.comment())
                 .type(request.type())
                 .group(request.group())
                 .build();
@@ -48,7 +48,7 @@ public class MasterService {
         masterItem.setPurchase_unit(request.purchase_unit());
         masterItem.setAverage_unit_price(request.average_unit_price());
         masterItem.setCategory(request.category());
-        masterItem.setComments(request.comment());
+        masterItem.setComment(request.comment());
         masterItem.setType(request.type());
         masterItem.setGroup(request.group());
 
