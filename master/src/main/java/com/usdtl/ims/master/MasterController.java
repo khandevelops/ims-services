@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.*;
 public class MasterController {
     private MasterService service;
 
+
     @GetMapping("list/filter")
-    public Page<MasterEntity> getItemsFiltered(@RequestParam String item, @RequestParam Integer page) {
-        return service.getItemsFiltered(item, page);
+    public Page<MasterEntity> findAllByKeyword(@RequestParam String keyword, @RequestParam Integer page) {
+        return service.getItemsFiltered(keyword, page);
     }
 
     @GetMapping("list")
