@@ -1,7 +1,8 @@
 package com.usdtl.ims.departmentMaster.extractionsMaster;
 
+import com.usdtl.ims.clients.DepartmentMasterResponse;
+import com.usdtl.ims.clients.request.ExtractionsMasterRequest;
 import com.usdtl.ims.common.exceptions.NotFoundException;
-import com.usdtl.ims.departmentMaster.response.DepartmentTransformedResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -18,18 +19,24 @@ import java.util.List;
 public class ExtractionsMasterController {
     private ExtractionsMasterService service;
 
+    @GetMapping("list")
+    public Page<ExtractionsMasterEntity> getDepartmentMasterItems(@RequestParam Integer page) {
+        log.info("List extractions master transformed items");
+        return service.getDepartmentMasterItems(page);
+    }
+
     @GetMapping("list/transformed")
-    public Page<DepartmentTransformedResponse> getItemsByPage(@RequestParam Integer page) {
+    public Page<DepartmentMasterResponse> getItemsByPage(@RequestParam Integer page) {
         log.info("List extractions master transformed items");
         return service.getExperienceItemsByPage(page);
     }
-    @GetMapping("list")
+    @GetMapping("list/raw")
     public Page<ExtractionsMasterEntity> getExtractionsExperienceItemsByPage(@RequestParam Integer page) {
         log.info("List extractions master items");
         return service.getExtractionsExperienceItemsByPage(page);
     }
     @GetMapping("scheduled/email/list")
-    public List<DepartmentTransformedResponse> getScheduledEmailItems() {
+    public List<DepartmentMasterResponse> getScheduledEmailItems() {
         log.info("List scheduled email items");
         return service.getScheduledEmailItems();
     }

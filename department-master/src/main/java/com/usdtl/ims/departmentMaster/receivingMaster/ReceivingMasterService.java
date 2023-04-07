@@ -1,11 +1,10 @@
 package com.usdtl.ims.departmentMaster.receivingMaster;
 
+import com.usdtl.ims.clients.DepartmentMasterResponse;
 import com.usdtl.ims.clients.MasterDepartmentClient;
 import com.usdtl.ims.clients.DepartmentResponse;
 import com.usdtl.ims.clients.MasterDepartmentResponse;
 import com.usdtl.ims.common.exceptions.NotFoundException;
-import com.usdtl.ims.departmentMaster.response.DepartmentTransformedPageResponse;
-import com.usdtl.ims.departmentMaster.response.DepartmentTransformedResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,6 +19,12 @@ import java.util.List;
 public class ReceivingMasterService {
     private ReceivingMasterRepository repository;
     private MasterDepartmentClient client;
+
+    public Page<DepartmentMasterResponse> getDepartmentMasterItems(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<DepartmentMasterResponse> departmentMasterItems = repository.getDepartmentMasterItems(pageRequest);
+        return departmentMasterItems;
+    }
     public ReceivingMasterEntity createItem(ReceivingMasterRequest request) {
         ReceivingMasterEntity newItem = ReceivingMasterEntity.builder()
                 .location(request.location())
@@ -50,14 +55,14 @@ public class ReceivingMasterService {
 
     }
 
-    public Page<DepartmentTransformedResponse> getExperienceItemsByPage(Integer page) {
-        List<DepartmentTransformedResponse> departmentMasterItems = new ArrayList<>();
+    public Page<DepartmentMasterResponse> getExperienceItemsByPage(Integer page) {
+        List<DepartmentMasterResponse> departmentMasterItems = new ArrayList<>();
 
         PageRequest pageRequest = PageRequest.of(page, 10);
         Long receivingItemsCount = repository.count();
         List<ReceivingMasterEntity> extractionsItems = repository.findAll(pageRequest).getContent();
         extractionsItems.forEach((extractionsItem) -> {
-            DepartmentTransformedResponse experienceResponse = DepartmentTransformedResponse.builder()
+            DepartmentMasterResponse experienceResponse = DepartmentMasterResponse.builder()
                     .department_id(extractionsItem.getId())
                     .item_id(extractionsItem.getMasterItem().getId())
                     .item(extractionsItem.getMasterItem().getItem())

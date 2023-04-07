@@ -1,4 +1,4 @@
-package com.usdtl.ims.departmentMaster.extractionsMaster;
+package com.usdtl.ims.clients.request;
 
 import lombok.Builder;
 

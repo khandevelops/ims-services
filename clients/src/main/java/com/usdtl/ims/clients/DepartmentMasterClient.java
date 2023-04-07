@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @FeignClient(value = "department-master")
-public interface DepartmentTransformedClient {
+public interface DepartmentMasterClient {
     @GetMapping("/ims/api/v1/department-master/extractions/scheduled/email/list")
     List<DepartmentTransformedRequest> getScheduledEmailItems();
 }

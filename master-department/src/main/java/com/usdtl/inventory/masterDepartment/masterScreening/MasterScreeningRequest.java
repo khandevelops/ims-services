@@ -1,5 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterScreening;
 
+import com.usdtl.ims.common.constants.Category;
 import com.usdtl.inventory.masterDepartment.entities.ScreeningEntity;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public record MasterScreeningRequest(
         String next_advance_cn,
         String purchase_unit,
         Double average_unit_price,
-        String category,
+        Category category,
         String comments,
         String type,
         String group,

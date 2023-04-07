@@ -1,11 +1,11 @@
 package com.usdtl.ims.departmentMaster.rdMaster;
 
 
+import com.usdtl.ims.clients.DepartmentMasterResponse;
 import com.usdtl.ims.clients.MasterDepartmentClient;
 import com.usdtl.ims.clients.DepartmentResponse;
 import com.usdtl.ims.clients.MasterDepartmentResponse;
 import com.usdtl.ims.common.exceptions.NotFoundException;
-import com.usdtl.ims.departmentMaster.response.DepartmentTransformedResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,6 +20,12 @@ import java.util.List;
 public class RdMasterService {
     private RdMasterRepository repository;
     private MasterDepartmentClient client;
+
+    public Page<DepartmentMasterResponse> getDepartmentMasterItems(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<DepartmentMasterResponse> departmentMasterItems = repository.getDepartmentMasterItems(pageRequest);
+        return departmentMasterItems;
+    }
     public RdMasterEntity createItem(RdMasterRequest request) {
         RdMasterEntity newItem = RdMasterEntity.builder()
                 .location(request.location())
@@ -50,14 +56,14 @@ public class RdMasterService {
 
     }
 
-    public Page<DepartmentTransformedResponse> getExperienceItemsByPage(Integer page) {
-        List<DepartmentTransformedResponse> departmentMasterItems = new ArrayList<>();
+    public Page<DepartmentMasterResponse> getExperienceItemsByPage(Integer page) {
+        List<DepartmentMasterResponse> departmentMasterItems = new ArrayList<>();
 
         PageRequest pageRequest = PageRequest.of(page, 10);
         Long rdItemsCount = repository.count();
         List<RdMasterEntity> departmentPageableItems = repository.findAll(pageRequest).getContent();
         departmentPageableItems.forEach((departmentItems) -> {
-            DepartmentTransformedResponse experienceResponse = DepartmentTransformedResponse.builder()
+            DepartmentMasterResponse experienceResponse = DepartmentMasterResponse.builder()
                     .department_id(departmentItems.getId())
                     .item(departmentItems.getMasterItem().getItem())
                     .purchase_unit(departmentItems.getMasterItem().getPurchase_unit())

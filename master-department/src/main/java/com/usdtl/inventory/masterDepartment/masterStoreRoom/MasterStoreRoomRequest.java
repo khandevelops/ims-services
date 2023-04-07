@@ -1,5 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterStoreRoom;
 
+import com.usdtl.ims.common.constants.Category;
 import com.usdtl.inventory.masterDepartment.entities.ShippingEntity;
 import com.usdtl.inventory.masterDepartment.entities.StoreRoomEntity;
 
@@ -18,7 +19,7 @@ public record MasterStoreRoomRequest(
         String next_advance_cn,
         String purchase_unit,
         Double average_unit_price,
-        String category,
+        Category category,
         String comments,
         String type,
         String group,

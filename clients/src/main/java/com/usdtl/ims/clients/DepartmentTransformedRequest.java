@@ -1,5 +1,6 @@
 package com.usdtl.ims.clients;
 
+import com.usdtl.ims.common.constants.Category;
 import lombok.Builder;
 
 @Builder
@@ -20,7 +21,7 @@ public record DepartmentTransformedRequest(
         Double unit_price,
         Double total_price,
         String lot_number,
-        String category,
+        Category category,
         String comment
 ) {
 }

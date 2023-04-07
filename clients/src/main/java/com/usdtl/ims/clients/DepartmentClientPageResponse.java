@@ -6,7 +6,7 @@ import java.util.List;
 
 @Builder
 public record DepartmentClientPageResponse(
-        List<DepartmentTransformedResponse> content,
+        List<DepartmentMasterResponse> content,
         Integer totalPages,
         Long totalElements,
         Integer size,

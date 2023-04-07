@@ -1,13 +1,13 @@
 package com.usdtl.ims.email.departmentExperience;
 
-import com.usdtl.ims.clients.DepartmentTransformedResponse;
+import com.usdtl.ims.clients.DepartmentMasterResponse;
 import lombok.Builder;
 
 import java.util.List;
 
 @Builder
 public record DepartmentTransformedPageResponse(
-        List<DepartmentTransformedResponse> content,
+        List<DepartmentMasterResponse> content,
         Integer totalPages,
         Long totalElements,
         Integer size,

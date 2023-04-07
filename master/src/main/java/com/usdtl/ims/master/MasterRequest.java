@@ -1,5 +1,7 @@
 package com.usdtl.ims.master;
 
+import com.usdtl.ims.common.constants.Category;
+
 public record MasterRequest(
         Integer id,
         String item,
@@ -13,7 +15,7 @@ public record MasterRequest(
         String next_advance_cn,
         String purchase_unit,
         Double average_unit_price,
-        String category,
+        Category category,
         String comment,
         String type,
         String group

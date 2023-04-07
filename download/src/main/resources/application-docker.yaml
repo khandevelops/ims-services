@@ -1,0 +1,20 @@
+server:
+  port: 8010
+  servlet:
+    context-path: /ims/api/v1/department-master
+spring:
+  application:
+    name: department-master
+  datasource:
+    url: jdbc:mysql://mysql:${MYSQL_DOCKER_PORT}/${MYSQL_DATABASE}
+    username: ${MYSQL_ROOT_USER}
+    password: ${MYSQL_ROOT_PASSWORD}
+  jpa:
+    show-sql: true
+  zipkin:
+    base-url: http://zipkin:9411
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    enabled: true

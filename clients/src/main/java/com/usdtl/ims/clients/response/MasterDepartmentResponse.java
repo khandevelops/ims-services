@@ -1,12 +1,13 @@
-package com.usdtl.ims.departmentMaster.response;
+package com.usdtl.ims.clients.response;
 
+import com.usdtl.ims.common.constants.Category;
 import lombok.Builder;
 
 @Builder
-public record DepartmentTransformedResponse(
-        Integer department_id,
-        Integer item_id,
-        String item,
+public record MasterDepartmentResponse(
+        Integer department_item_id,
+        Integer master_item_id,
+        String master_item,
         String purchase_unit,
         String part_number,
         String recent_cn,
@@ -20,7 +21,7 @@ public record DepartmentTransformedResponse(
         Double unit_price,
         Double total_price,
         String lot_number,
-        String category,
+        Category category,
         String comment
 ) {
 }

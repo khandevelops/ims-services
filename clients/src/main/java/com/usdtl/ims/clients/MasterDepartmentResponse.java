@@ -1,5 +1,7 @@
 package com.usdtl.ims.clients;
 
+import com.usdtl.ims.common.constants.Category;
+
 import java.util.List;
 public record MasterDepartmentResponse(
         Integer id,
@@ -14,7 +16,7 @@ public record MasterDepartmentResponse(
         String next_advance_cn,
         String purchase_unit,
         Double average_unit_price,
-        String category,
+        Category category,
         String comment,
         String type,
         String group,

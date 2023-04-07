@@ -1,11 +1,11 @@
 package com.usdtl.ims.departmentMaster.extractionsMaster;
 
+import com.usdtl.ims.clients.DepartmentMasterResponse;
 import com.usdtl.ims.clients.MasterDepartmentClient;
 import com.usdtl.ims.clients.MasterDepartmentResponse;
 import com.usdtl.ims.clients.DepartmentResponse;
+import com.usdtl.ims.clients.request.ExtractionsMasterRequest;
 import com.usdtl.ims.common.exceptions.NotFoundException;
-import com.usdtl.ims.departmentMaster.response.DepartmentTransformedPageResponse;
-import com.usdtl.ims.departmentMaster.response.DepartmentTransformedResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,6 +20,14 @@ import java.util.List;
 public class ExtractionsMasterService {
     private ExtractionsMasterRepository repository;
     private MasterDepartmentClient client;
+
+    public Page<ExtractionsMasterEntity> getDepartmentMasterItems(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<ExtractionsMasterEntity> extractionsMasterItems =  repository.getDepartmentMasterItems(pageRequest);
+
+        return extractionsMasterItems;
+    }
+
     public ExtractionsMasterEntity createItem(ExtractionsMasterRequest request) {
         ExtractionsMasterEntity newItem = ExtractionsMasterEntity.builder()
                 .location(request.location())
@@ -36,6 +44,8 @@ public class ExtractionsMasterService {
         return newItem;
     };
 
+
+
     public Page<ExtractionsMasterEntity> getExtractionsExperienceItemsByPage(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAll(pageRequest);
@@ -50,14 +60,14 @@ public class ExtractionsMasterService {
 
     }
 
-    public Page<DepartmentTransformedResponse> getExperienceItemsByPage(Integer page) {
-        List<DepartmentTransformedResponse> departmentExtractionsItems = new ArrayList<>();
+    public Page<DepartmentMasterResponse> getExperienceItemsByPage(Integer page) {
+        List<DepartmentMasterResponse> departmentExtractionsItems = new ArrayList<>();
 
         PageRequest pageRequest = PageRequest.of(page, 10);
         Long extractionsItemsCount = repository.count();
         List<ExtractionsMasterEntity> extractionsItems = repository.findAll(pageRequest).getContent();
         extractionsItems.forEach((extractionsItem) -> {
-            DepartmentTransformedResponse experienceResponse = DepartmentTransformedResponse.builder()
+            DepartmentMasterResponse experienceResponse = DepartmentMasterResponse.builder()
                     .department_id(extractionsItem.getId())
                     .item_id(extractionsItem.getMasterItem().getId())
                     .item(extractionsItem.getMasterItem().getItem())
@@ -109,14 +119,14 @@ public class ExtractionsMasterService {
         return response.extractionsItems().stream().mapToInt(DepartmentResponse::quantity).sum();
     }
 
-    public List<DepartmentTransformedResponse> getScheduledEmailItems() {
-        List<DepartmentTransformedResponse> transformedItems = new ArrayList<>();
+    public List<DepartmentMasterResponse> getScheduledEmailItems() {
+        List<DepartmentMasterResponse> transformedItems = new ArrayList<>();
         List<ExtractionsMasterEntity> items = (List<ExtractionsMasterEntity>) repository.findAll();
 
         items.forEach((item) -> {
             Integer order_quantity = getOrderQuantity(item.getMax_quantity(), item.getMin_quantity(), item.getQuantity());
             if(order_quantity > 0) {
-                DepartmentTransformedResponse response = DepartmentTransformedResponse.builder()
+                DepartmentMasterResponse response = DepartmentMasterResponse.builder()
                         .department_id(item.getId())
                         .item_id(item.getMasterItem().getId())
                         .item(item.getMasterItem().getItem())

@@ -1,4 +1,5 @@
 package com.usdtl.inventory.masterDepartment.masterRd;
+import com.usdtl.ims.common.constants.Category;
 import com.usdtl.inventory.masterDepartment.entities.RdEntity;
 import lombok.*;
 
@@ -40,7 +41,7 @@ public class MasterRdEntity {
     @Column(name = "average_unit_price")
     private Double average_unit_price;
     @Column(name = "category")
-    private String category;
+    private Category category;
     @Column(name = "comment")
     private String comment;
     @Column(name = "[type]")

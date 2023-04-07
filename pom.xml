@@ -22,6 +22,7 @@
         <module>store-room-master</module>
         <module>store-room</module>
         <module>request-master</module>
+        <module>download</module>
     </modules>
 
     <properties>
@@ -87,6 +88,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.1</version>
         </dependency>
     </dependencies>
 

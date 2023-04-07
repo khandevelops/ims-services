@@ -1,0 +1,17 @@
+server:
+  port: 8100
+  servlet:
+    context-path: /ims/api/v1/download
+spring:
+  application:
+    name: download
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:mysql://localhost:${MYSQL_LOCAL_PORT}/${MYSQL_DATABASE}
+    username: ${MYSQL_ROOT_USER}
+    password: ${MYSQL_ROOT_PASSWORD}
+  jpa:
+    show-sql: true
+  profiles:
+    active: local

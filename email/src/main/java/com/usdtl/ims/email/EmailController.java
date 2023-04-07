@@ -1,6 +1,6 @@
 package com.usdtl.ims.email;
 
-import com.usdtl.ims.clients.DepartmentTransformedClient;
+import com.usdtl.ims.clients.DepartmentMasterClient;
 import com.usdtl.ims.clients.DepartmentTransformedRequest;
 import com.usdtl.ims.clients.RequestItemRequest;
 import freemarker.template.TemplateException;
@@ -18,7 +18,7 @@ import java.util.List;
 public class EmailController {
 
     private EmailService service;
-    private DepartmentTransformedClient transformedClient;
+    private DepartmentMasterClient transformedClient;
 
     @GetMapping("scheduled-email")
     public List<DepartmentTransformedRequest> sendScheduledEmail(Model model) throws MessagingException, TemplateException, IOException {
