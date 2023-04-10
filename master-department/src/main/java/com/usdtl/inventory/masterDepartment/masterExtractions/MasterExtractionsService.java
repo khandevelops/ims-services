@@ -1,6 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterExtractions;
 
-import com.usdtl.ims.clients.response.MasterDepartmentResponse;
+import com.usdtl.ims.clients.responseRecord.MasterDepartmentResponse;
 import com.usdtl.ims.common.exceptions.NotFoundException;
 import com.usdtl.inventory.masterDepartment.entities.ExtractionsEntity;
 import lombok.AllArgsConstructor;

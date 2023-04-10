@@ -1,6 +1,6 @@
 package com.usdtl.ims.departmentMaster.extractionsMaster;
 
-import com.usdtl.ims.clients.response.DepartmentMasterDownloadExcelResponse;
+import com.usdtl.ims.clients.responseRecord.DepartmentMasterDownloadExcelResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;

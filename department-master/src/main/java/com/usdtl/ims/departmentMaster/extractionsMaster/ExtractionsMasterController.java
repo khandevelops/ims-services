@@ -2,6 +2,7 @@ package com.usdtl.ims.departmentMaster.extractionsMaster;
 
 import com.usdtl.ims.clients.DepartmentMasterResponse;
 import com.usdtl.ims.clients.request.ExtractionsMasterRequest;
+import com.usdtl.ims.clients.responseClass.DepartmentMasterResponseTest;
 import com.usdtl.ims.common.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,7 @@ public class ExtractionsMasterController {
     private ExtractionsMasterService service;
 
     @GetMapping("list")
-    public Page<ExtractionsMasterEntity> getDepartmentMasterItems(@RequestParam Integer page) {
+    public Page<DepartmentMasterResponseTest> getDepartmentMasterItems(@RequestParam Integer page) {
         log.info("List extractions master transformed items");
         return service.getDepartmentMasterItems(page);
     }

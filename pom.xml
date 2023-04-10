@@ -23,6 +23,7 @@
         <module>store-room</module>
         <module>request-master</module>
         <module>download</module>
+        <module>department</module>
     </modules>
 
     <properties>

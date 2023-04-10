@@ -1,6 +1,8 @@
 package com.usdtl.ims.departmentMaster.extractionsMaster;
 
+import com.usdtl.ims.clients.responseClass.DepartmentMasterResponseTest;
 import com.usdtl.ims.clients.DepartmentMasterResponse;
+
 import com.usdtl.ims.clients.MasterDepartmentClient;
 import com.usdtl.ims.clients.MasterDepartmentResponse;
 import com.usdtl.ims.clients.DepartmentResponse;
@@ -21,9 +23,9 @@ public class ExtractionsMasterService {
     private ExtractionsMasterRepository repository;
     private MasterDepartmentClient client;
 
-    public Page<ExtractionsMasterEntity> getDepartmentMasterItems(Integer page) {
+    public Page<DepartmentMasterResponseTest> getDepartmentMasterItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        Page<ExtractionsMasterEntity> extractionsMasterItems =  repository.getDepartmentMasterItems(pageRequest);
+        Page<DepartmentMasterResponseTest> extractionsMasterItems =  repository.getDepartmentMasterItems(pageRequest);
 
         return extractionsMasterItems;
     }

@@ -3,7 +3,7 @@ package com.usdtl.ims.departmentMaster.extractionsMaster;
 import com.usdtl.ims.clients.MasterDepartmentClient;
 import com.usdtl.ims.clients.MasterDepartmentResponse;
 import com.usdtl.ims.clients.DepartmentResponse;
-import com.usdtl.ims.clients.response.DepartmentMasterDownloadExcelResponse;
+import com.usdtl.ims.clients.responseRecord.DepartmentMasterDownloadExcelResponse;
 import com.usdtl.ims.common.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

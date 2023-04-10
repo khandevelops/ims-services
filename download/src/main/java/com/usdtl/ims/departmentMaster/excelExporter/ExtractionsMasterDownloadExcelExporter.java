@@ -1,6 +1,6 @@
 package com.usdtl.ims.departmentMaster.excelExporter;
 
-import com.usdtl.ims.clients.response.DepartmentMasterDownloadExcelResponse;
+import com.usdtl.ims.clients.responseRecord.DepartmentMasterDownloadExcelResponse;
 import com.usdtl.ims.departmentMaster.extractionsMaster.ExtractionsMasterDownloadService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
