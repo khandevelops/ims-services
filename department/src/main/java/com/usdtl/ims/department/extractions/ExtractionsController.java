@@ -14,7 +14,12 @@ public class ExtractionsController  {
     private ExtractionsService service;
 
     @GetMapping("list/transformed")
-    public Page<DepartmentMasterResponseTest> getItemsByPage(@RequestParam Integer page) {
+    public Page<DepartmentMasterResponseTest> getDepartmentTransformedItems(@RequestParam Integer page) {
         return service.getDepartmentTransformedItems(page);
     }
+
+//    @GetMapping("list/master/transformed")
+//    public Page<DepartmentMasterResponseTest> getDepartmentMasterTransformedItems(@RequestParam Integer page) {
+//        return service.getDepartmentMasterTransformedItems(page);
+//    }
 }

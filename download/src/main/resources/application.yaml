@@ -8,7 +8,7 @@ spring:
   config:
     import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:mysql://localhost:${MYSQL_LOCAL_PORT}/${MYSQL_DATABASE}
+    url: jdbc:mysql://localhost:${MYSQL_SERVER_PORT}/${MYSQL_DATABASE}
     username: ${MYSQL_ROOT_USER}
     password: ${MYSQL_ROOT_PASSWORD}
   jpa:

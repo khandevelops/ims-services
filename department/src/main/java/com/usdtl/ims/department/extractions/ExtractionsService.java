@@ -11,6 +11,19 @@ import org.springframework.stereotype.Service;
 public class ExtractionsService {
     private ExtractionsRepository repository;
 
+//    public Page<DepartmentMasterResponseTest> getDepartmentMasterTransformedItems(Integer page) {
+//        PageRequest pageRequest = PageRequest.of(page, 10);
+//        Page<DepartmentMasterResponseTest> departmentTransformedItems = repository.getDepartmentTransformedItems(pageRequest);
+//        return departmentTransformedItems;
+//    }
+//
+//    public Page<DepartmentMasterResponseTest> getDepartmentTransformedItems(Integer page) {
+//        PageRequest pageRequest = PageRequest.of(page, 10);
+//        Page<DepartmentMasterResponseTest> departmentTransformedItems = repository.getDepartmentTransformedItems(pageRequest);
+//
+//        return departmentTransformedItems;
+//    }
+
     public Page<DepartmentMasterResponseTest> getDepartmentTransformedItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         Page<DepartmentMasterResponseTest> departmentTransformedItems = repository.getDepartmentTransformedItems(pageRequest);
@@ -22,7 +35,7 @@ public class ExtractionsService {
                     departmentTransformedItem.getTotal_quantity()
             ));
             departmentTransformedItem.setTotal_price(
-                    departmentTransformedItem.getUnit_price() * departmentTransformedItem.getTotal_quantity()
+                    departmentTransformedItem.getAverage_unit_price() * departmentTransformedItem.getTotal_quantity()
             );
         });
 
@@ -42,7 +55,7 @@ public class ExtractionsService {
                 return max_quantity - min_quantity;
             }
         }
-        return 0;
+        return null;
     }
 }
 
