@@ -78,4 +78,22 @@ public class MasterExtractionsService {
     private Integer getTotalQuantity(List<ExtractionsEntity> departmentItems) {
         return departmentItems.stream().mapToInt(ExtractionsEntity::getQuantity).sum();
     }
+
+    public Page<MasterExtractionsEntity> getMasterDepartmentItems(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        List<MasterExtractionsEntity> masterDepartmentResponseItems = new ArrayList<>();
+        long masterDepartmentItemCount = repository.count();
+
+        List<MasterExtractionsEntity> masterDepartmentPageableItems = (List<MasterExtractionsEntity>) repository.findAll();
+
+        masterDepartmentPageableItems.forEach(item -> {
+            if(!item.getExtractionsItems().isEmpty()) {
+                masterDepartmentResponseItems.add(item);
+            }
+        });
+
+        List<MasterExtractionsEntity> pagedItems = masterDepartmentResponseItems.subList(page, page + 10);
+
+        return new PageImpl<>(pagedItems, pageRequest, masterDepartmentItemCount);
+    }
 }

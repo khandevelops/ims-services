@@ -1,28 +1,24 @@
 package com.usdtl.ims.department.extractions;
 
 import com.usdtl.ims.clients.responseClass.DepartmentMasterResponseTest;
+import com.usdtl.ims.common.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class ExtractionsService {
     private ExtractionsRepository repository;
 
-//    public Page<DepartmentMasterResponseTest> getDepartmentMasterTransformedItems(Integer page) {
-//        PageRequest pageRequest = PageRequest.of(page, 10);
-//        Page<DepartmentMasterResponseTest> departmentTransformedItems = repository.getDepartmentTransformedItems(pageRequest);
-//        return departmentTransformedItems;
-//    }
-//
-//    public Page<DepartmentMasterResponseTest> getDepartmentTransformedItems(Integer page) {
-//        PageRequest pageRequest = PageRequest.of(page, 10);
-//        Page<DepartmentMasterResponseTest> departmentTransformedItems = repository.getDepartmentTransformedItems(pageRequest);
-//
-//        return departmentTransformedItems;
-//    }
+    public Page<ExtractionsEntity> getDepartmentItems(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        return repository.findAll(pageRequest);
+    }
 
     public Page<DepartmentMasterResponseTest> getDepartmentTransformedItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
@@ -56,6 +52,26 @@ public class ExtractionsService {
             }
         }
         return null;
+    }
+
+    public List<ExtractionsEntity> updateDepartmentItems(List<ExtractionsEntity> requestItems) {
+        List<ExtractionsEntity> updateItems = new ArrayList<>();
+        requestItems.forEach(departmentItem -> {
+            ExtractionsEntity item = repository.findById(departmentItem.getId()).orElseThrow(() -> new NotFoundException("Item associated with id: " + departmentItem.getId() + " not found"));
+            item.setLocation(departmentItem.getLocation());
+            item.setQuantity(departmentItem.getQuantity());
+            item.setMin_quantity(departmentItem.getMin_quantity());
+            item.setMax_quantity(departmentItem.getMax_quantity());
+            item.setUsage_level(departmentItem.getUsage_level());
+            item.setLot_number(departmentItem.getLot_number());
+            item.setExpiration_date(departmentItem.getExpiration_date());
+            item.setReceived_date(departmentItem.getReceived_date());
+
+            updateItems.add(item);
+            repository.save(item);
+        });
+
+        return updateItems;
     }
 }
 

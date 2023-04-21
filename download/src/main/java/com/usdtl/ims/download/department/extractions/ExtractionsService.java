@@ -20,14 +20,10 @@ public class ExtractionsService {
         List<DepartmentDownloadResponse> departmentTransformedItems = repository.getDepartmentTransformedItems();
 
         departmentTransformedItems.forEach(departmentTransformedItem -> {
-            departmentTransformedItem.setOrder_quantity(getOrderQuantity(
-                    departmentTransformedItem.getMax_quantity(),
-                    departmentTransformedItem.getMin_quantity(),
-                    getTotalQuantity(departmentTransformedItem.getMaster_item_id())
-            ));
             departmentTransformedItem.setTotal_price(
                     departmentTransformedItem.getAverage_unit_price() * getTotalQuantity(departmentTransformedItem.getMaster_item_id())
             );
+            departmentTransformedItem.setTotal_quantity(getTotalQuantity(departmentTransformedItem.getMaster_item_id()));
         });
 
         return departmentTransformedItems;

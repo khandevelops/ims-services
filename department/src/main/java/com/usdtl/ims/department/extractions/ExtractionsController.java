@@ -13,13 +13,18 @@ import java.util.List;
 public class ExtractionsController  {
     private ExtractionsService service;
 
+    @GetMapping("list")
+    public Page<ExtractionsEntity> getDepartmentItems(@RequestParam Integer page) {
+        return service.getDepartmentItems(page);
+    }
+
     @GetMapping("list/transformed")
     public Page<DepartmentMasterResponseTest> getDepartmentTransformedItems(@RequestParam Integer page) {
         return service.getDepartmentTransformedItems(page);
     }
 
-//    @GetMapping("list/master/transformed")
-//    public Page<DepartmentMasterResponseTest> getDepartmentMasterTransformedItems(@RequestParam Integer page) {
-//        return service.getDepartmentMasterTransformedItems(page);
-//    }
+    @PatchMapping("update-department-items")
+    public List<ExtractionsEntity> updateDepartmentItems(@RequestBody List<ExtractionsEntity> requestItems) {
+        return service.updateDepartmentItems(requestItems);
+    }
 }

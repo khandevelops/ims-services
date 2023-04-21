@@ -2,6 +2,7 @@ package com.usdtl.ims.department.rd;
 
 import com.usdtl.ims.clients.responseClass.DepartmentMasterResponseTest;
 import com.usdtl.ims.common.exceptions.NotFoundException;
+import com.usdtl.ims.department.massSpec.MassSpecEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,76 +49,23 @@ public class RdService {
         }
         return null;
     }
+    public List<RdEntity> updateDepartmentItems(List<RdEntity> requestItems) {
+        List<RdEntity> updateItems = new ArrayList<>();
+        requestItems.forEach(departmentItem -> {
+            RdEntity item = repository.findById(departmentItem.getId()).orElseThrow(() -> new NotFoundException("Item associated with id: " + departmentItem.getId() + " not found"));
+            item.setLocation(departmentItem.getLocation());
+            item.setQuantity(departmentItem.getQuantity());
+            item.setMin_quantity(departmentItem.getMin_quantity());
+            item.setMax_quantity(departmentItem.getMax_quantity());
+            item.setUsage_level(departmentItem.getUsage_level());
+            item.setLot_number(departmentItem.getLot_number());
+            item.setExpiration_date(departmentItem.getExpiration_date());
+            item.setReceived_date(departmentItem.getReceived_date());
 
+            updateItems.add(item);
+            repository.save(item);
+        });
 
-//    public RdEntity createItem(DepartmentRequest request) {
-//        RdEntity newItem = RdEntity.builder()
-//                .location(request.location())
-//                .quantity(request.quantity())
-//                .min_quantity(request.min_quantity())
-//                .max_quantity(request.max_quantity())
-//                .usage_level(request.usage_level())
-//                .lot_number(request.lot_number())
-//                .expiration_date(request.expiration_date())
-//                .received_date(request.received_date())
-//                .build();
-//
-//        repository.save(newItem);
-//        return newItem;
-//    };
-//
-//    public RdEntity updateItemById(Integer id, DepartmentRequest request) {
-//        RdEntity item = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
-//        item.setLocation(request.location());
-//        item.setQuantity(request.quantity());
-//        item.setMin_quantity(request.min_quantity());
-//        item.setMax_quantity(request.max_quantity());
-//        item.setUsage_level(request.usage_level());
-//        item.setLot_number(request.lot_number());
-//        item.setExpiration_date(request.expiration_date());
-//        item.setReceived_date(request.received_date());
-//
-//        repository.save(item);
-//
-//        return item;
-//    }
-//
-//    public List<RdEntity> updateQuantity(List<DepartmentRequest> request) {
-//        List<RdEntity> updateItems = new ArrayList<>();
-//        request.forEach(departmentItem -> {
-//            RdEntity item = repository.findById(departmentItem.id()).orElseThrow(() -> new NotFoundException("Item associated with id: " + departmentItem.id() + " not found"));
-//            item.setLocation(departmentItem.location());
-//            item.setQuantity(departmentItem.quantity());
-//            item.setMin_quantity(departmentItem.min_quantity());
-//            item.setMax_quantity(departmentItem.max_quantity());
-//            item.setUsage_level(departmentItem.usage_level());
-//            item.setLot_number(departmentItem.lot_number());
-//            item.setExpiration_date(departmentItem.expiration_date());
-//            item.setReceived_date(departmentItem.received_date());
-//
-//            updateItems.add(item);
-//            repository.save(item);
-//        });
-//
-//        return updateItems;
-//    }
-//
-//    public void deleteItemById(Integer id) {
-//        boolean exists = repository.existsById(id);
-//        if(!exists) {
-//            throw new NotFoundException("Item associated with id: " + id + " not found");
-//        }
-//        repository.deleteById(id);
-//
-//    }
-//
-//    public Page<RdEntity> getItemsByPage(Integer page, Integer size) {
-//        PageRequest pageRequest = PageRequest.of(page, size);
-//        return repository.findAll(pageRequest);
-//    }
-//
-//    public RdEntity getItemById(Integer id) throws NotFoundException {
-//        RdEntity item = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
-//        return item;
-//    }
+        return updateItems;
+    }
 }

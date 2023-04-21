@@ -14,10 +14,4 @@ public record DepartmentResponse (
         Date expiration_date,
         Date received_date,
         Integer order_quantity
-) {
-    public DepartmentResponse {
-        if(quantity == null) {
-            throw new IllegalArgumentException();
-        }
-    }
-}
+) { }

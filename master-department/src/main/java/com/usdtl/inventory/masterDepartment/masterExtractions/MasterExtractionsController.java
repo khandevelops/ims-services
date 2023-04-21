@@ -19,6 +19,11 @@ public class MasterExtractionsController {
         return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
     }
 
+    @GetMapping("list")
+    public Page<MasterExtractionsEntity> getMasterDepartmentItems(@RequestParam Integer page) {
+        return service.getMasterDepartmentItems(page);
+    }
+
     @GetMapping("list/transformed")
     public Page<MasterDepartmentResponse> getMasterDepartmentPageableItems(@RequestParam Integer page) {
         return service.getMasterDepartmentPageableItems(page);

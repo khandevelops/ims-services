@@ -4,6 +4,7 @@ import com.usdtl.ims.common.constants.Category;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Builder
@@ -47,4 +48,12 @@ public class MasterEntity {
     private String type;
     @Column(name = "[group]")
     private String group;
+    @Column(name = "drug_class")
+    private String drug_class;
+    @Column(name = "usage_level")
+    private String usage_level;
+    @Column(name = "expiration_date")
+    private Date expiration_date;
+    @Column(name = "received_date")
+    private Date received_date;
 }

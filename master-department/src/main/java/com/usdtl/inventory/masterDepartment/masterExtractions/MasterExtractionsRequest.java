@@ -1,5 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterExtractions;
 
+import com.usdtl.ims.clients.DepartmentResponse;
 import com.usdtl.ims.common.constants.Category;
 import com.usdtl.inventory.masterDepartment.entities.ExtractionsEntity;
 
@@ -22,6 +23,6 @@ public record MasterExtractionsRequest(
         String comments,
         String type,
         String group,
-        List<ExtractionsEntity> extractionsItems
+        List<DepartmentResponse> departmentItems
 ) {
 }

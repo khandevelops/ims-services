@@ -44,21 +44,20 @@ public class DownloadDepartmentItems {
         createCell(row, 1, "Purchase Unit", style);
         createCell(row, 2, "Part Number", style);
         createCell(row, 3, "Recent CN", style);
-        createCell(row, 3, "Recent Vendor", style);
-        createCell(row, 10, "Average Unit Price", style);
-        createCell(row, 14, "Category", style);
-        createCell(row, 12, "Comment", style);
-        createCell(row, 6, "Usage Level", style);
-        createCell(row, 7, "Min Qty", style);
-        createCell(row, 8, "Max Qty", style);
-        createCell(row, 15, "Lot Number", style);
-        createCell(row, 13, "Location", style);
-        createCell(row, 15, "Received Date", style);
-        createCell(row, 15, "Expiration Date", style);
-        createCell(row, 5, "Quantity", style);
-        createCell(row, 9, "Order Qty", style);
-        createCell(row, 11, "Total Price", style);
-        createCell(row, 4, "Total Quantity", style);
+        createCell(row, 4, "Recent Vendor", style);
+        createCell(row, 5, "Average Unit Price", style);
+        createCell(row, 6, "Category", style);
+        createCell(row, 7, "Comment", style);
+        createCell(row, 8, "Usage Level", style);
+        createCell(row, 9, "Min Qty", style);
+        createCell(row, 10, "Max Qty", style);
+        createCell(row, 11, "Lot Number", style);
+        createCell(row, 12, "Location", style);
+        createCell(row, 13, "expiration_date", style);
+        createCell(row, 14, "received_date", style);
+        createCell(row, 15, "Quantity", style);
+        createCell(row, 16, "Total Price", style);
+        createCell(row, 17, "Total Quantity", style);
     }
 
     private void createCell(Row row, int columnCount, Object value, CellStyle style) {
@@ -87,28 +86,26 @@ public class DownloadDepartmentItems {
 
         for(DepartmentDownloadResponse departmentDownloadResponseItem : departmentDownloadResponseItems) {
             Row row = sheet.createRow(rowCount++);
-            int columCount = 0;
-            Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            int columnCount = 0;
 
-            createCell(row, columCount, departmentDownloadResponseItem.getItem(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getPurchase_unit(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getPart_number(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getRecent_cn(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getRecent_vendor(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getAverage_unit_price(), style);
-            createCell(row, columCount, (departmentDownloadResponseItem.getCategory()).toString(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getComment(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getUsage_level(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getMin_quantity(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getMax_quantity(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getLot_number(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getLocation(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getReceived_date(), style);
-            createCell(row, columCount, DateFormatUtils.format(departmentDownloadResponseItem.getExpirations_date(), "dd MMM yyyy HH:mm:ss Z"), style);
-            createCell(row, columCount, DateFormatUtils.format(departmentDownloadResponseItem.getQuantity(), "dd MMM yyyy HH:mm:ss Z"), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getOrder_quantity(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getTotal_price(), style);
-            createCell(row, columCount, departmentDownloadResponseItem.getTotal_quantity(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getItem(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getPurchase_unit(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getPart_number(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getRecent_cn(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getRecent_vendor(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getAverage_unit_price(), style);
+            createCell(row, columnCount++, (departmentDownloadResponseItem.getCategory()).toString(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getComment(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getUsage_level(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getMin_quantity(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getMax_quantity(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getLot_number(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getLocation(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getExpirations_date() == null ? null : DateFormatUtils.format(departmentDownloadResponseItem.getExpirations_date(), "yyyy-MM-dd HH:mm:SS"), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getReceived_date() == null ? null : DateFormatUtils.format(departmentDownloadResponseItem.getReceived_date(), "yyyy-MM-dd HH:mm:SS"), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getQuantity(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getTotal_price(), style);
+            createCell(row, columnCount++, departmentDownloadResponseItem.getTotal_quantity(), style);
         }
     }
 
