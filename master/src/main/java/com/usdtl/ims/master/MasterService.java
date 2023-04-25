@@ -34,7 +34,7 @@ public class MasterService {
         return newMasterItem;
     };
 
-    public MasterEntity updateItemById(Integer id, MasterRequest request) {
+    public MasterEntity updateItem(Integer id, MasterRequest request) {
         MasterEntity masterItem = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
         masterItem.setItem(request.item());
         masterItem.setManufacturer(request.manufacturer());
@@ -51,6 +51,8 @@ public class MasterService {
         masterItem.setComment(request.comment());
         masterItem.setType(request.type());
         masterItem.setGroup(request.group());
+        masterItem.setExpiration_date(request.expiration_date());
+        masterItem.setReceived_date(request.received_date());
 
         System.out.println("khan " + masterItem);
         repository.save(masterItem);

@@ -1,6 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterExtractions;
 
-import com.usdtl.ims.clients.responseRecord.MasterDepartmentResponse;
+import com.usdtl.ims.clients.response.MasterDepartmentResponse;
 import com.usdtl.ims.common.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,13 +19,13 @@ public class MasterExtractionsController {
         return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
     }
 
+    @GetMapping("list/transformed")
+    public Page<MasterDepartmentResponse> getMasterDepartmentItemsTransformed(@RequestParam Integer page) {
+        return service.getMasterDepartmentItemsTransformed(page);
+    }
+
     @GetMapping("list")
     public Page<MasterExtractionsEntity> getMasterDepartmentItems(@RequestParam Integer page) {
         return service.getMasterDepartmentItems(page);
-    }
-
-    @GetMapping("list/transformed")
-    public Page<MasterDepartmentResponse> getMasterDepartmentPageableItems(@RequestParam Integer page) {
-        return service.getMasterDepartmentPageableItems(page);
     }
 }

@@ -35,9 +35,9 @@ public class MasterController {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
     }
 
-    @PatchMapping(path = "{id}")
-    public MasterEntity updateItemById(@PathVariable(value = "id") Integer id, @RequestBody MasterRequest request) {
-        return service.updateItemById(id, request);
+    @PatchMapping(path = "{id}/update")
+    public MasterEntity updateItem(@PathVariable(value = "id") Integer id, @RequestBody MasterRequest request) {
+        return service.updateItem(id, request);
     }
 
     @DeleteMapping(path = "{id}")

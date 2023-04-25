@@ -1,8 +1,8 @@
 package com.usdtl.inventory.masterDepartment.masterExtractions;
 
-import com.usdtl.ims.clients.responseRecord.MasterDepartmentResponse;
+import com.usdtl.ims.clients.response.DepartmentResponse;
+import com.usdtl.ims.clients.response.MasterDepartmentResponse;
 import com.usdtl.ims.common.exceptions.NotFoundException;
-import com.usdtl.inventory.masterDepartment.entities.ExtractionsEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,41 +22,74 @@ public class MasterExtractionsService {
         return masterItem;
     }
 
-    public Page<MasterDepartmentResponse> getMasterDepartmentPageableItems(Integer page) {
-        List<MasterDepartmentResponse> masterDepartmentResponseItems = new ArrayList<>();
-
+    public Page<MasterExtractionsEntity> getMasterDepartmentItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        Long masterDepartmentItemCount = repository.count();
+        return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
+    }
 
-        List<MasterExtractionsEntity> masterExtractionsItems = (List<MasterExtractionsEntity>) repository.findAll(pageRequest);
+    public Page<MasterDepartmentResponse> getMasterDepartmentItemsTransformed(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        List<MasterDepartmentResponse> masterDepartmentItemResponse = new ArrayList<>();
 
-        masterExtractionsItems.forEach(masterDepartmentItem -> {
-            if(!masterDepartmentItem.getExtractionsItems().isEmpty()) {
+        List<MasterExtractionsEntity> masterDepartmentItems = (List<MasterExtractionsEntity>) repository.findAll();
+
+        masterDepartmentItems.forEach(masterDepartmentItem -> {
+            if(!masterDepartmentItem.getDepartmentItems().isEmpty()) {
+                List<DepartmentResponse> departmentItems = new ArrayList<>();
+                masterDepartmentItem.getDepartmentItems().forEach(departmentItem -> {
+                    DepartmentResponse departmentItemResponse = DepartmentResponse.builder()
+                            .id(departmentItem.getId())
+                            .location(departmentItem.getLocation())
+                            .quantity(departmentItem.getQuantity())
+                            .min_quantity(departmentItem.getMin_quantity())
+                            .max_quantity(departmentItem.getMax_quantity())
+                            .lot_number(departmentItem.getLot_number())
+                            .expiration_date((departmentItem.getExpiration_date()))
+                            .received_date((departmentItem.getReceived_date()))
+                            .build();
+                    departmentItems.add(departmentItemResponse);
+                });
                 MasterDepartmentResponse masterDepartmentResponseItem = MasterDepartmentResponse.builder()
-                        .department_item_id(masterDepartmentItem.getId())
-                        .master_item_id(masterDepartmentItem.getId())
-                        .master_item(masterDepartmentItem.getItem())
-                        .purchase_unit(masterDepartmentItem.getPurchase_unit())
+                        .id(masterDepartmentItem.getId())
+                        .item(masterDepartmentItem.getItem())
+                        .manufacturer(masterDepartmentItem.getManufacturer())
                         .part_number(masterDepartmentItem.getPart_number())
                         .recent_cn(masterDepartmentItem.getRecent_cn())
-                        .total_quantity(getTotalQuantity(masterDepartmentItem.getExtractionsItems()))
-                        .location(masterDepartmentItem.getExtractionsItems().get(0).getLocation())
-                        .usage_level(masterDepartmentItem.getExtractionsItems().get(0).getUsage_level())
-                        .min_quantity(masterDepartmentItem.getExtractionsItems().get(0).getMin_quantity())
-                        .max_quantity(masterDepartmentItem.getExtractionsItems().get(0).getMax_quantity())
-                        .order_quantity(getOrderQuantity(masterDepartmentItem.getExtractionsItems().get(0).getMax_quantity(), masterDepartmentItem.getExtractionsItems().get(0).getMin_quantity(), getTotalQuantity(masterDepartmentItem.getExtractionsItems())))
-                        .unit_price(masterDepartmentItem.getAverage_unit_price())
-                        .total_price(masterDepartmentItem.getAverage_unit_price() * getTotalQuantity(masterDepartmentItem.getExtractionsItems()))
-                        .lot_number(masterDepartmentItem.getExtractionsItems().get(0).getLot_number())
+                        .recent_vendor(masterDepartmentItem.getRecent_vendor())
+                        .fisher_cn(masterDepartmentItem.getFisher_cn())
+                        .vwr_cn(masterDepartmentItem.getVwr_cn())
+                        .lab_source_cn(masterDepartmentItem.getLab_source_cn())
+                        .next_advance_cn(masterDepartmentItem.getNext_advance_cn())
+                        .purchase_unit(masterDepartmentItem.getPurchase_unit())
+                        .average_unit_price(masterDepartmentItem.getAverage_unit_price())
                         .category(masterDepartmentItem.getCategory())
                         .comment(masterDepartmentItem.getComment())
-                        .build();
+                        .type(masterDepartmentItem.getType())
+                        .group(masterDepartmentItem.getGroup())
+                        .drug_class(masterDepartmentItem.getDrug_class())
+                        .usage_level(masterDepartmentItem.getUsage_level())
+                        .expiration_date(masterDepartmentItem.getExpiration_date())
+                        .received_date(masterDepartmentItem.getReceived_date())
+                        .departmentItems(departmentItems)
+                        .minimum_quantity(masterDepartmentItem.getMinimum_quantity())
+                        .maximum_quantity(masterDepartmentItem.getMaximum_quantity())
+                        .order_quantity(getOrderQuantity(
+                                masterDepartmentItem.getMaximum_quantity(),
+                                masterDepartmentItem.getMinimum_quantity(),
+                                    getTotalQuantity(departmentItems)
+                                )
 
-                masterDepartmentResponseItems.add(masterDepartmentResponseItem);
+                        )
+                        .total_price(getTotalQuantity(departmentItems) * masterDepartmentItem.getAverage_unit_price())
+                        .total_quantity(getTotalQuantity(departmentItems))
+                        .build();
+                masterDepartmentItemResponse.add(masterDepartmentResponseItem);
             }
         });
 
-        return new PageImpl<>(masterDepartmentResponseItems, pageRequest, masterDepartmentItemCount);
+        List<MasterDepartmentResponse> pagedItems = masterDepartmentItemResponse.subList(page, page + 10);
+
+        return new PageImpl<>(pagedItems, pageRequest, masterDepartmentItemResponse.size());
     }
 
     private Integer getOrderQuantity(Integer max_quantity, Integer min_quantity, Integer quantity) {
@@ -75,25 +108,7 @@ public class MasterExtractionsService {
         return 0;
     }
 
-    private Integer getTotalQuantity(List<ExtractionsEntity> departmentItems) {
-        return departmentItems.stream().mapToInt(ExtractionsEntity::getQuantity).sum();
-    }
-
-    public Page<MasterExtractionsEntity> getMasterDepartmentItems(Integer page) {
-        PageRequest pageRequest = PageRequest.of(page, 10);
-        List<MasterExtractionsEntity> masterDepartmentResponseItems = new ArrayList<>();
-        long masterDepartmentItemCount = repository.count();
-
-        List<MasterExtractionsEntity> masterDepartmentPageableItems = (List<MasterExtractionsEntity>) repository.findAll();
-
-        masterDepartmentPageableItems.forEach(item -> {
-            if(!item.getExtractionsItems().isEmpty()) {
-                masterDepartmentResponseItems.add(item);
-            }
-        });
-
-        List<MasterExtractionsEntity> pagedItems = masterDepartmentResponseItems.subList(page, page + 10);
-
-        return new PageImpl<>(pagedItems, pageRequest, masterDepartmentItemCount);
+    private Integer getTotalQuantity(List<DepartmentResponse> departmentItems) {
+        return departmentItems.stream().mapToInt(DepartmentResponse::quantity).sum();
     }
 }

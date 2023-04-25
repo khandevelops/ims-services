@@ -1,13 +1,13 @@
 package com.usdtl.inventory.masterDepartment.masterRd;
 
+import com.usdtl.ims.clients.response.MasterDepartmentResponse;
 import com.usdtl.ims.common.exceptions.NotFoundException;
+import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -18,5 +18,15 @@ public class MasterRdController {
     @GetMapping(path = "{id}")
     public  ResponseEntity<MasterRdEntity> getMasterRdItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
         return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("list/transformed")
+    public Page<MasterDepartmentResponse> getMasterDepartmentItemsTransformed(@RequestParam Integer page) {
+        return service.getMasterDepartmentItemsTransformed(page);
+    }
+
+    @GetMapping("list")
+    public Page<MasterRdEntity> getMasterDepartmentItems(@RequestParam Integer page) {
+        return service.getMasterDepartmentItems(page);
     }
 }

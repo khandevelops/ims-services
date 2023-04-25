@@ -1,12 +1,13 @@
-package com.usdtl.inventory.masterDepartment.masterExtractions;
+package com.usdtl.ims.clients.response;
 
-import com.usdtl.ims.clients.DepartmentResponse;
 import com.usdtl.ims.common.constants.Category;
-import com.usdtl.inventory.masterDepartment.entities.ExtractionsEntity;
+import lombok.Builder;
 
+import java.util.Date;
 import java.util.List;
 
-public record MasterExtractionsRequest(
+@Builder
+public record MasterDepartmentResponse(
         Integer id,
         String item,
         String manufacturer,
@@ -20,9 +21,20 @@ public record MasterExtractionsRequest(
         String purchase_unit,
         Double average_unit_price,
         Category category,
-        String comments,
+        String comment,
         String type,
         String group,
+        String drug_class,
+        String usage_level,
+        Date expiration_date,
+        Date received_date,
+        Double total_price,
+        Integer total_quantity,
+        Integer order_quantity,
+        Integer minimum_quantity,
+        Integer maximum_quantity,
         List<DepartmentResponse> departmentItems
+
+
 ) {
 }

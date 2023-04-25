@@ -4,6 +4,7 @@ import com.usdtl.inventory.masterDepartment.entities.QualityEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -48,7 +49,19 @@ public class MasterQualityEntity {
     private String type;
     @Column(name = "[group]")
     private String group;
+    @Column(name = "drug_class")
+    private String drug_class;
+    @Column(name = "usage_level")
+    private String usage_level;
+    @Column(name = "minimum_quantity")
+    private Integer minimum_quantity;
+    @Column(name = "maximum_quantity")
+    private Integer maximum_quantity;
+    @Column(name = "expiration_date")
+    private Date expiration_date;
+    @Column(name = "received_date")
+    private Date received_date;
     @OneToMany(mappedBy = "masterItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<QualityEntity> qualityItems;
+    private List<QualityEntity> departmentItems;
 
 }

@@ -31,7 +31,7 @@ public class ExtractionsController  {
     public List<ExtractionsEntity> updateQuantity(@RequestBody List<DepartmentRequest> request) {
         return service.updateQuantity(request);
     }
-    @PatchMapping(path = "{id}")
+    @PatchMapping(path = "/{id}/update")
     public ExtractionsEntity updateItemById(@PathVariable(value = "id") Integer id, @RequestBody DepartmentRequest request) {
         return service.updateItemById(id, request);
     }

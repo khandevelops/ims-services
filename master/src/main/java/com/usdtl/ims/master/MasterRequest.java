@@ -2,12 +2,14 @@ package com.usdtl.ims.master;
 
 import com.usdtl.ims.common.constants.Category;
 
+import java.util.Date;
+
 public record MasterRequest(
         Integer id,
         String item,
         String manufacturer,
-        String part_number,
         String recent_cn,
+        String part_number,
         String recent_vendor,
         String fisher_cn,
         String vwr_cn,
@@ -18,6 +20,11 @@ public record MasterRequest(
         Category category,
         String comment,
         String type,
-        String group
+        String group,
+        Integer minimum_quantity,
+        Integer maximum_quantity,
+        Date expiration_date,
+        Date received_date,
+        String drug_class
 ) {
 }
