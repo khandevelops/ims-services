@@ -1,4 +1,4 @@
-package com.usdtl.ims.master;
+package com.usdtl.ims.users;
 
 import com.usdtl.ims.common.constants.Category;
 

@@ -24,6 +24,7 @@
         <module>request-master</module>
         <module>download</module>
         <module>department</module>
+        <module>users</module>
     </modules>
 
     <properties>

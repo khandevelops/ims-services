@@ -20,6 +20,10 @@ spring:
           uri: lb://DEPARTMENT-MASTER
           predicates:
             - Path=/ims/api/v1/department-master/**
+        - id: users
+          uri: lb://USERS
+          predicates:
+            - Path=/ims/api/v1/users/**
         - id: department
           uri: lb://DEPARTMENT
           predicates:

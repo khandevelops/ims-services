@@ -1,4 +1,4 @@
-package com.usdtl.ims.master;
+package com.usdtl.ims.users;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
