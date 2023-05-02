@@ -23,6 +23,8 @@
     <file url="file://$PROJECT_DIR$/master-department/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/master/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/master/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/profile-details/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/profile-details/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/request-master/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/request-master/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/request/src/main/java" charset="UTF-8" />
@@ -33,7 +35,5 @@
     <file url="file://$PROJECT_DIR$/store-room-master/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/store-room/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/store-room/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/users/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/users/src/main/resources" charset="UTF-8" />
   </component>
 </project>

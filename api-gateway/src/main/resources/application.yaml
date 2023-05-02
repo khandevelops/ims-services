@@ -21,9 +21,9 @@ spring:
           predicates:
             - Path=/ims/api/v1/department-master/**
         - id: users
-          uri: lb://USERS
+          uri: lb://PROFILE-DETAILS
           predicates:
-            - Path=/ims/api/v1/users/**
+            - Path=/ims/api/v1/profile-details/**
         - id: department
           uri: lb://DEPARTMENT
           predicates:
