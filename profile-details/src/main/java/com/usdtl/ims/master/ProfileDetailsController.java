@@ -16,6 +16,13 @@ public class ProfileDetailsController {
         return service.getProfileDetails();
     }
 
+    @GetMapping("sync")
+    public List<ProfileDetailsEntity> syncProfileDetails(@RequestBody List<ProfileDetailsEntity> profileDetailsRequest) {
+        return service.syncProfileDetails(profileDetailsRequest);
+    }
+
+
+
     @GetMapping("{id}")
     public ProfileDetailsEntity getProfileDetail(@PathVariable(value = "id") String id) {
         return service.getProfileDetail(id);
@@ -27,7 +34,7 @@ public class ProfileDetailsController {
     }
 
     @PatchMapping("{id}/update")
-    public ProfileDetailsEntity updateUser(@PathVariable(value = "id") String id, @RequestBody ProfileDetailsEntity userRequest) {
-        return service.updateUser(id, userRequest);
+    public ProfileDetailsEntity updateUser(@PathVariable(value = "id") String id, @RequestBody ProfileDetailsEntity profileDetailsRequest) {
+        return service.updateUser(id, profileDetailsRequest);
     }
 }

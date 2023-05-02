@@ -33,11 +33,32 @@ public class ProfileDetailsService {
         return (List<ProfileDetailsEntity>) repository.findAll();
     }
 
-    public ProfileDetailsEntity updateUser(String id, ProfileDetailsEntity userRequest) {
+    public List<ProfileDetailsEntity> syncProfileDetails(List<ProfileDetailsEntity> profileDetailsRequest) {
+        profileDetailsRequest.forEach(profileDetail -> {
+            boolean profileDetailExist = repository.existsById(profileDetail.getId());
+            if(profileDetailExist) {
+                ProfileDetailsEntity existingProfileDetail = repository.findById(profileDetail.getId()).orElseThrow();
+                existingProfileDetail.setId(profileDetail.getId());
+                repository.save(existingProfileDetail);
+            }
+            if(!profileDetailExist) {
+                ProfileDetailsEntity newUser = ProfileDetailsEntity.builder()
+                        .id(profileDetail.getId())
+                        .department(null)
+                        .role(null)
+                        .permission(null)
+                        .build();
+                repository.save(newUser);
+            }
+        });
+        return (List<ProfileDetailsEntity>) repository.findAll();
+    }
+
+    public ProfileDetailsEntity updateUser(String id, ProfileDetailsEntity profileDetailRequest) {
         ProfileDetailsEntity profileDetails = repository.findById(id).orElseThrow();
-        profileDetails.setDepartment(userRequest.getDepartment() == null ? profileDetails.getDepartment() : userRequest.getDepartment());
-        profileDetails.setRole(userRequest.getRole() == null ? profileDetails.getRole() : userRequest.getRole());
-        profileDetails.setPermission(userRequest.getPermission() == null ? profileDetails.getPermission() : userRequest.getPermission());
+        profileDetails.setDepartment(profileDetailRequest.getDepartment());
+        profileDetails.setRole(profileDetailRequest.getRole());
+        profileDetails.setPermission(profileDetailRequest.getPermission());
         repository.save(profileDetails);
 
         return profileDetails;
