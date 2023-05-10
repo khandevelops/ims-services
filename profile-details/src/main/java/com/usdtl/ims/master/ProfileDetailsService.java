@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,12 +19,12 @@ public class ProfileDetailsService {
         return repository.findById(id).orElseThrow();
     }
 
-    public List<ProfileDetailsEntity> createUsers(List<ProfileDetailsEntity> usersRequest) {
-        usersRequest.forEach(userRequest -> {
-            boolean userExists = repository.existsById(userRequest.getId());
+    public List<ProfileDetailsEntity> createProfileDetail(List<ProfileDetailsEntity> profileDetailRequest) {
+        profileDetailRequest.forEach(profileDetail -> {
+            boolean userExists = repository.existsById(profileDetail.getEmail());
             if(!userExists) {
                 ProfileDetailsEntity newUser = ProfileDetailsEntity.builder()
-                        .id(userRequest.getId())
+                        .email(profileDetail.getEmail())
                         .department(null)
                         .role(null)
                         .build();
@@ -35,26 +36,33 @@ public class ProfileDetailsService {
 
     public List<ProfileDetailsEntity> syncProfileDetails(List<ProfileDetailsEntity> profileDetailsRequest) {
         profileDetailsRequest.forEach(profileDetail -> {
-            boolean profileDetailExist = repository.existsById(profileDetail.getId());
+            boolean profileDetailExist = repository.existsById(profileDetail.getEmail());
             if(profileDetailExist) {
-                ProfileDetailsEntity existingProfileDetail = repository.findById(profileDetail.getId()).orElseThrow();
-                existingProfileDetail.setId(profileDetail.getId());
+                ProfileDetailsEntity existingProfileDetail = repository.findById(profileDetail.getEmail()).orElseThrow();
+                existingProfileDetail.setEmail(profileDetail.getEmail());
                 repository.save(existingProfileDetail);
             }
             if(!profileDetailExist) {
                 ProfileDetailsEntity newUser = ProfileDetailsEntity.builder()
-                        .id(profileDetail.getId())
+                        .email(profileDetail.getEmail())
                         .department(null)
                         .role(null)
                         .permission(null)
                         .build();
                 repository.save(newUser);
             }
+            if(profileDetailExist) {
+                ProfileDetailsEntity profileDetailsEntity = repository.findById(profileDetail.getEmail()).orElseThrow();
+                profileDetailsEntity.setDepartment(profileDetail.getDepartment());
+                profileDetailsEntity.setRole(profileDetail.getRole());
+                profileDetailsEntity.setPermission(profileDetail.getPermission());
+                repository.save(profileDetailsEntity);
+            }
         });
         return (List<ProfileDetailsEntity>) repository.findAll();
     }
 
-    public ProfileDetailsEntity updateUser(String id, ProfileDetailsEntity profileDetailRequest) {
+    public ProfileDetailsEntity updateProfileDetail(String id, ProfileDetailsEntity profileDetailRequest) {
         ProfileDetailsEntity profileDetails = repository.findById(id).orElseThrow();
         profileDetails.setDepartment(profileDetailRequest.getDepartment());
         profileDetails.setRole(profileDetailRequest.getRole());

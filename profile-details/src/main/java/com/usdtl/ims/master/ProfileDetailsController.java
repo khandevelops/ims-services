@@ -16,12 +16,10 @@ public class ProfileDetailsController {
         return service.getProfileDetails();
     }
 
-    @GetMapping("sync")
+    @PostMapping("sync")
     public List<ProfileDetailsEntity> syncProfileDetails(@RequestBody List<ProfileDetailsEntity> profileDetailsRequest) {
         return service.syncProfileDetails(profileDetailsRequest);
     }
-
-
 
     @GetMapping("{id}")
     public ProfileDetailsEntity getProfileDetail(@PathVariable(value = "id") String id) {
@@ -29,12 +27,12 @@ public class ProfileDetailsController {
     }
 
     @PostMapping("create")
-    public List<ProfileDetailsEntity> createUsers(@RequestBody List<ProfileDetailsEntity> usersRequest) {
-        return service.createUsers(usersRequest);
+    public List<ProfileDetailsEntity> createProfileDetail(@RequestBody List<ProfileDetailsEntity> usersRequest) {
+        return service.createProfileDetail(usersRequest);
     }
 
     @PatchMapping("{id}/update")
-    public ProfileDetailsEntity updateUser(@PathVariable(value = "id") String id, @RequestBody ProfileDetailsEntity profileDetailsRequest) {
-        return service.updateUser(id, profileDetailsRequest);
+    public ProfileDetailsEntity updateProfileDetail(@PathVariable(value = "id") String id, @RequestBody ProfileDetailsEntity profileDetailsRequest) {
+        return service.updateProfileDetail(id, profileDetailsRequest);
     }
 }
