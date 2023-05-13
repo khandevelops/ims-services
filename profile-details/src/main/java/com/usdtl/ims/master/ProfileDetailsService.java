@@ -21,10 +21,10 @@ public class ProfileDetailsService {
 
     public List<ProfileDetailsEntity> createProfileDetail(List<ProfileDetailsEntity> profileDetailRequest) {
         profileDetailRequest.forEach(profileDetail -> {
-            boolean userExists = repository.existsById(profileDetail.getEmail());
+            boolean userExists = repository.existsById(profileDetail.getId());
             if(!userExists) {
                 ProfileDetailsEntity newUser = ProfileDetailsEntity.builder()
-                        .email(profileDetail.getEmail())
+                        .id(profileDetail.getId())
                         .department(null)
                         .role(null)
                         .build();
@@ -36,27 +36,15 @@ public class ProfileDetailsService {
 
     public List<ProfileDetailsEntity> syncProfileDetails(List<ProfileDetailsEntity> profileDetailsRequest) {
         profileDetailsRequest.forEach(profileDetail -> {
-            boolean profileDetailExist = repository.existsById(profileDetail.getEmail());
-            if(profileDetailExist) {
-                ProfileDetailsEntity existingProfileDetail = repository.findById(profileDetail.getEmail()).orElseThrow();
-                existingProfileDetail.setEmail(profileDetail.getEmail());
-                repository.save(existingProfileDetail);
-            }
+            boolean profileDetailExist = repository.existsById(profileDetail.getId());
             if(!profileDetailExist) {
                 ProfileDetailsEntity newUser = ProfileDetailsEntity.builder()
-                        .email(profileDetail.getEmail())
+                        .id(profileDetail.getId())
                         .department(null)
                         .role(null)
                         .permission(null)
                         .build();
                 repository.save(newUser);
-            }
-            if(profileDetailExist) {
-                ProfileDetailsEntity profileDetailsEntity = repository.findById(profileDetail.getEmail()).orElseThrow();
-                profileDetailsEntity.setDepartment(profileDetail.getDepartment());
-                profileDetailsEntity.setRole(profileDetail.getRole());
-                profileDetailsEntity.setPermission(profileDetail.getPermission());
-                repository.save(profileDetailsEntity);
             }
         });
         return (List<ProfileDetailsEntity>) repository.findAll();

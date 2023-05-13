@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("extractions")
+@RequestMapping("rd")
 public class RdController {
     private RdService service;
 

@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("extractions")
+@RequestMapping("screening")
 public class ScreeningController {
     private ScreeningService service;
 
