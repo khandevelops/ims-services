@@ -16,8 +16,8 @@ import javax.persistence.*;
 @ToString
 public class ProfileDetailsEntity {
     @Id
-    @Column(name="email")
-    private String email;
+    @Column(name="id")
+    private String id;
     @Column(name = "department")
     private Department department;
     @Column(name = "role")
