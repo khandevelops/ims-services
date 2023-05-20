@@ -52,27 +52,32 @@ public class MasterService {
                 if(departmentName == Department.MASS_SPEC) {
                     MassSpecEntity massSpecItem = new MassSpecEntity();
                     massSpecItem.setMasterItem(newMasterItem);
-
+                    massSpecRepository.save(massSpecItem);
                 }
                 if(departmentName == Department.RECEIVING) {
                     ReceivingEntity receivingItem = new ReceivingEntity();
                     receivingItem.setMasterItem(newMasterItem);
+                    receivingRepository.save(receivingItem);
                 }
                 if(departmentName == Department.RD) {
                     RdEntity rdItem = new RdEntity();
                     rdItem.setMasterItem(newMasterItem);
+                    rdRepository.save(rdItem);
                 }
                 if(departmentName == Department.SCREENING) {
                     ScreeningEntity screeningItem = new ScreeningEntity();
                     screeningItem.setMasterItem(newMasterItem);
+                    screeningRepository.save(screeningItem);
                 }
                 if(departmentName == Department.SHIPPING) {
                     ShippingEntity shippingItem = new ShippingEntity();
                     shippingItem.setMasterItem(newMasterItem);
+                    shippingRepository.save(shippingItem);
                 }
                 if(departmentName == Department.QUALITY) {
                     QualityEntity qualityItem = new QualityEntity();
                     qualityItem.setMasterItem(newMasterItem);
+                    qualityRepository.save(qualityItem);
                 }
             });
 
@@ -86,6 +91,44 @@ public class MasterService {
 
 
     };
+
+    public void assignItem(Department departmentName, MasterEntity masterItem) {
+        if(departmentName == Department.EXTRACTIONS) {
+            ExtractionsEntity extractionsItem = new ExtractionsEntity();
+            extractionsItem.setMasterItem(masterItem);
+            extractionsRepository.save(extractionsItem);
+        }
+        if(departmentName == Department.MASS_SPEC) {
+            MassSpecEntity massSpecItem = new MassSpecEntity();
+            massSpecItem.setMasterItem(masterItem);
+            massSpecRepository.save(massSpecItem);
+        }
+        if(departmentName == Department.RECEIVING) {
+            ReceivingEntity receivingItem = new ReceivingEntity();
+            receivingItem.setMasterItem(masterItem);
+            receivingRepository.save(receivingItem);
+        }
+        if(departmentName == Department.RD) {
+            RdEntity rdItem = new RdEntity();
+            rdItem.setMasterItem(masterItem);
+            rdRepository.save(rdItem);
+        }
+        if(departmentName == Department.SCREENING) {
+            ScreeningEntity screeningItem = new ScreeningEntity();
+            screeningItem.setMasterItem(masterItem);
+            screeningRepository.save(screeningItem);
+        }
+        if(departmentName == Department.SHIPPING) {
+            ShippingEntity shippingItem = new ShippingEntity();
+            shippingItem.setMasterItem(masterItem);
+            shippingRepository.save(shippingItem);
+        }
+        if(departmentName == Department.QUALITY) {
+            QualityEntity qualityItem = new QualityEntity();
+            qualityItem.setMasterItem(masterItem);
+            qualityRepository.save(qualityItem);
+        }
+    }
 
     public MasterEntity updateItem(Integer id, MasterRequest request) {
         MasterEntity masterItem = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
