@@ -1,15 +1,8 @@
 server:
-  port: 8443
+  port: 8000
   ssl:
-    key-store: classpath:ims_keystore.jks
-    key-store-password: Y91permhjwb%
-    key-store-type: JKS
-    key-alias: ims.usdtl.services
-    key-password: Y91permhjwb%
-    enabled: true
+    enabled: false
 spring:
-  profiles:
-    active: local
   main:
     web-application-type: reactive
   application:
@@ -18,9 +11,6 @@ spring:
     base-url: http://localhost:9411
   cloud:
     gateway:
-      httpclient:
-        ssl:
-          useInsecureTrustManager: true
       globalcors:
         cors-configurations:
           '[/**]':
@@ -51,7 +41,7 @@ spring:
         - id: store-room
           uri: lb://STORE-ROOM
           predicates:
-              - Path=/ims/api/v1/store-room/**
+            - Path=/ims/api/v1/store-room/**
         - id: departments
           uri: lb://DEPARTMENTS
           predicates:
