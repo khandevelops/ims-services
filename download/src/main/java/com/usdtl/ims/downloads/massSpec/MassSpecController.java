@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("extractions")
+@RequestMapping("mass-spec")
 public class MassSpecController {
     private MassSpecService service;
 
@@ -36,11 +36,5 @@ public class MassSpecController {
         DownloadDepartmentItems downloadDepartmentItems = new DownloadDepartmentItems(departmentDownloadResponseItems);
 
         downloadDepartmentItems.export(response);
-    }
-
-    @GetMapping("list/test")
-    public List<DepartmentDownloadResponse> test() {
-        log.info("List extractions master transformed items");
-        return service.getDepartmentTransformedItems();
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("extractions")
+@RequestMapping("receiving")
 public class ReceivingController {
     private ReceivingService service;
 

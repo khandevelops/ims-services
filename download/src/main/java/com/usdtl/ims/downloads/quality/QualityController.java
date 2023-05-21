@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("extractions")
+@RequestMapping("quality")
 public class QualityController {
     private QualityService service;
 
