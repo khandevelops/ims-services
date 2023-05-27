@@ -1,6 +1,8 @@
 package com.usdtl.ims.master;
 
+import com.usdtl.ims.common.constants.Department;
 import com.usdtl.ims.common.exceptions.NotFoundException;
+import com.usdtl.ims.master.requests.AssignRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -33,6 +35,11 @@ public class MasterController {
     @PostMapping("create")
     public ResponseEntity<MasterEntity> createItem(@RequestBody MasterRequest request) {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
+    }
+
+    @PostMapping("assign")
+    public ResponseEntity<MasterEntity> assignItem(@RequestBody AssignRequest assignRequest) {
+        return new ResponseEntity<>(service.assignItem(assignRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "{id}/update")
