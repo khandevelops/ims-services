@@ -75,8 +75,8 @@ public class RdService {
 
     }
 
-    public Page<RdEntity> getItemsByPage(Integer page, Integer size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+    public Page<RdEntity> getItemsByPage(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAll(pageRequest);
     }
 

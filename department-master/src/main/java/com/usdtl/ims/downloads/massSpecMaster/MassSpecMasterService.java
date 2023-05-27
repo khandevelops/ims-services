@@ -128,6 +128,6 @@ public class MassSpecMasterService {
 
     private Integer getTotalQuantity(Integer id) {
         MasterDepartmentResponse response = client.getMasterMassSpecItemById(id);
-        return response.massSpecItems().stream().mapToInt(DepartmentResponse::quantity).sum();
+        return response.departmentItems().stream().mapToInt(DepartmentResponse::quantity).sum();
     }
 }

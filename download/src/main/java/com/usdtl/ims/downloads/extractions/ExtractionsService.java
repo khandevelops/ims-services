@@ -46,6 +46,6 @@ public class ExtractionsService {
 
     private Long getTotalQuantity(Integer id) {
         MasterDepartmentResponse response = client.getMasterExtractionsItemById(id);
-        return (long) response.extractionsItems().stream().mapToInt(DepartmentResponse::quantity).sum();
+        return (long) response.departmentItems().stream().mapToInt(DepartmentResponse::quantity).sum();
     }
 }

@@ -16,8 +16,8 @@ import java.util.List;
 public class ScreeningController {
     private ScreeningService service;
     @GetMapping("list")
-    public Page<ScreeningEntity> getItemsByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return service.getItemsByPage(page, size);
+    public Page<ScreeningEntity> getItemsByPage(@RequestParam Integer page) {
+        return service.getItemsByPage(page);
     }
     @GetMapping(path = "{id}")
     public ResponseEntity<ScreeningEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {

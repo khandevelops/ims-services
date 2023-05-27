@@ -128,6 +128,6 @@ public class ScreeningMasterService {
 
     private Integer getTotalQuantity(Integer id) {
         MasterDepartmentResponse response = client.getMasterScreeningItemById(id);
-        return response.screeningItems().stream().mapToInt(DepartmentResponse::quantity).sum();
+        return response.departmentItems().stream().mapToInt(DepartmentResponse::quantity).sum();
     }
 }

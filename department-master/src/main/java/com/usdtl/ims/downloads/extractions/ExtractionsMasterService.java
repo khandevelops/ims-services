@@ -110,7 +110,7 @@ public class ExtractionsMasterService {
 
     private Integer getTotalQuantity(Integer id) {
         MasterDepartmentResponse response = client.getMasterExtractionsItemById(id);
-        return response.extractionsItems().stream().mapToInt(DepartmentResponse::quantity).sum();
+        return response.departmentItems().stream().mapToInt(DepartmentResponse::quantity).sum();
     }
 
     public List<DepartmentMasterResponse> getScheduledEmailItems() {

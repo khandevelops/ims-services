@@ -128,6 +128,6 @@ public class RdMasterService {
 
     private Integer getTotalQuantity(Integer id) {
         MasterDepartmentResponse response = client.getMasterRdItemById(id);
-        return response.rdItems().stream().mapToInt(DepartmentResponse::quantity).sum();
+        return response.departmentItems().stream().mapToInt(DepartmentResponse::quantity).sum();
     }
 }

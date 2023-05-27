@@ -16,8 +16,8 @@ import java.util.List;
 public class QualityController {
     private QualityService service;
     @GetMapping("list")
-    public Page<QualityEntity> getItemsByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return service.getItemsByPage(page, size);
+    public Page<QualityEntity> getItemsByPage(@RequestParam Integer page) {
+        return service.getItemsByPage(page);
     }
     @GetMapping(path = "{id}")
     public ResponseEntity<QualityEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {

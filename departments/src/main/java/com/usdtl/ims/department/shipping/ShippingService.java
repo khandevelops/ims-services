@@ -75,8 +75,8 @@ public class ShippingService {
 
     }
 
-    public Page<ShippingEntity> getItemsByPage(Integer page, Integer size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+    public Page<ShippingEntity> getItemsByPage(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAll(pageRequest);
     }
 

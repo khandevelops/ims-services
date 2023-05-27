@@ -16,8 +16,8 @@ import java.util.List;
 public class ShippingController {
     private ShippingService service;
     @GetMapping("list")
-    public Page<ShippingEntity> getItemsByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return service.getItemsByPage(page, size);
+    public Page<ShippingEntity> getItemsByPage(@RequestParam Integer page) {
+        return service.getItemsByPage(page);
     }
     @GetMapping(path = "{id}")
     public ResponseEntity<ShippingEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
