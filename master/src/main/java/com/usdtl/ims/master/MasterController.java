@@ -30,7 +30,7 @@ public class MasterController {
         return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<MasterEntity> createItem(@RequestBody MasterRequest request) {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
     }

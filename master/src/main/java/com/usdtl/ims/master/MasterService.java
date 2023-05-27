@@ -84,12 +84,7 @@ public class MasterService {
 
         }
 
-        repository.save(newMasterItem);
         return newMasterItem;
-
-
-
-
     };
 
     public void assignItem(Department departmentName, MasterEntity masterItem) {
