@@ -8,8 +8,6 @@ server:
     key-password: Y91permhjwb%
     enabled: true
 spring:
-  profiles:
-    active: local
   main:
     web-application-type: reactive
   application:
