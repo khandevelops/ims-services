@@ -20,12 +20,6 @@ public record MasterDepartmentResponse(
         String comment,
         String type,
         String group,
-        List<DepartmentResponse> extractionsItems,
-        List<DepartmentResponse> massSpecItems,
-        List<DepartmentResponse> qualityItems,
-        List<DepartmentResponse> rdItems,
-        List<DepartmentResponse> receivingItems,
-        List<DepartmentResponse> screeningItems,
-        List<DepartmentResponse> shippingItems
+        List<DepartmentResponse> departmentItems
 ) {
 }

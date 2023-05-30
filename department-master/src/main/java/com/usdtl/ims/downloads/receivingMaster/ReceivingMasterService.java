@@ -128,6 +128,6 @@ public class ReceivingMasterService {
 
     private Integer getTotalQuantity(Integer id) {
         MasterDepartmentResponse response = client.getMasterReceivingItemById(id);
-        return response.receivingItems().stream().mapToInt(DepartmentResponse::quantity).sum();
+        return response.departmentItems().stream().mapToInt(DepartmentResponse::quantity).sum();
     }
 }

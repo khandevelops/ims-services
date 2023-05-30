@@ -4,6 +4,7 @@ import com.usdtl.ims.common.constants.Department;
 import com.usdtl.ims.common.exceptions.NotFoundException;
 import com.usdtl.ims.master.entities.*;
 import com.usdtl.ims.master.repositories.*;
+import com.usdtl.ims.master.requests.AssignRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -87,7 +88,11 @@ public class MasterService {
         return newMasterItem;
     };
 
-    public void assignItem(Department departmentName, MasterEntity masterItem) {
+    public MasterEntity assignItem(AssignRequest assignRequest) {
+        Integer masterItemId = assignRequest.masterItemId();
+        Department departmentName = assignRequest.department();
+
+        MasterEntity masterItem = repository.findById(masterItemId).orElseThrow();
         if(departmentName == Department.EXTRACTIONS) {
             ExtractionsEntity extractionsItem = new ExtractionsEntity();
             extractionsItem.setMasterItem(masterItem);
@@ -123,6 +128,7 @@ public class MasterService {
             qualityItem.setMasterItem(masterItem);
             qualityRepository.save(qualityItem);
         }
+        return masterItem;
     }
 
     public MasterEntity updateItem(Integer id, MasterRequest request) {

@@ -2,6 +2,8 @@ package com.usdtl.ims.department.extractions;
 
 import com.usdtl.ims.common.exceptions.NotFoundException;
 import com.usdtl.ims.department.department.DepartmentRequest;
+import com.usdtl.ims.department.master.MasterEntity;
+import com.usdtl.ims.department.master.MasterRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ExtractionsService {
     private ExtractionsRepository repository;
+    private MasterRepository masterRepository;
     public ExtractionsEntity createItem(DepartmentRequest request) {
         ExtractionsEntity newItem = ExtractionsEntity.builder()
                 .location(request.location())
@@ -75,8 +78,8 @@ public class ExtractionsService {
 
     }
 
-    public Page<ExtractionsEntity> getItemsByPage(Integer page, Integer size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+    public Page<ExtractionsEntity> getItemsByPage(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAll(pageRequest);
     }
 

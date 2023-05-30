@@ -16,8 +16,8 @@ import java.util.List;
 public class RdController {
     private RdService service;
     @GetMapping("list")
-    public Page<RdEntity> getItemsByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return service.getItemsByPage(page, size);
+    public Page<RdEntity> getItemsByPage(@RequestParam Integer page) {
+        return service.getItemsByPage(page);
     }
     @GetMapping(path = "{id}")
     public ResponseEntity<RdEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {

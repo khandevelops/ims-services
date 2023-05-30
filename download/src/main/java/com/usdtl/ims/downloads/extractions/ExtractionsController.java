@@ -20,7 +20,7 @@ import java.util.List;
 public class ExtractionsController {
     private ExtractionsService service;
 
-    @GetMapping("list/download")
+    @GetMapping("list")
     public void getDepartmentTransformedItems(HttpServletResponse response) throws IOException {
         log.info("List extractions master transformed items");
         response.setContentType("application/octet-stream");

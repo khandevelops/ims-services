@@ -16,8 +16,8 @@ import java.util.List;
 public class MassSpecController  {
     private MassSpecService service;
     @GetMapping("list")
-    public Page<MassSpecEntity> getItemsByPage(@RequestParam Integer page, @RequestParam Integer size) {
-        return service.getItemsByPage(page, size);
+    public Page<MassSpecEntity> getItemsByPage(@RequestParam Integer page) {
+        return service.getItemsByPage(page);
     }
     @GetMapping(path = "{id}")
     public ResponseEntity<MassSpecEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
