@@ -1,6 +1,5 @@
 package com.usdtl.inventory.masterDepartment.masterShipping;
 
-import com.usdtl.inventory.masterDepartment.masterReceiving.MasterReceivingEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;

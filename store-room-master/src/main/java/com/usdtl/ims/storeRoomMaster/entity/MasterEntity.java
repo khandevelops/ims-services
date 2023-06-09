@@ -36,11 +36,11 @@ public class MasterEntity {
     private String vwr_cn;
     @Column(name = "lab_source_cn")
     private String lab_source_cn;
-    @Column(name = "next_advance_cn")
+    @Column(name = "other_cn")
     private String next_advance_cn;
     @Column(name = "purchase_unit")
     private String purchase_unit;
-    @Column(name = "average_unit_price")
+    @Column(name = "unit_price")
     private Double average_unit_price;
     @Column(name = "category")
     private Category category;
@@ -50,6 +50,14 @@ public class MasterEntity {
     private String type;
     @Column(name = "[group]")
     private String group;
+    @Column(name = "drug_class")
+    private String drug_class;
+    @Column(name = "usage_level")
+    private String usage_level;
+    @Column(name = "minimum_quantity")
+    private Integer minimum_quantity;
+    @Column(name = "maximum_quantity")
+    private Integer maximum_quantity;
     @OneToMany(mappedBy = "masterItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<StoreRoomMasterEntity> storeRoomMasterItem;

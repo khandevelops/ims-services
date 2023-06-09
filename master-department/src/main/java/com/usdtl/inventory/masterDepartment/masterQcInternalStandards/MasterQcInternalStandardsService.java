@@ -1,10 +1,8 @@
-package com.usdtl.inventory.masterDepartment.masterShipping;
+package com.usdtl.inventory.masterDepartment.masterQcInternalStandards;
 
 import com.usdtl.ims.clients.response.DepartmentResponse;
 import com.usdtl.ims.clients.response.MasterDepartmentResponse;
 import com.usdtl.ims.common.exceptions.NotFoundException;
-import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity;
-import com.usdtl.inventory.masterDepartment.masterScreening.MasterScreeningEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,15 +14,15 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class MasterShippingService {
-    private MasterShippingRepository repository;
+public class MasterQcInternalStandardsService {
+    private MasterQcInternalStandardsRepository repository;
 
-    public MasterShippingEntity getItemById(Integer id) throws NotFoundException {
-        MasterShippingEntity masterItem = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
+    public MasterQcInternalStandardsEntity getItemById(Integer id) throws NotFoundException {
+        MasterQcInternalStandardsEntity masterItem = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
         return masterItem;
     }
 
-    public Page<MasterShippingEntity> getMasterDepartmentItems(Integer page) {
+    public Page<MasterQcInternalStandardsEntity> getMasterDepartmentItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
@@ -33,7 +31,7 @@ public class MasterShippingService {
         PageRequest pageRequest = PageRequest.of(page, 10);
         List<MasterDepartmentResponse> masterDepartmentItemResponse = new ArrayList<>();
 
-        List<MasterShippingEntity> masterDepartmentItems = (List<MasterShippingEntity>) repository.findAll();
+        List<MasterQcInternalStandardsEntity> masterDepartmentItems = (List<MasterQcInternalStandardsEntity>) repository.findAll();
 
         masterDepartmentItems.forEach(masterDepartmentItem -> {
             if(!masterDepartmentItem.getDepartmentItems().isEmpty()) {
@@ -59,7 +57,7 @@ public class MasterShippingService {
                         .fisher_cn(masterDepartmentItem.getFisher_cn())
                         .vwr_cn(masterDepartmentItem.getVwr_cn())
                         .lab_source_cn(masterDepartmentItem.getLab_source_cn())
-                        .next_advance_cn(masterDepartmentItem.getOther_cn())
+                        .next_advance_cn(masterDepartmentItem.getNext_advance_cn())
                         .purchase_unit(masterDepartmentItem.getPurchase_unit())
                         .average_unit_price(masterDepartmentItem.getUnit_price())
                         .category(masterDepartmentItem.getCategory())

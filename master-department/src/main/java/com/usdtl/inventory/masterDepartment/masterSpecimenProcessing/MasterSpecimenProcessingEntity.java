@@ -1,11 +1,10 @@
-package com.usdtl.inventory.masterDepartment.masterReceiving;
+package com.usdtl.inventory.masterDepartment.masterSpecimenProcessing;
 
 import com.usdtl.ims.common.constants.Category;
-import com.usdtl.inventory.masterDepartment.entities.ReceivingEntity;
+import com.usdtl.inventory.masterDepartment.entities.SpecimenProcessingEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @ToString
-public class MasterReceivingEntity {
+public class MasterSpecimenProcessingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -36,12 +35,12 @@ public class MasterReceivingEntity {
     private String vwr_cn;
     @Column(name = "lab_source_cn")
     private String lab_source_cn;
-    @Column(name = "next_advance_cn")
-    private String next_advance_cn;
+    @Column(name = "other_cn")
+    private String other_cn;
     @Column(name = "purchase_unit")
     private String purchase_unit;
-    @Column(name = "average_unit_price")
-    private Double average_unit_price;
+    @Column(name = "unit_price")
+    private Double unit_price;
     @Column(name = "category")
     private Category category;
     @Column(name = "comment")
@@ -58,10 +57,6 @@ public class MasterReceivingEntity {
     private Integer minimum_quantity;
     @Column(name = "maximum_quantity")
     private Integer maximum_quantity;
-    @Column(name = "expiration_date")
-    private Date expiration_date;
-    @Column(name = "received_date")
-    private Date received_date;
     @OneToMany(mappedBy = "masterItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ReceivingEntity> departmentItems;
+    private List<SpecimenProcessingEntity> departmentItems;
 }

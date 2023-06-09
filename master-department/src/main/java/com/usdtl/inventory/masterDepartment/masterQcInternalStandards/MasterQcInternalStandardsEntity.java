@@ -1,11 +1,9 @@
-package com.usdtl.inventory.masterDepartment.masterShipping;
+package com.usdtl.inventory.masterDepartment.masterQcInternalStandards;
 import com.usdtl.ims.common.constants.Category;
-import com.usdtl.inventory.masterDepartment.entities.ExtractionsEntity;
 import com.usdtl.inventory.masterDepartment.entities.ShippingEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @ToString
-public class MasterShippingEntity {
+public class MasterQcInternalStandardsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -37,7 +35,7 @@ public class MasterShippingEntity {
     @Column(name = "lab_source_cn")
     private String lab_source_cn;
     @Column(name = "other_cn")
-    private String other_cn;
+    private String next_advance_cn;
     @Column(name = "purchase_unit")
     private String purchase_unit;
     @Column(name = "unit_price")

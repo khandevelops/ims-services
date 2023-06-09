@@ -3,8 +3,6 @@ package com.usdtl.inventory.masterDepartment.masterScreening;
 import com.usdtl.ims.clients.response.DepartmentResponse;
 import com.usdtl.ims.clients.response.MasterDepartmentResponse;
 import com.usdtl.ims.common.exceptions.NotFoundException;
-import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity;
-import com.usdtl.inventory.masterDepartment.masterReceiving.MasterReceivingEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -43,8 +41,6 @@ public class MasterScreeningService {
                             .id(departmentItem.getId())
                             .location(departmentItem.getLocation())
                             .quantity(departmentItem.getQuantity())
-                            .min_quantity(departmentItem.getMin_quantity())
-                            .max_quantity(departmentItem.getMax_quantity())
                             .lot_number(departmentItem.getLot_number())
                             .expiration_date((departmentItem.getExpiration_date()))
                             .received_date((departmentItem.getReceived_date()))
@@ -61,17 +57,15 @@ public class MasterScreeningService {
                         .fisher_cn(masterDepartmentItem.getFisher_cn())
                         .vwr_cn(masterDepartmentItem.getVwr_cn())
                         .lab_source_cn(masterDepartmentItem.getLab_source_cn())
-                        .next_advance_cn(masterDepartmentItem.getNext_advance_cn())
+                        .next_advance_cn(masterDepartmentItem.getOther_cn())
                         .purchase_unit(masterDepartmentItem.getPurchase_unit())
-                        .average_unit_price(masterDepartmentItem.getAverage_unit_price())
+                        .average_unit_price(masterDepartmentItem.getUnit_price())
                         .category(masterDepartmentItem.getCategory())
                         .comment(masterDepartmentItem.getComment())
                         .type(masterDepartmentItem.getType())
                         .group(masterDepartmentItem.getGroup())
                         .drug_class(masterDepartmentItem.getDrug_class())
                         .usage_level(masterDepartmentItem.getUsage_level())
-                        .expiration_date(masterDepartmentItem.getExpiration_date())
-                        .received_date(masterDepartmentItem.getReceived_date())
                         .departmentItems(departmentItems)
                         .minimum_quantity(masterDepartmentItem.getMinimum_quantity())
                         .maximum_quantity(masterDepartmentItem.getMaximum_quantity())
@@ -82,7 +76,7 @@ public class MasterScreeningService {
                                 )
 
                         )
-                        .total_price(getTotalQuantity(departmentItems) * masterDepartmentItem.getAverage_unit_price())
+                        .total_price(getTotalQuantity(departmentItems) * masterDepartmentItem.getUnit_price())
                         .total_quantity(getTotalQuantity(departmentItems))
                         .build();
                 masterDepartmentItemResponse.add(masterDepartmentResponseItem);

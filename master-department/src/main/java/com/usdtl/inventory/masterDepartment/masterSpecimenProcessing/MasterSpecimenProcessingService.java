@@ -1,10 +1,8 @@
-package com.usdtl.inventory.masterDepartment.masterReceiving;
+package com.usdtl.inventory.masterDepartment.masterSpecimenProcessing;
 
 import com.usdtl.ims.clients.response.DepartmentResponse;
 import com.usdtl.ims.clients.response.MasterDepartmentResponse;
 import com.usdtl.ims.common.exceptions.NotFoundException;
-import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity;
-import com.usdtl.inventory.masterDepartment.masterRd.MasterRdEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,15 +14,15 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class MasterReceivingService {
-    private MasterReceivingRepository repository;
+public class MasterSpecimenProcessingService {
+    private MasterSpecimenProcessingRepository repository;
 
-    public MasterReceivingEntity getItemById(Integer id) throws NotFoundException {
-        MasterReceivingEntity masterItem = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
+    public MasterSpecimenProcessingEntity getItemById(Integer id) throws NotFoundException {
+        MasterSpecimenProcessingEntity masterItem = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
         return masterItem;
     }
 
-    public Page<MasterReceivingEntity> getMasterDepartmentItems(Integer page) {
+    public Page<MasterSpecimenProcessingEntity> getMasterDepartmentItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
@@ -33,7 +31,7 @@ public class MasterReceivingService {
         PageRequest pageRequest = PageRequest.of(page, 10);
         List<MasterDepartmentResponse> masterDepartmentItemResponse = new ArrayList<>();
 
-        List<MasterReceivingEntity> masterDepartmentItems = (List<MasterReceivingEntity>) repository.findAll();
+        List<MasterSpecimenProcessingEntity> masterDepartmentItems = (List<MasterSpecimenProcessingEntity>) repository.findAll();
 
         masterDepartmentItems.forEach(masterDepartmentItem -> {
             if(!masterDepartmentItem.getDepartmentItems().isEmpty()) {
@@ -43,8 +41,6 @@ public class MasterReceivingService {
                             .id(departmentItem.getId())
                             .location(departmentItem.getLocation())
                             .quantity(departmentItem.getQuantity())
-                            .min_quantity(departmentItem.getMin_quantity())
-                            .max_quantity(departmentItem.getMax_quantity())
                             .lot_number(departmentItem.getLot_number())
                             .expiration_date((departmentItem.getExpiration_date()))
                             .received_date((departmentItem.getReceived_date()))
@@ -61,17 +57,15 @@ public class MasterReceivingService {
                         .fisher_cn(masterDepartmentItem.getFisher_cn())
                         .vwr_cn(masterDepartmentItem.getVwr_cn())
                         .lab_source_cn(masterDepartmentItem.getLab_source_cn())
-                        .next_advance_cn(masterDepartmentItem.getNext_advance_cn())
+                        .next_advance_cn(masterDepartmentItem.getOther_cn())
                         .purchase_unit(masterDepartmentItem.getPurchase_unit())
-                        .average_unit_price(masterDepartmentItem.getAverage_unit_price())
+                        .average_unit_price(masterDepartmentItem.getUnit_price())
                         .category(masterDepartmentItem.getCategory())
                         .comment(masterDepartmentItem.getComment())
                         .type(masterDepartmentItem.getType())
                         .group(masterDepartmentItem.getGroup())
                         .drug_class(masterDepartmentItem.getDrug_class())
                         .usage_level(masterDepartmentItem.getUsage_level())
-                        .expiration_date(masterDepartmentItem.getExpiration_date())
-                        .received_date(masterDepartmentItem.getReceived_date())
                         .departmentItems(departmentItems)
                         .minimum_quantity(masterDepartmentItem.getMinimum_quantity())
                         .maximum_quantity(masterDepartmentItem.getMaximum_quantity())
@@ -82,7 +76,7 @@ public class MasterReceivingService {
                                 )
 
                         )
-                        .total_price(getTotalQuantity(departmentItems) * masterDepartmentItem.getAverage_unit_price())
+                        .total_price(getTotalQuantity(departmentItems) * masterDepartmentItem.getUnit_price())
                         .total_quantity(getTotalQuantity(departmentItems))
                         .build();
                 masterDepartmentItemResponse.add(masterDepartmentResponseItem);

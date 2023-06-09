@@ -2,7 +2,6 @@ package com.usdtl.inventory.masterDepartment.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity;
-import com.usdtl.inventory.masterDepartment.masterRd.MasterRdEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,12 +9,12 @@ import java.util.Date;
 
 @Entity
 @Builder
-@Table(name = "rd")
+@Table(name = "specimen_processing")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class RdEntity {
+public class SpecimenProcessingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

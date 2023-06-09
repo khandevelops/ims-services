@@ -36,12 +36,12 @@ public class MasterScreeningEntity {
     private String vwr_cn;
     @Column(name = "lab_source_cn")
     private String lab_source_cn;
-    @Column(name = "next_advance_cn")
-    private String next_advance_cn;
+    @Column(name = "other_cn")
+    private String other_cn;
     @Column(name = "purchase_unit")
     private String purchase_unit;
-    @Column(name = "average_unit_price")
-    private Double average_unit_price;
+    @Column(name = "unit_price")
+    private Double unit_price;
     @Column(name = "category")
     private Category category;
     @Column(name = "comment")
@@ -58,10 +58,6 @@ public class MasterScreeningEntity {
     private Integer minimum_quantity;
     @Column(name = "maximum_quantity")
     private Integer maximum_quantity;
-    @Column(name = "expiration_date")
-    private Date expiration_date;
-    @Column(name = "received_date")
-    private Date received_date;
     @OneToMany(mappedBy = "masterItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ScreeningEntity> departmentItems;
 }

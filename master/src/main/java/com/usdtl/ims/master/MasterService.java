@@ -148,8 +148,6 @@ public class MasterService {
         masterItem.setComment(request.masterItem().getComment());
         masterItem.setType(request.masterItem().getType());
         masterItem.setGroup(request.masterItem().getGroup());
-        masterItem.setExpiration_date(request.masterItem().getExpiration_date());
-        masterItem.setReceived_date(request.masterItem().getReceived_date());
 
         repository.save(masterItem);
 
