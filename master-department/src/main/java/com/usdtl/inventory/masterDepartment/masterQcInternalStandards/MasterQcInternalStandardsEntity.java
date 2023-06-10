@@ -1,5 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterQcInternalStandards;
 import com.usdtl.ims.common.constants.Category;
+import com.usdtl.inventory.masterDepartment.entities.QcInternalStandardsEntity;
 import com.usdtl.inventory.masterDepartment.entities.ShippingEntity;
 import lombok.*;
 
@@ -50,12 +51,6 @@ public class MasterQcInternalStandardsEntity {
     private String group;
     @Column(name = "drug_class")
     private String drug_class;
-    @Column(name = "usage_level")
-    private String usage_level;
-    @Column(name = "minimum_quantity")
-    private Integer minimum_quantity;
-    @Column(name = "maximum_quantity")
-    private Integer maximum_quantity;
     @OneToMany(mappedBy = "masterItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ShippingEntity> departmentItems;
+    private List<QcInternalStandardsEntity> departmentItems;
 }

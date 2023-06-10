@@ -10,5 +10,6 @@ public enum Category {
     LDTD,
     SCIEX,
     BREAK_ROOM,
-    OFFICE_SUPPLY
+    OFFICE_SUPPLY,
+    REAGENT
 }

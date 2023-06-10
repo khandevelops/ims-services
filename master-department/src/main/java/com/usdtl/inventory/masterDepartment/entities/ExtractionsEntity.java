@@ -28,6 +28,12 @@ public class ExtractionsEntity {
     private Date expiration_date;
     @Column(name = "received_date")
     private Date received_date;
+    @Column(name = "usage_level")
+    private String usage_level;
+    @Column(name = "minimum_quantity")
+    private Integer minimum_quantity;
+    @Column(name = "maximum_quantity")
+    private Integer maximum_quantity;
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "item_id")
     @JsonIgnore

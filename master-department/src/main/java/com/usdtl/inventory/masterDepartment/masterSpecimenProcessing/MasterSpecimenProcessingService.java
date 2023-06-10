@@ -65,17 +65,7 @@ public class MasterSpecimenProcessingService {
                         .type(masterDepartmentItem.getType())
                         .group(masterDepartmentItem.getGroup())
                         .drug_class(masterDepartmentItem.getDrug_class())
-                        .usage_level(masterDepartmentItem.getUsage_level())
                         .departmentItems(departmentItems)
-                        .minimum_quantity(masterDepartmentItem.getMinimum_quantity())
-                        .maximum_quantity(masterDepartmentItem.getMaximum_quantity())
-                        .order_quantity(getOrderQuantity(
-                                        masterDepartmentItem.getMaximum_quantity(),
-                                        masterDepartmentItem.getMinimum_quantity(),
-                                        getTotalQuantity(departmentItems)
-                                )
-
-                        )
                         .total_price(getTotalQuantity(departmentItems) * masterDepartmentItem.getUnit_price())
                         .total_quantity(getTotalQuantity(departmentItems))
                         .build();

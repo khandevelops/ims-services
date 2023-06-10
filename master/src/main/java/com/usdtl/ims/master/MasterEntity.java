@@ -50,10 +50,4 @@ public class MasterEntity {
     private String group;
     @Column(name = "drug_class")
     private String drug_class;
-    @Column(name = "usage_level")
-    private String usage_level;
-    @Column(name = "minimum_quantity")
-    private Integer minimum_quantity;
-    @Column(name = "maximum_quantity")
-    private Integer maximum_quantity;
 }

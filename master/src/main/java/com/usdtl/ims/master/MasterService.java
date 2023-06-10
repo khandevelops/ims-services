@@ -55,7 +55,7 @@ public class MasterService {
                     massSpecItem.setMasterItem(newMasterItem);
                     massSpecRepository.save(massSpecItem);
                 }
-                if(departmentName == Department.RECEIVING) {
+                if(departmentName == Department.SPECIMEN_PROCESSING) {
                     ReceivingEntity receivingItem = new ReceivingEntity();
                     receivingItem.setMasterItem(newMasterItem);
                     receivingRepository.save(receivingItem);
@@ -103,7 +103,7 @@ public class MasterService {
             massSpecItem.setMasterItem(masterItem);
             massSpecRepository.save(massSpecItem);
         }
-        if(departmentName == Department.RECEIVING) {
+        if(departmentName == Department.SPECIMEN_PROCESSING) {
             ReceivingEntity receivingItem = new ReceivingEntity();
             receivingItem.setMasterItem(masterItem);
             receivingRepository.save(receivingItem);

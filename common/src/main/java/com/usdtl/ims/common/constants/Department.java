@@ -3,12 +3,11 @@ package com.usdtl.ims.common.constants;
 public enum Department {
     EXTRACTIONS,
     MASS_SPEC,
-    SCREENING,
-    SAFETY,
-    RECEIVING,
-    LABORATORY,
     RD,
-    ACCOUNTING,
-    QUALITY,
-    SHIPPING
+    SCREENING,
+    SHIPPING,
+    SPECIMEN_PROCESSING,
+    STORE_ROOM,
+    QC_INTERNAL_STANDARDS,
+    QUALITY
 }

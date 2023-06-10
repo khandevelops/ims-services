@@ -111,7 +111,7 @@
                                 <goal>repackage</goal>
                             </goals>
                             <configuration>
-                                <outputDirectory>E:\production\services\ims-services\prod</outputDirectory>
+                                <outputDirectory>\\webserver\E\ims\services\prod\servicesjar</outputDirectory>
                             </configuration>
                         </execution>
                     </executions>

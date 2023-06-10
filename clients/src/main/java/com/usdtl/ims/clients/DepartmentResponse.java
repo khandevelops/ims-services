@@ -9,5 +9,8 @@ public record DepartmentResponse (
         Integer quantity,
         String lot_number,
         Date expiration_date,
-        Date received_date
+        Date received_date,
+        String usage_level,
+        Integer min_quantity,
+        Integer max_quantity
 ) { }
