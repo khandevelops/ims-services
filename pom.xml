@@ -19,11 +19,8 @@
         <module>email</module>
         <module>master</module>
         <module>api-gateway</module>
-        <module>store-room-master</module>
-        <module>store-room</module>
         <module>request-master</module>
         <module>download</module>
-        <module>department</module>
         <module>profile-details</module>
     </modules>
 

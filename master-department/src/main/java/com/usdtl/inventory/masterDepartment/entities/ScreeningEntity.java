@@ -38,5 +38,5 @@ public class ScreeningEntity {
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "item_id")
     @JsonIgnore
-    private MasterExtractionsEntity masterItem;
+    private MasterScreeningEntity masterItem;
 }

@@ -2,6 +2,7 @@ package com.usdtl.inventory.masterDepartment.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity;
+import com.usdtl.inventory.masterDepartment.masterQcInternalStandards.MasterQcInternalStandardsEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,5 +38,5 @@ public class QcInternalStandardsEntity {
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "item_id")
     @JsonIgnore
-    private MasterExtractionsEntity masterItem;
+    private MasterQcInternalStandardsEntity masterItem;
 }

@@ -2,6 +2,7 @@ package com.usdtl.inventory.masterDepartment.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity;
+import com.usdtl.inventory.masterDepartment.masterShipping.MasterShippingEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,5 +38,5 @@ public class ShippingEntity {
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "item_id")
     @JsonIgnore
-    private MasterExtractionsEntity masterItem;
+    private MasterShippingEntity masterItem;
 }

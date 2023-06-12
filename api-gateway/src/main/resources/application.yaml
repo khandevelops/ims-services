@@ -34,10 +34,6 @@ spring:
           uri: lb://PROFILE-DETAILS
           predicates:
             - Path=/ims/api/v1/profile-details/**
-        - id: department
-          uri: lb://DEPARTMENT
-          predicates:
-            - Path=/ims/api/v1/department/**
         - id: download
           uri: lb://DOWNLOAD
           predicates:

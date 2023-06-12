@@ -1,17 +1,17 @@
 package com.usdtl.ims.departmentMaster.specimenProcessing;
 
-import com.usdtl.ims.departmentMaster.master.MasterEntity;
+import com.usdtl.ims.departmentMaster.common.master.MasterEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Table(name = "receiving")
+@Table(name = "specimen_processing")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@javax.persistence.Entity
 @ToString
 public class SpecimenProcessingMasterEntity {
     @Id
@@ -21,10 +21,10 @@ public class SpecimenProcessingMasterEntity {
     private String location;
     @Column(name = "quantity")
     private Integer quantity;
-    @Column(name = "min_quantity")
-    private Integer min_quantity;
-    @Column(name = "max_quantity")
-    private Integer max_quantity;
+    @Column(name = "minimum_quantity")
+    private Integer minimum_quantity;
+    @Column(name = "maximum_quantity")
+    private Integer maximum_quantity;
     @Column(name = "usage_level")
     private String usage_level;
     @Column(name = "lot_number")

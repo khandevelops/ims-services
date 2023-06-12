@@ -7,9 +7,16 @@
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/department/pom.xml" />
+        <option value="$PROJECT_DIR$/store-room-master/pom.xml" />
+        <option value="$PROJECT_DIR$/store-room/pom.xml" />
+      </set>
+    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/../../../production/ims-services" />
+    <output url="file://$USER_HOME$/production/ims-services" />
   </component>
   <component name="ProjectType">
     <option name="id" value="jpab" />

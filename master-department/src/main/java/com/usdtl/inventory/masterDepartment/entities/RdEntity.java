@@ -38,5 +38,5 @@ public class RdEntity {
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "item_id")
     @JsonIgnore
-    private MasterExtractionsEntity masterItem;
+    private MasterRdEntity masterItem;
 }
