@@ -1,9 +1,7 @@
 package com.usdtl.ims.master;
 
-import com.usdtl.ims.common.constants.Category;
-import com.usdtl.ims.common.constants.Department;
+import com.usdtl.ims.common.exceptions.constants.Department;
 
-import java.util.Date;
 import java.util.List;
 
 public record MasterRequest(

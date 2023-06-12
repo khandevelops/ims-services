@@ -1,7 +1,7 @@
 package com.usdtl.inventory.masterDepartment.masterQcInternalStandards;
 
 import com.usdtl.ims.clients.response.MasterDepartmentResponse;
-import com.usdtl.ims.common.exceptions.NotFoundException;
+import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

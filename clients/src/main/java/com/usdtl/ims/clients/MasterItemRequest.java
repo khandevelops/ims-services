@@ -1,6 +1,6 @@
 package com.usdtl.ims.clients;
 
-import com.usdtl.ims.common.constants.Category;
+import com.usdtl.ims.common.exceptions.constants.Category;
 import lombok.Builder;
 
 @Builder
@@ -20,6 +20,7 @@ public record MasterItemRequest(
         Category category,
         String comment,
         String type,
-        String group
+        String group,
+        String drug_class
 ) {
 }

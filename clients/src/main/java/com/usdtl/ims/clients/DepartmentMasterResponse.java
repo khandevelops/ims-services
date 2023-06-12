@@ -1,6 +1,6 @@
 package com.usdtl.ims.clients;
 
-import com.usdtl.ims.common.constants.Category;
+import com.usdtl.ims.common.exceptions.constants.Category;
 import lombok.Builder;
 
 @Builder
@@ -14,6 +14,7 @@ public record DepartmentMasterResponse(
         String recent_vendor,
         String location,
         Integer total_quantity,
+        String usage_level,
         Integer order_quantity,
         Double unit_price,
         Double total_price,

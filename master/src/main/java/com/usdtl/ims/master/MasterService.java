@@ -1,7 +1,7 @@
 package com.usdtl.ims.master;
 
-import com.usdtl.ims.common.constants.Department;
-import com.usdtl.ims.common.exceptions.NotFoundException;
+import com.usdtl.ims.common.exceptions.constants.Department;
+import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.master.entities.*;
 import com.usdtl.ims.master.repositories.*;
 import com.usdtl.ims.master.requests.AssignRequest;

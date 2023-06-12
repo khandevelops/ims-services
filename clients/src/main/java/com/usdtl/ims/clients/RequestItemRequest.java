@@ -1,8 +1,8 @@
 package com.usdtl.ims.clients;
 
-import com.usdtl.ims.common.constants.Confirmation;
-import com.usdtl.ims.common.constants.Department;
-import com.usdtl.ims.common.constants.Status;
+import com.usdtl.ims.common.exceptions.constants.Confirmation;
+import com.usdtl.ims.common.exceptions.constants.Department;
+import com.usdtl.ims.common.exceptions.constants.Status;
 import lombok.Builder;
 
 import java.util.Date;

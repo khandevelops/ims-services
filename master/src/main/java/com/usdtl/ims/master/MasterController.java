@@ -1,7 +1,6 @@
 package com.usdtl.ims.master;
 
-import com.usdtl.ims.common.constants.Department;
-import com.usdtl.ims.common.exceptions.NotFoundException;
+import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.master.requests.AssignRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

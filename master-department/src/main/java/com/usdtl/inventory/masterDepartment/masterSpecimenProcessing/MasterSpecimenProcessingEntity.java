@@ -1,6 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterSpecimenProcessing;
 
-import com.usdtl.ims.common.constants.Category;
+import com.usdtl.ims.common.exceptions.constants.Category;
 import com.usdtl.inventory.masterDepartment.entities.SpecimenProcessingEntity;
 import lombok.*;
 

@@ -1,9 +1,6 @@
 package com.usdtl.ims.clients.responseRecord;
 
-import com.usdtl.ims.common.constants.Category;
-import lombok.*;
-
-import javax.persistence.NamedNativeQuery;
+import com.usdtl.ims.common.exceptions.constants.Category;
 
 
 public class DepartmentMasterResponseTest {

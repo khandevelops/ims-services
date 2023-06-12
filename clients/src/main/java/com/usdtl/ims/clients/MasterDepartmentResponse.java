@@ -1,6 +1,6 @@
 package com.usdtl.ims.clients;
 
-import com.usdtl.ims.common.constants.Category;
+import com.usdtl.ims.common.exceptions.constants.Category;
 
 import java.util.List;
 public record MasterDepartmentResponse(

@@ -1,10 +1,9 @@
 package com.usdtl.inventory.masterDepartment.masterRd;
-import com.usdtl.ims.common.constants.Category;
+import com.usdtl.ims.common.exceptions.constants.Category;
 import com.usdtl.inventory.masterDepartment.entities.RdEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Entity

@@ -1,7 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterQcInternalStandards;
-import com.usdtl.ims.common.constants.Category;
+import com.usdtl.ims.common.exceptions.constants.Category;
 import com.usdtl.inventory.masterDepartment.entities.QcInternalStandardsEntity;
-import com.usdtl.inventory.masterDepartment.entities.ShippingEntity;
 import lombok.*;
 
 import javax.persistence.*;
