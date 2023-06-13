@@ -34,7 +34,7 @@ public class MasterService {
                 .lab_source_cn(request.masterItem().getLab_source_cn())
                 .next_advance_cn(request.masterItem().getNext_advance_cn())
                 .purchase_unit(request.masterItem().getPurchase_unit())
-                .average_unit_price(request.masterItem().getAverage_unit_price())
+                .unit_price(request.masterItem().getUnit_price())
                 .category(request.masterItem().getCategory())
                 .comment(request.masterItem().getComment())
                 .type(request.masterItem().getType())
@@ -143,7 +143,7 @@ public class MasterService {
         masterItem.setLab_source_cn(request.masterItem().getLab_source_cn());
         masterItem.setNext_advance_cn(request.masterItem().getNext_advance_cn());
         masterItem.setPurchase_unit(request.masterItem().getPurchase_unit());
-        masterItem.setAverage_unit_price(request.masterItem().getAverage_unit_price());
+        masterItem.setUnit_price(request.masterItem().getUnit_price());
         masterItem.setCategory(request.masterItem().getCategory());
         masterItem.setComment(request.masterItem().getComment());
         masterItem.setType(request.masterItem().getType());

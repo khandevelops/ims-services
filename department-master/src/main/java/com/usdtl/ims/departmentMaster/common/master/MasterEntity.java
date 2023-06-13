@@ -39,7 +39,7 @@ public class MasterEntity {
     @Column(name = "purchase_unit")
     private String purchase_unit;
     @Column(name = "unit_price")
-    private Double average_unit_price;
+    private Double unit_price;
     @Column(name = "category")
     private Category category;
     @Column(name = "comment")
