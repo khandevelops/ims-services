@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @AllArgsConstructor
-@RestController("QualityMaster")
+@RestController
 @RequestMapping("quality")
 public class QualityMasterController {
     private QualityMasterService qualityMasterService;

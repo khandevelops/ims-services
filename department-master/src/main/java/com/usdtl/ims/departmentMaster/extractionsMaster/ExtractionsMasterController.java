@@ -1,6 +1,5 @@
-package com.usdtl.ims.departmentMaster.extractions;
+package com.usdtl.ims.departmentMaster.extractionsMaster;
 
-import com.usdtl.ims.departmentMaster.common.response.DepartmentMasterResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @AllArgsConstructor
-@RestController("ExtractionsMaster")
+@RestController
 @RequestMapping("extractions")
 public class ExtractionsMasterController {
     private ExtractionsMasterService extractionsMasterService;

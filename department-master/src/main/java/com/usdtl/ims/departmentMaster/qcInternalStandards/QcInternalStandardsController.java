@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @AllArgsConstructor
-@RestController("QcInternalStandardsMaster")
+@RestController
 @RequestMapping("qc-internal-standards")
 public class QcInternalStandardsController {
     private QcInternalStandardsService qcInternalStandardsService;

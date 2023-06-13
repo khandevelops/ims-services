@@ -1,4 +1,4 @@
-package com.usdtl.ims.departmentMaster.massSpec;
+package com.usdtl.ims.departmentMaster.massSpecMaster;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 

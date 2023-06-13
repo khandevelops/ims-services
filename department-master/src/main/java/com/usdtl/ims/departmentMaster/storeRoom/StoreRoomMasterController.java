@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @AllArgsConstructor
-@RestController("StoreRoomMaster")
+@RestController
 @RequestMapping("store-room")
 public class StoreRoomMasterController {
     private StoreRoomMasterService storeRoomMasterService;

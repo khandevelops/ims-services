@@ -1,6 +1,5 @@
-package com.usdtl.ims.departmentMaster.extractions;
+package com.usdtl.ims.departmentMaster.extractionsMaster;
 
-import com.usdtl.ims.departmentMaster.common.response.DepartmentMasterResponse;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

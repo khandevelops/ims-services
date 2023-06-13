@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @AllArgsConstructor
-@RestController("ShippingMaster")
+@RestController
 @RequestMapping("shipping")
 public class ShippingMasterController {
     private ShippingMasterService shippingMasterService;

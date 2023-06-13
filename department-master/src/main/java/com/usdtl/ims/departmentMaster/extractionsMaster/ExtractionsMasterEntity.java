@@ -1,4 +1,4 @@
-package com.usdtl.ims.departmentMaster.extractions;
+package com.usdtl.ims.departmentMaster.extractionsMaster;
 
 import com.usdtl.ims.departmentMaster.common.master.MasterEntity;
 import lombok.*;

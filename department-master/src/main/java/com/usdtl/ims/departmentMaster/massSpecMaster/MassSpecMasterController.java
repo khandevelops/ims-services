@@ -1,6 +1,5 @@
-package com.usdtl.ims.departmentMaster.massSpec;
+package com.usdtl.ims.departmentMaster.massSpecMaster;
 
-import com.usdtl.ims.clients.response.DepartmentMasterResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @AllArgsConstructor
-@RestController("MassSpecMaster")
+@RestController
 @RequestMapping("mass-spec")
 public class MassSpecMasterController {
     private MassSpecMasterService massSpecMasterService;

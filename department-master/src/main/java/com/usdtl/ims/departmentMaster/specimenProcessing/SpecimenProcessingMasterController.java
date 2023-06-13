@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @AllArgsConstructor
-@RestController("SpecimenProcessingMaster")
+@RestController
 @RequestMapping("specimen-processing")
 public class SpecimenProcessingMasterController {
     private SpecimenProcessingMasterService specimenProcessingMasterService;
