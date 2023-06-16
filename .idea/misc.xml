@@ -5,13 +5,13 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/store-room/pom.xml" />
+        <option value="$PROJECT_DIR$/store-room-master/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/department/pom.xml" />
-        <option value="$PROJECT_DIR$/store-room-master/pom.xml" />
-        <option value="$PROJECT_DIR$/store-room/pom.xml" />
       </set>
     </option>
   </component>

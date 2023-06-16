@@ -22,6 +22,8 @@
         <module>request-master</module>
         <module>download</module>
         <module>profile-details</module>
+        <module>store-room</module>
+        <module>store-room-master</module>
     </modules>
 
     <properties>
