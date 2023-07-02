@@ -1,7 +1,5 @@
-package com.usdtl.ims.master.entities;
+package com.usdtl.ims.departments.specimenProcessing;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.usdtl.ims.master.MasterEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,12 +7,12 @@ import java.util.Date;
 
 @Entity
 @Builder
-@Table(name = "receiving")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ReceivingEntity {
+@Table(name = "extractions")
+public class SpecimenProcessingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,10 +20,10 @@ public class ReceivingEntity {
     private String location;
     @Column(name = "quantity")
     private Integer quantity;
-    @Column(name = "min_quantity")
-    private Integer min_quantity;
-    @Column(name = "max_quantity")
-    private Integer max_quantity;
+    @Column(name = "minimum_quantity")
+    private Integer minimum_quantity;
+    @Column(name = "maximum_quantity")
+    private Integer maximum_quantity;
     @Column(name = "usage_level")
     private String usage_level;
     @Column(name = "lot_number")
@@ -34,8 +32,4 @@ public class ReceivingEntity {
     private Date expiration_date;
     @Column(name = "received_date")
     private Date received_date;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "item_id")
-    @JsonIgnore
-    private MasterEntity masterItem;
 }

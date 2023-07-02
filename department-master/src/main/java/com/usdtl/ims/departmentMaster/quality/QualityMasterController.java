@@ -20,4 +20,9 @@ public class QualityMasterController {
         log.info("List extractions master transformed items");
         return qualityMasterService.getDepartmentMasterItems(page);
     }
+
+    @GetMapping("grand-total")
+    public Double getTotal() {
+        return qualityMasterService.getTotal();
+    }
 }

@@ -9,5 +9,7 @@ public enum Department {
     SPECIMEN_PROCESSING,
     STORE_ROOM,
     QC_INTERNAL_STANDARDS,
-    QUALITY
+    QUALITY,
+    GENERAL,
+    OFFICE_SUPPLY
 }

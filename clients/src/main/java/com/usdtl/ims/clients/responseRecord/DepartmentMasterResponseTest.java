@@ -20,6 +20,6 @@ public class DepartmentMasterResponseTest {
     Double unit_price;
     Double total_price;
     String lot_number;
-    Category category;
+    String category;
     String comment;
 }

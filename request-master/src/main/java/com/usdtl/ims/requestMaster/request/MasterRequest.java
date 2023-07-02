@@ -15,7 +15,7 @@ public record MasterRequest(
         String next_advance_cn,
         String purchase_unit,
         Double average_unit_price,
-        Category category,
+        String category,
         String comments,
         String type,
         String group

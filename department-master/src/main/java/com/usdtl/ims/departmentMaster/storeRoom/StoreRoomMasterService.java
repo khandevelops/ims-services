@@ -17,4 +17,7 @@ public class StoreRoomMasterService {
         return storeRoomMasterRepository.findAll(pageRequest);
     }
 
+    public Double getTotal() {
+        return storeRoomMasterRepository.getGrandTotal();
+    }
 }

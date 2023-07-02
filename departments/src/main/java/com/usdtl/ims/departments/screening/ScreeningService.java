@@ -18,8 +18,8 @@ public class ScreeningService {
         ScreeningEntity newItem = ScreeningEntity.builder()
                 .location(request.location())
                 .quantity(request.quantity())
-                .min_quantity(request.min_quantity())
-                .max_quantity(request.max_quantity())
+                .minimum_quantity(request.min_quantity())
+                .maximum_quantity(request.max_quantity())
                 .usage_level(request.usage_level())
                 .lot_number(request.lot_number())
                 .expiration_date(request.expiration_date())
@@ -34,8 +34,8 @@ public class ScreeningService {
         ScreeningEntity item = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
         item.setLocation(request.location());
         item.setQuantity(request.quantity());
-        item.setMin_quantity(request.min_quantity());
-        item.setMax_quantity(request.max_quantity());
+        item.setMinimum_quantity(request.min_quantity());
+        item.setMaximum_quantity(request.max_quantity());
         item.setUsage_level(request.usage_level());
         item.setLot_number(request.lot_number());
         item.setExpiration_date(request.expiration_date());
@@ -52,8 +52,8 @@ public class ScreeningService {
             ScreeningEntity item = repository.findById(departmentItem.id()).orElseThrow(() -> new NotFoundException("Item associated with id: " + departmentItem.id() + " not found"));
             item.setLocation(departmentItem.location());
             item.setQuantity(departmentItem.quantity());
-            item.setMin_quantity(departmentItem.min_quantity());
-            item.setMax_quantity(departmentItem.max_quantity());
+            item.setMinimum_quantity(departmentItem.min_quantity());
+            item.setMaximum_quantity(departmentItem.max_quantity());
             item.setUsage_level(departmentItem.usage_level());
             item.setLot_number(departmentItem.lot_number());
             item.setExpiration_date(departmentItem.expiration_date());

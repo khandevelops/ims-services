@@ -21,4 +21,9 @@ public class ShippingMasterController {
         log.info("List extractions master transformed items");
         return shippingMasterService.getDepartmentMasterItems(page);
     }
+
+    @GetMapping("grand-total")
+    public Double getTotal() {
+        return shippingMasterService.getTotal();
+    }
 }

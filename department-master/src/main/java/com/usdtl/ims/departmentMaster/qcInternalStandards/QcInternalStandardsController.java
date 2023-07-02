@@ -21,4 +21,9 @@ public class QcInternalStandardsController {
         log.info("List extractions master transformed items");
         return qcInternalStandardsService.getDepartmentMasterItems(page);
     }
+
+    @GetMapping("grand-total")
+    public Double getTotal() {
+        return qcInternalStandardsService.getTotal();
+    }
 }

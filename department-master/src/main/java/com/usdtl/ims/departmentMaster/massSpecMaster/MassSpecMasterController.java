@@ -20,4 +20,9 @@ public class MassSpecMasterController {
         log.info("List extractions master transformed items");
         return massSpecMasterService.getDepartmentMasterItems(page);
     }
+
+    @GetMapping("grand-total")
+    public Double getTotal() {
+        return massSpecMasterService.getTotal();
+    }
 }

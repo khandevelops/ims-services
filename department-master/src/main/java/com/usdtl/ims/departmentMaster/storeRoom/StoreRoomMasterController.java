@@ -21,4 +21,9 @@ public class StoreRoomMasterController {
         log.info("List extractions master transformed items");
         return storeRoomMasterService.getDepartmentMasterItems(page);
     }
+
+    @GetMapping("grand-total")
+    public Double getTotal() {
+        return storeRoomMasterService.getTotal();
+    }
 }

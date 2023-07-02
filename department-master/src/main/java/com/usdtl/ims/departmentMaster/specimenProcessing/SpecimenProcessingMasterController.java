@@ -20,4 +20,9 @@ public class SpecimenProcessingMasterController {
         log.info("List extractions master transformed items");
         return specimenProcessingMasterService.getDepartmentMasterItems(page);
     }
+
+    @GetMapping("grand-total")
+    public Double getTotal() {
+        return specimenProcessingMasterService.getTotal();
+    }
 }

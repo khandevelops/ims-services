@@ -17,4 +17,7 @@ public class RdMasterService {
         return rdMasterRepository.findAll(pageRequest);
     }
 
+    public Double getTotal() {
+        return rdMasterRepository.getGrandTotal();
+    }
 }

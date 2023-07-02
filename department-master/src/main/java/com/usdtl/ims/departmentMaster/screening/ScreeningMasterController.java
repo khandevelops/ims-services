@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @AllArgsConstructor
+@RestController
 @RequestMapping("screening")
 public class ScreeningMasterController {
     private ScreeningMasterService screeningMasterService;
@@ -19,5 +20,10 @@ public class ScreeningMasterController {
     public Page<ScreeningMasterEntity> getItemsByPage(@RequestParam Integer page) {
         log.info("List extractions master transformed items");
         return screeningMasterService.getDepartmentMasterItems(page);
+    }
+
+    @GetMapping("grand-total")
+    public Double getTotal() {
+        return screeningMasterService.getTotal();
     }
 }

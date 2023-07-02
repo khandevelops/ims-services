@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 public class MasterController {
     private MasterService service;
-
-
-    @GetMapping("list/filter")
-    public Page<MasterEntity> findAllByKeyword(@RequestParam String keyword, @RequestParam Integer page) {
-        return service.getItemsFiltered(keyword, page);
+    @GetMapping("filter")
+    public Page<MasterEntity> getItemsByKeyword(@RequestParam String keyword, @RequestParam Integer page) {
+        return service.getItemsByKeyword(keyword, page);
     }
 
     @GetMapping("list")
@@ -42,7 +40,7 @@ public class MasterController {
     }
 
     @PatchMapping(path = "{id}/update")
-    public MasterEntity updateItem(@PathVariable(value = "id") Integer id, @RequestBody MasterRequest request) {
+    public MasterEntity updateItem(@PathVariable(value = "id") Integer id, @RequestBody MasterEntity request) {
         return service.updateItem(id, request);
     }
 

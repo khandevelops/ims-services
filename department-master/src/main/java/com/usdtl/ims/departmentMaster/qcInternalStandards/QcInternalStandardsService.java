@@ -17,4 +17,7 @@ public class QcInternalStandardsService {
         return qcInternalStandardsRepository.findAll(pageRequest);
     }
 
+    public Double getTotal() {
+        return qcInternalStandardsRepository.getGrandTotal();
+    }
 }

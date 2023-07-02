@@ -17,7 +17,7 @@ public class DepartmentMasterResponseTest {
     String recent_cn;
     String recent_vendor;
     Double average_unit_price;
-    Category category;
+    String category;
     String comment;
     Integer master_item_id;
     Integer department_item_id;
@@ -33,7 +33,7 @@ public class DepartmentMasterResponseTest {
     Long total_quantity;
     Double total_price;
 
-    public DepartmentMasterResponseTest(String item, String purchase_unit, String part_number, String recent_cn, String recent_vendor, Double average_unit_price, Category category, String comment, Integer master_item_id, String usage_level, Integer min_quantity, Integer max_quantity, Long total_quantity) {
+    public DepartmentMasterResponseTest(String item, String purchase_unit, String part_number, String recent_cn, String recent_vendor, Double average_unit_price, String category, String comment, Integer master_item_id, String usage_level, Integer min_quantity, Integer max_quantity, Long total_quantity) {
         this.item = item;
         this.purchase_unit = purchase_unit;
         this.part_number = part_number;
@@ -49,7 +49,7 @@ public class DepartmentMasterResponseTest {
         this.total_quantity = total_quantity;
     }
 
-    public DepartmentMasterResponseTest(String item, String purchase_unit, String part_number, String recent_cn, String recent_vendor, Double average_unit_price, Category category, String comment, Integer master_item_id, Integer department_item_id, String usage_level, Integer min_quantity, Integer max_quantity, String lot_number, String location, Date received_date, Date expirations_date, Integer quantity, Long total_quantity) {
+    public DepartmentMasterResponseTest(String item, String purchase_unit, String part_number, String recent_cn, String recent_vendor, Double average_unit_price, String category, String comment, Integer master_item_id, Integer department_item_id, String usage_level, Integer min_quantity, Integer max_quantity, String lot_number, String location, Date received_date, Date expirations_date, Integer quantity, Long total_quantity) {
         this.item = item;
         this.purchase_unit = purchase_unit;
         this.part_number = part_number;

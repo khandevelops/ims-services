@@ -17,7 +17,7 @@ public class DepartmentDownloadResponse {
     String recent_cn;
     String recent_vendor;
     Double average_unit_price;
-    Category category;
+    String category;
     String comment;
     Integer master_item_id;
     Integer department_item_id;
@@ -35,7 +35,7 @@ public class DepartmentDownloadResponse {
 
     public DepartmentDownloadResponse(
             String item, String purchase_unit, String part_number, String recent_cn, String recent_vendor,
-              Double average_unit_price, Category category, String comment, Integer master_item_id,
+              Double average_unit_price, String category, String comment, Integer master_item_id,
               Integer department_item_id, String usage_level, Integer min_quantity, Integer max_quantity,
               String lot_number, String location, Date received_date, Date expirations_date, Integer quantity
     ) {

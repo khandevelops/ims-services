@@ -1,7 +1,8 @@
-package com.usdtl.ims.departments.receiving;
+package com.usdtl.ims.departments.specimenProcessing;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.departments.department.DepartmentRequest;
+import com.usdtl.ims.departments.master.MasterRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,14 +13,15 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ReceivingService {
-    private ReceivingRepository repository;
-    public ReceivingEntity createItem(DepartmentRequest request) {
-        ReceivingEntity newItem = ReceivingEntity.builder()
+public class SpecimenProcessingService {
+    private SpecimenProcessingRepository repository;
+    private MasterRepository masterRepository;
+    public SpecimenProcessingEntity createItem(DepartmentRequest request) {
+        SpecimenProcessingEntity newItem = SpecimenProcessingEntity.builder()
                 .location(request.location())
                 .quantity(request.quantity())
-                .min_quantity(request.min_quantity())
-                .max_quantity(request.max_quantity())
+                .minimum_quantity(request.min_quantity())
+                .maximum_quantity(request.max_quantity())
                 .usage_level(request.usage_level())
                 .lot_number(request.lot_number())
                 .expiration_date(request.expiration_date())
@@ -30,12 +32,12 @@ public class ReceivingService {
         return newItem;
     };
 
-    public ReceivingEntity updateItemById(Integer id, DepartmentRequest request) {
-        ReceivingEntity item = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
+    public SpecimenProcessingEntity updateItemById(Integer id, DepartmentRequest request) {
+        SpecimenProcessingEntity item = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
         item.setLocation(request.location());
         item.setQuantity(request.quantity());
-        item.setMin_quantity(request.min_quantity());
-        item.setMax_quantity(request.max_quantity());
+        item.setMinimum_quantity(request.min_quantity());
+        item.setMaximum_quantity(request.max_quantity());
         item.setUsage_level(request.usage_level());
         item.setLot_number(request.lot_number());
         item.setExpiration_date(request.expiration_date());
@@ -46,14 +48,14 @@ public class ReceivingService {
         return item;
     }
 
-    public List<ReceivingEntity> updateQuantity(List<DepartmentRequest> request) {
-        List<ReceivingEntity> updateItems = new ArrayList<>();
+    public List<SpecimenProcessingEntity> updateQuantity(List<DepartmentRequest> request) {
+        List<SpecimenProcessingEntity> updateItems = new ArrayList<>();
         request.forEach(departmentItem -> {
-            ReceivingEntity item = repository.findById(departmentItem.id()).orElseThrow(() -> new NotFoundException("Item associated with id: " + departmentItem.id() + " not found"));
+            SpecimenProcessingEntity item = repository.findById(departmentItem.id()).orElseThrow(() -> new NotFoundException("Item associated with id: " + departmentItem.id() + " not found"));
             item.setLocation(departmentItem.location());
             item.setQuantity(departmentItem.quantity());
-            item.setMin_quantity(departmentItem.min_quantity());
-            item.setMax_quantity(departmentItem.max_quantity());
+            item.setMinimum_quantity(departmentItem.min_quantity());
+            item.setMaximum_quantity(departmentItem.max_quantity());
             item.setUsage_level(departmentItem.usage_level());
             item.setLot_number(departmentItem.lot_number());
             item.setExpiration_date(departmentItem.expiration_date());
@@ -75,13 +77,14 @@ public class ReceivingService {
 
     }
 
-    public Page<ReceivingEntity> getItemsByPage(Integer page) {
+    public Page<SpecimenProcessingEntity> getItemsByPage(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAll(pageRequest);
     }
 
-    public ReceivingEntity getItemById(Integer id) throws NotFoundException {
-        ReceivingEntity item = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
+    public SpecimenProcessingEntity getItemById(Integer id) throws NotFoundException {
+        SpecimenProcessingEntity item = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
         return item;
     }
 }
+

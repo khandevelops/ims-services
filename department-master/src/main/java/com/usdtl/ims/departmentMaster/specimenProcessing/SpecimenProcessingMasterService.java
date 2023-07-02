@@ -17,4 +17,7 @@ public class SpecimenProcessingMasterService {
         return specimenProcessingMasterRepository.findAll(pageRequest);
     }
 
+    public Double getTotal() {
+        return specimenProcessingMasterRepository.getGrandTotal();
+    }
 }

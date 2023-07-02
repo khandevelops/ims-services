@@ -1,4 +1,4 @@
-package com.usdtl.ims.departments.receiving;
+package com.usdtl.ims.departments.qcInternalStandards;
 
 import lombok.*;
 
@@ -11,8 +11,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "receiving")
-public class ReceivingEntity {
+@Table(name = "extractions")
+public class QcInternalStandardsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,10 +20,10 @@ public class ReceivingEntity {
     private String location;
     @Column(name = "quantity")
     private Integer quantity;
-    @Column(name = "min_quantity")
-    private Integer min_quantity;
-    @Column(name = "max_quantity")
-    private Integer max_quantity;
+    @Column(name = "minimum_quantity")
+    private Integer minimum_quantity;
+    @Column(name = "maximum_quantity")
+    private Integer maximum_quantity;
     @Column(name = "usage_level")
     private String usage_level;
     @Column(name = "lot_number")

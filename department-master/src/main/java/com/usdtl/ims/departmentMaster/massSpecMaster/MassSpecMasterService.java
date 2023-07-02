@@ -17,4 +17,7 @@ public class MassSpecMasterService {
         return massSpecMasterRepository.findAll(pageRequest);
     }
 
+    public Double getTotal() {
+        return massSpecMasterRepository.getGrandTotal();
+    }
 }

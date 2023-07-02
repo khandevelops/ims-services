@@ -17,4 +17,7 @@ public class ShippingMasterService {
         return shippingMasterRepository.findAll(pageRequest);
     }
 
+    public Double getTotal() {
+        return shippingMasterRepository.getGrandTotal();
+    }
 }

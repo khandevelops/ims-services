@@ -17,11 +17,14 @@ public class MasterService {
     private MasterRepository repository;
     private ExtractionsRepository extractionsRepository;
     private MassSpecRepository massSpecRepository;
-    private ReceivingRepository receivingRepository;
+    private SpecimenProcessingRepository receivingRepository;
     private RdRepository rdRepository;
     private ScreeningRepository screeningRepository;
     private ShippingRepository shippingRepository;
     private QualityRepository qualityRepository;
+    private RequestGeneralRepository requestGeneralRepository;
+    private RequestOfficeSupplyRepository requestOfficeSupplyRepository;
+    private RequestStoreRoomRepository requestStoreRoomRepository;
     public MasterEntity createItem(MasterRequest request) {
         MasterEntity newMasterItem = MasterEntity.builder()
                 .item(request.masterItem().getItem())
@@ -32,7 +35,7 @@ public class MasterService {
                 .fisher_cn(request.masterItem().getFisher_cn())
                 .vwr_cn(request.masterItem().getVwr_cn())
                 .lab_source_cn(request.masterItem().getLab_source_cn())
-                .next_advance_cn(request.masterItem().getNext_advance_cn())
+                .other_cn(request.masterItem().getOther_cn())
                 .purchase_unit(request.masterItem().getPurchase_unit())
                 .unit_price(request.masterItem().getUnit_price())
                 .category(request.masterItem().getCategory())
@@ -55,11 +58,6 @@ public class MasterService {
                     massSpecItem.setMasterItem(newMasterItem);
                     massSpecRepository.save(massSpecItem);
                 }
-                if(departmentName == Department.SPECIMEN_PROCESSING) {
-                    ReceivingEntity receivingItem = new ReceivingEntity();
-                    receivingItem.setMasterItem(newMasterItem);
-                    receivingRepository.save(receivingItem);
-                }
                 if(departmentName == Department.RD) {
                     RdEntity rdItem = new RdEntity();
                     rdItem.setMasterItem(newMasterItem);
@@ -79,6 +77,21 @@ public class MasterService {
                     QualityEntity qualityItem = new QualityEntity();
                     qualityItem.setMasterItem(newMasterItem);
                     qualityRepository.save(qualityItem);
+                }
+                if(departmentName == Department.GENERAL) {
+                    RequestGeneralEntity requestGeneralEntity = new RequestGeneralEntity();
+                    requestGeneralEntity.setMasterItem(newMasterItem);
+                    requestGeneralRepository.save(requestGeneralEntity);
+                }
+                if(departmentName == Department.STORE_ROOM) {
+                    RequestStoreRoomEntity requestStoreRoomEntity = new RequestStoreRoomEntity();
+                    requestStoreRoomEntity.setMasterItem(newMasterItem);
+                    requestStoreRoomRepository.save(requestStoreRoomEntity);
+                }
+                if(departmentName == Department.OFFICE_SUPPLY) {
+                    RequestOfficeSupplyEntity requestOfficeSupplyEntity = new RequestOfficeSupplyEntity();
+                    requestOfficeSupplyEntity.setMasterItem(newMasterItem);
+                    requestOfficeSupplyRepository.save(requestOfficeSupplyEntity);
                 }
             });
 
@@ -103,11 +116,6 @@ public class MasterService {
             massSpecItem.setMasterItem(masterItem);
             massSpecRepository.save(massSpecItem);
         }
-        if(departmentName == Department.SPECIMEN_PROCESSING) {
-            ReceivingEntity receivingItem = new ReceivingEntity();
-            receivingItem.setMasterItem(masterItem);
-            receivingRepository.save(receivingItem);
-        }
         if(departmentName == Department.RD) {
             RdEntity rdItem = new RdEntity();
             rdItem.setMasterItem(masterItem);
@@ -128,26 +136,41 @@ public class MasterService {
             qualityItem.setMasterItem(masterItem);
             qualityRepository.save(qualityItem);
         }
+        if(departmentName == Department.GENERAL) {
+            RequestGeneralEntity requestGeneralEntity = new RequestGeneralEntity();
+            requestGeneralEntity.setMasterItem(masterItem);
+            requestGeneralRepository.save(requestGeneralEntity);
+        }
+        if(departmentName == Department.STORE_ROOM) {
+            RequestStoreRoomEntity requestStoreRoomEntity = new RequestStoreRoomEntity();
+            requestStoreRoomEntity.setMasterItem(masterItem);
+            requestStoreRoomRepository.save(requestStoreRoomEntity);
+        }
+        if(departmentName == Department.OFFICE_SUPPLY) {
+            RequestOfficeSupplyEntity requestOfficeSupplyEntity = new RequestOfficeSupplyEntity();
+            requestOfficeSupplyEntity.setMasterItem(masterItem);
+            requestOfficeSupplyRepository.save(requestOfficeSupplyEntity);
+        }
         return masterItem;
     }
 
-    public MasterEntity updateItem(Integer id, MasterRequest request) {
+    public MasterEntity updateItem(Integer id, MasterEntity request) {
         MasterEntity masterItem = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
-        masterItem.setItem(request.masterItem().getItem());
-        masterItem.setManufacturer(request.masterItem().getManufacturer());
-        masterItem.setPart_number(request.masterItem().getPart_number());
-        masterItem.setRecent_cn(request.masterItem().getRecent_cn());
-        masterItem.setRecent_vendor(request.masterItem().getRecent_vendor());
-        masterItem.setFisher_cn(request.masterItem().getFisher_cn());
-        masterItem.setVwr_cn(request.masterItem().getVwr_cn());
-        masterItem.setLab_source_cn(request.masterItem().getLab_source_cn());
-        masterItem.setNext_advance_cn(request.masterItem().getNext_advance_cn());
-        masterItem.setPurchase_unit(request.masterItem().getPurchase_unit());
-        masterItem.setUnit_price(request.masterItem().getUnit_price());
-        masterItem.setCategory(request.masterItem().getCategory());
-        masterItem.setComment(request.masterItem().getComment());
-        masterItem.setType(request.masterItem().getType());
-        masterItem.setGroup(request.masterItem().getGroup());
+        masterItem.setItem(request.getItem());
+        masterItem.setManufacturer(request.getManufacturer());
+        masterItem.setPart_number(request.getPart_number());
+        masterItem.setRecent_cn(request.getRecent_cn());
+        masterItem.setRecent_vendor(request.getRecent_vendor());
+        masterItem.setFisher_cn(request.getFisher_cn());
+        masterItem.setVwr_cn(request.getVwr_cn());
+        masterItem.setLab_source_cn(request.getLab_source_cn());
+        masterItem.setOther_cn(request.getOther_cn());
+        masterItem.setPurchase_unit(request.getPurchase_unit());
+        masterItem.setUnit_price(request.getUnit_price());
+        masterItem.setCategory(request.getCategory());
+        masterItem.setComment(request.getComment());
+        masterItem.setType(request.getType());
+        masterItem.setGroup(request.getGroup());
 
         repository.save(masterItem);
 
@@ -174,7 +197,7 @@ public class MasterService {
         return masterItem;
     }
 
-    public Page<MasterEntity> getItemsFiltered(String keyword, Integer page) {
+    public Page<MasterEntity> getItemsByKeyword(String keyword, Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAllByKeyword(keyword, pageRequest);
     }

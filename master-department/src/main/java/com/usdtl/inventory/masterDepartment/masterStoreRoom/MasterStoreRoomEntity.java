@@ -42,7 +42,7 @@ public class MasterStoreRoomEntity {
     @Column(name = "unit_price")
     private Double unit_price;
     @Column(name = "category")
-    private Category category;
+    private String category;
     @Column(name = "comment")
     private String comment;
     @Column(name = "[type]")

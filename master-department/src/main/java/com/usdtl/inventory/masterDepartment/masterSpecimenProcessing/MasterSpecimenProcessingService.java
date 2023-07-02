@@ -57,7 +57,7 @@ public class MasterSpecimenProcessingService {
                         .fisher_cn(masterDepartmentItem.getFisher_cn())
                         .vwr_cn(masterDepartmentItem.getVwr_cn())
                         .lab_source_cn(masterDepartmentItem.getLab_source_cn())
-                        .next_advance_cn(masterDepartmentItem.getOther_cn())
+                        .other_cn(masterDepartmentItem.getOther_cn())
                         .purchase_unit(masterDepartmentItem.getPurchase_unit())
                         .average_unit_price(masterDepartmentItem.getUnit_price())
                         .category(masterDepartmentItem.getCategory())

@@ -39,7 +39,7 @@ public class MasterEntity {
     @Column(name = "average_unit_price")
     private Double average_unit_price;
     @Column(name = "category")
-    private Category category;
+    private String category;
     @Column(name = "comment")
     private String comment;
     @Column(name = "[type]")

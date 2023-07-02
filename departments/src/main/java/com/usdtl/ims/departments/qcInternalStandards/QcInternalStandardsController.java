@@ -1,4 +1,4 @@
-package com.usdtl.ims.departments.receiving;
+package com.usdtl.ims.departments.qcInternalStandards;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.departments.department.DepartmentRequest;
@@ -10,29 +10,29 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("receiving")
+@RequestMapping("qc_internal_standards")
 @AllArgsConstructor
 @RestController
-public class ReceivingController {
-    private ReceivingService service;
+public class QcInternalStandardsController {
+    private QcInternalStandardsService service;
     @GetMapping("list")
-    public Page<ReceivingEntity> getItemsByPage(@RequestParam Integer page) {
+    public Page<QcInternalStandardsEntity> getItemsByPage(@RequestParam Integer page) {
         return service.getItemsByPage(page);
     }
     @GetMapping(path = "{id}")
-    public ResponseEntity<ReceivingEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
+    public  ResponseEntity<QcInternalStandardsEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
         return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<ReceivingEntity> createItem(@RequestBody DepartmentRequest request) {
+    public ResponseEntity<QcInternalStandardsEntity> createItem(@RequestBody DepartmentRequest request) {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
     }
     @PatchMapping("update-quantity")
-    public List<ReceivingEntity> updateQuantity(@RequestBody List<DepartmentRequest> request) {
+    public List<QcInternalStandardsEntity> updateQuantity(@RequestBody List<DepartmentRequest> request) {
         return service.updateQuantity(request);
     }
-    @PatchMapping(path = "{id}")
-    public ReceivingEntity updateItemById(@PathVariable(value = "id") Integer id, @RequestBody DepartmentRequest request) {
+    @PatchMapping(path = "/{id}/update")
+    public QcInternalStandardsEntity updateItemById(@PathVariable(value = "id") Integer id, @RequestBody DepartmentRequest request) {
         return service.updateItemById(id, request);
     }
     @DeleteMapping(path = "{id}")

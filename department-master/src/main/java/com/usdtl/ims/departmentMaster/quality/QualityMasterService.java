@@ -18,4 +18,7 @@ public class QualityMasterService {
         return qualityMasterRepository.findAll(pageRequest);
     }
 
+    public Double getTotal() {
+        return qualityMasterRepository.getGrandTotal();
+    }
 }

@@ -15,7 +15,7 @@ public record MasterResponse(
         String other_cn,
         String purchase_unit,
         Double unit_price,
-        Category category,
+        String category,
         String comment,
         String type,
         String group,

@@ -23,7 +23,7 @@ public record DepartmentMasterDownloadExcelResponse(
         Double total_price,
         String comment,
         String location,
-        Category category,
+        String category,
         String lot_number,
         Date expiration_date,
         Date received_date

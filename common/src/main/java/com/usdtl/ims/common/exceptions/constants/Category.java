@@ -11,5 +11,6 @@ public enum Category {
     SCIEX,
     BREAK_ROOM,
     OFFICE_SUPPLY,
-    REAGENT
+    REAGENT,
+    AGILENT_GC
 }

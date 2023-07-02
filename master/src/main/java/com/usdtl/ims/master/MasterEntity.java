@@ -34,13 +34,13 @@ public class MasterEntity {
     @Column(name = "lab_source_cn")
     private String lab_source_cn;
     @Column(name = "other_cn")
-    private String next_advance_cn;
+    private String other_cn;
     @Column(name = "purchase_unit")
     private String purchase_unit;
     @Column(name = "unit_price")
     private Double unit_price;
     @Column(name = "category")
-    private Category category;
+    private String category;
     @Column(name = "comment")
     private String comment;
     @Column(name = "[type]")

@@ -21,4 +21,9 @@ public class RdMasterController {
         log.info("List extractions master transformed items");
         return rdMasterService.getDepartmentMasterItems(page);
     }
+
+    @GetMapping("grand-total")
+    public Double getTotal() {
+        return rdMasterService.getTotal();
+    }
 }

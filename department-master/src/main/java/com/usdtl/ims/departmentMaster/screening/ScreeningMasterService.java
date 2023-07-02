@@ -17,4 +17,7 @@ public class ScreeningMasterService {
         return screeningMasterRepository.findAll(pageRequest);
     }
 
+    public Double getTotal() {
+        return screeningMasterRepository.getGrandTotal();
+    }
 }
