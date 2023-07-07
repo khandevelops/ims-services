@@ -36,7 +36,7 @@ public class ExtractionsController  {
         return service.updateItemById(id, request);
     }
     @DeleteMapping(path = "{id}")
-    public void deleteItemById(@PathVariable(value = "id")Integer id) {
-        service.deleteItemById(id);
+    public ResponseEntity<String> deleteItemById(@PathVariable(value = "id")Integer id) {
+        return service.deleteItemById(id);
     }
 }

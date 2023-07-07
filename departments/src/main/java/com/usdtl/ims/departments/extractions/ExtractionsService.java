@@ -6,6 +6,8 @@ import com.usdtl.ims.departments.master.MasterRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -67,24 +69,21 @@ public class ExtractionsService {
 
         return updateItems;
     }
-
-    public void deleteItemById(Integer id) {
+    public Page<ExtractionsEntity> getItemsByPage(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        return repository.findAll(pageRequest);
+    }
+    public ExtractionsEntity getItemById(Integer id) throws NotFoundException {
+        ExtractionsEntity item = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
+        return item;
+    }
+    public ResponseEntity<String> deleteItemById(Integer id) {
         boolean exists = repository.existsById(id);
         if(!exists) {
             throw new NotFoundException("Item associated with id: " + id + " not found");
         }
         repository.deleteById(id);
-
-    }
-
-    public Page<ExtractionsEntity> getItemsByPage(Integer page) {
-        PageRequest pageRequest = PageRequest.of(page, 10);
-        return repository.findAll(pageRequest);
-    }
-
-    public ExtractionsEntity getItemById(Integer id) throws NotFoundException {
-        ExtractionsEntity item = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
-        return item;
+        return ResponseEntity.status(HttpStatus.OK).body("SUCCESS");
     }
 }
 

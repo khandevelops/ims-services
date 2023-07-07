@@ -5,9 +5,12 @@ import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.master.entities.*;
 import com.usdtl.ims.master.repositories.*;
 import com.usdtl.ims.master.requests.AssignRequest;
+import com.usdtl.ims.master.responses.DeleteResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -177,13 +180,14 @@ public class MasterService {
         return masterItem;
     }
 
-    public void deleteItemById(Integer id) {
+    public ResponseEntity<DeleteResponse> deleteItemById(Integer id) {
         boolean exists = repository.existsById(id);
         if(!exists) {
             throw new NotFoundException("Item associated with id: " + id + " not found");
         }
         repository.deleteById(id);
-
+        DeleteResponse deleteResponse = new DeleteResponse("SUCCESS", id);
+        return ResponseEntity.status(HttpStatus.OK).body(deleteResponse);
     }
 
     public Page<MasterEntity> getItemsByPage(Integer page) {

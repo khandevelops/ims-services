@@ -2,6 +2,7 @@ package com.usdtl.ims.master;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.master.requests.AssignRequest;
+import com.usdtl.ims.master.responses.DeleteResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -44,8 +45,8 @@ public class MasterController {
         return service.updateItem(id, request);
     }
 
-    @DeleteMapping(path = "{id}")
-    public void deleteItemById(@PathVariable(value = "id")Integer id) {
-        service.deleteItemById(id);
+    @DeleteMapping(path = "{id}/delete")
+    public ResponseEntity<DeleteResponse> deleteItemById(@PathVariable(value = "id")Integer id) {
+        return service.deleteItemById(id);
     }
 }
