@@ -19,11 +19,6 @@ public class MasterRdController {
         return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
     }
 
-    @GetMapping("list/transformed")
-    public Page<MasterDepartmentResponse> getMasterDepartmentItemsTransformed(@RequestParam Integer page) {
-        return service.getMasterDepartmentItemsTransformed(page);
-    }
-
     @GetMapping("list")
     public Page<MasterRdEntity> getMasterDepartmentItems(@RequestParam Integer page) {
         return service.getMasterDepartmentItems(page);

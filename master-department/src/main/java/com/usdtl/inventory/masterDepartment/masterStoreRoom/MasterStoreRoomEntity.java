@@ -1,7 +1,5 @@
 package com.usdtl.inventory.masterDepartment.masterStoreRoom;
-import com.usdtl.ims.common.exceptions.constants.Category;
-import com.usdtl.inventory.masterDepartment.entities.ScreeningEntity;
-import com.usdtl.inventory.masterDepartment.entities.StoreRoomEntity;
+import com.usdtl.inventory.masterDepartment.common.entities.StoreRoomEntity;
 import lombok.*;
 
 import javax.persistence.*;

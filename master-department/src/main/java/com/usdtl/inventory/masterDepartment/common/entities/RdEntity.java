@@ -1,8 +1,8 @@
-package com.usdtl.inventory.masterDepartment.entities;
+package com.usdtl.inventory.masterDepartment.common.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity;
-import com.usdtl.inventory.masterDepartment.masterQcInternalStandards.MasterQcInternalStandardsEntity;
+import com.usdtl.inventory.masterDepartment.masterRd.MasterRdEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,12 +10,12 @@ import java.util.Date;
 
 @Entity
 @Builder
-@Table(name = "qc_internal_standards")
+@Table(name = "rd")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class QcInternalStandardsEntity {
+public class RdEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -38,5 +38,5 @@ public class QcInternalStandardsEntity {
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "item_id")
     @JsonIgnore
-    private MasterQcInternalStandardsEntity masterItem;
+    private MasterRdEntity masterItem;
 }

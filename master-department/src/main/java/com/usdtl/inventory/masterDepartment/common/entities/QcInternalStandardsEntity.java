@@ -1,8 +1,8 @@
-package com.usdtl.inventory.masterDepartment.entities;
+package com.usdtl.inventory.masterDepartment.common.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity;
-import com.usdtl.inventory.masterDepartment.masterMassSpec.MasterMassSpecEntity;
+import com.usdtl.inventory.masterDepartment.masterQcInternalStandards.MasterQcInternalStandardsEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,12 +10,12 @@ import java.util.Date;
 
 @Entity
 @Builder
-@Table(name = "mass_spec")
+@Table(name = "qc_internal_standards")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class MassSpecEntity {
+public class QcInternalStandardsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -38,5 +38,5 @@ public class MassSpecEntity {
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "item_id")
     @JsonIgnore
-    private MasterMassSpecEntity masterItem;
+    private MasterQcInternalStandardsEntity masterItem;
 }

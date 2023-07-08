@@ -1,7 +1,9 @@
 package com.usdtl.ims.master;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
+import com.usdtl.ims.common.exceptions.constants.Department;
 import com.usdtl.ims.master.requests.AssignRequest;
+import com.usdtl.ims.master.responses.AssignResponse;
 import com.usdtl.ims.master.responses.DeleteResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,9 +37,9 @@ public class MasterController {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
     }
 
-    @PostMapping("assign")
-    public ResponseEntity<MasterEntity> assignItem(@RequestBody AssignRequest assignRequest) {
-        return new ResponseEntity<>(service.assignItem(assignRequest), HttpStatus.CREATED);
+    @PatchMapping("{id}/{department}/assign")
+    public AssignResponse assignItem(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
+        return service.assignItem(id, department);
     }
 
     @PatchMapping(path = "{id}/update")

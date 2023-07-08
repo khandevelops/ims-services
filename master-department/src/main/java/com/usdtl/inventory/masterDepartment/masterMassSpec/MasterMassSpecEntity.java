@@ -1,6 +1,5 @@
 package com.usdtl.inventory.masterDepartment.masterMassSpec;
-import com.usdtl.ims.common.exceptions.constants.Category;
-import com.usdtl.inventory.masterDepartment.entities.MassSpecEntity;
+import com.usdtl.inventory.masterDepartment.common.entities.MassSpecEntity;
 import lombok.*;
 
 import javax.persistence.*;

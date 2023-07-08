@@ -3,6 +3,9 @@ package com.usdtl.inventory.masterDepartment.masterExtractions;
 import com.usdtl.ims.clients.response.DepartmentResponse;
 import com.usdtl.ims.clients.response.MasterDepartmentResponse;
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
+import com.usdtl.ims.common.exceptions.constants.Department;
+import com.usdtl.inventory.masterDepartment.common.entities.ExtractionsEntity;
+import com.usdtl.inventory.masterDepartment.common.repositories.ExtractionsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,23 +18,29 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class MasterExtractionsService {
-    private MasterExtractionsRepository repository;
+    private MasterExtractionsRepository masterExtractionsRepository;
+    private ExtractionsRepository extractionsRepository;
 
     public MasterExtractionsEntity getItemById(Integer id) throws NotFoundException {
-        MasterExtractionsEntity masterItem = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
+        MasterExtractionsEntity masterItem = masterExtractionsRepository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
         return masterItem;
     }
 
     public Page<MasterExtractionsEntity> getMasterDepartmentItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
+        return masterExtractionsRepository.findByDepartmentItemsIsNotEmpty(pageRequest);
+    }
+
+    public Page<MasterExtractionsEntity> getMasterDepartmentItems(String keyword, Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        return masterExtractionsRepository.findAllByItemContainingIgnoreCaseAndPurchase_unitContainingIgnoreCase(keyword, pageRequest);
     }
 
     public Page<MasterDepartmentResponse> getMasterDepartmentItemsTransformed(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         List<MasterDepartmentResponse> masterDepartmentItemResponse = new ArrayList<>();
 
-        List<MasterExtractionsEntity> masterDepartmentItems = (List<MasterExtractionsEntity>) repository.findAll();
+        List<MasterExtractionsEntity> masterDepartmentItems = (List<MasterExtractionsEntity>) masterExtractionsRepository.findAll();
 
         masterDepartmentItems.forEach(masterDepartmentItem -> {
             if(!masterDepartmentItem.getDepartmentItems().isEmpty()) {

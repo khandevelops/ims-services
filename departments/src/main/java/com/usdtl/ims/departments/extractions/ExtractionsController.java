@@ -23,19 +23,15 @@ public class ExtractionsController  {
     public  ResponseEntity<ExtractionsEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
         return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
     }
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<ExtractionsEntity> createItem(@RequestBody DepartmentRequest request) {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
-    }
-    @PatchMapping("update-quantity")
-    public List<ExtractionsEntity> updateQuantity(@RequestBody List<DepartmentRequest> request) {
-        return service.updateQuantity(request);
     }
     @PatchMapping(path = "/{id}/update")
     public ExtractionsEntity updateItemById(@PathVariable(value = "id") Integer id, @RequestBody DepartmentRequest request) {
         return service.updateItemById(id, request);
     }
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "{id}/delete")
     public ResponseEntity<String> deleteItemById(@PathVariable(value = "id")Integer id) {
         return service.deleteItemById(id);
     }

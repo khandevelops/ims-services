@@ -78,22 +78,6 @@ public class MasterRdService {
         return new PageImpl<>(pagedItems, pageRequest, masterDepartmentItemResponse.size());
     }
 
-    private Integer getOrderQuantity(Integer max_quantity, Integer min_quantity, Integer quantity) {
-        if(max_quantity != null && min_quantity != null) {
-            if(min_quantity == 1 && max_quantity == 1) {
-                if(quantity < 1) {
-                    return 1;
-                }
-            } else if(quantity <= min_quantity) {
-                if(max_quantity - min_quantity < 0) {
-                    throw new RuntimeException();
-                }
-                return max_quantity - min_quantity;
-            }
-        }
-        return 0;
-    }
-
     private Integer getTotalQuantity(List<DepartmentResponse> departmentItems) {
         return departmentItems.stream().mapToInt(DepartmentResponse::quantity).sum();
     }

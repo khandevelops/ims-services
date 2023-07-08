@@ -1,18 +1,17 @@
-package com.usdtl.inventory.masterDepartment.masterShipping;
-import com.usdtl.inventory.masterDepartment.common.entities.ShippingEntity;
+package com.usdtl.inventory.masterDepartment.common.entities;
+
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Builder
 @Table(name = "master")
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
-public class MasterShippingEntity {
+public class MasterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -49,6 +48,4 @@ public class MasterShippingEntity {
     private String group;
     @Column(name = "drug_class")
     private String drug_class;
-    @OneToMany(mappedBy = "masterItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ShippingEntity> departmentItems;
 }

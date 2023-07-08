@@ -2,6 +2,7 @@ package com.usdtl.inventory.masterDepartment.masterExtractions;
 
 import com.usdtl.ims.clients.response.MasterDepartmentResponse;
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
+import com.usdtl.ims.common.exceptions.constants.Department;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,6 @@ public class MasterExtractionsController {
     @GetMapping(path = "{id}")
     public  ResponseEntity<MasterExtractionsEntity> getMasterExtractionsItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
         return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
-    }
-
-    @GetMapping("list/transformed")
-    public Page<MasterDepartmentResponse> getMasterDepartmentItemsTransformed(@RequestParam Integer page) {
-        return service.getMasterDepartmentItemsTransformed(page);
     }
 
     @GetMapping("list")

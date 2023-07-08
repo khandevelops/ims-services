@@ -5,6 +5,7 @@ import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.master.entities.*;
 import com.usdtl.ims.master.repositories.*;
 import com.usdtl.ims.master.requests.AssignRequest;
+import com.usdtl.ims.master.responses.AssignResponse;
 import com.usdtl.ims.master.responses.DeleteResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -97,17 +98,11 @@ public class MasterService {
                     requestOfficeSupplyRepository.save(requestOfficeSupplyEntity);
                 }
             });
-
-
         }
-
         return newMasterItem;
     };
 
-    public MasterEntity assignItem(AssignRequest assignRequest) {
-        Integer masterItemId = assignRequest.masterItemId();
-        Department departmentName = assignRequest.department();
-
+    public AssignResponse assignItem(Integer masterItemId, Department departmentName) {
         MasterEntity masterItem = repository.findById(masterItemId).orElseThrow();
         if(departmentName == Department.EXTRACTIONS) {
             ExtractionsEntity extractionsItem = new ExtractionsEntity();
@@ -154,7 +149,7 @@ public class MasterService {
             requestOfficeSupplyEntity.setMasterItem(masterItem);
             requestOfficeSupplyRepository.save(requestOfficeSupplyEntity);
         }
-        return masterItem;
+        return new AssignResponse(departmentName, masterItem);
     }
 
     public MasterEntity updateItem(Integer id, MasterEntity request) {

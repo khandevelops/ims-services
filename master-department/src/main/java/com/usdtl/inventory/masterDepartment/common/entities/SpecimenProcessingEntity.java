@@ -1,8 +1,8 @@
-package com.usdtl.inventory.masterDepartment.entities;
+package com.usdtl.inventory.masterDepartment.common.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity;
-import com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityEntity;
+import com.usdtl.inventory.masterDepartment.masterSpecimenProcessing.MasterSpecimenProcessingEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,12 +10,12 @@ import java.util.Date;
 
 @Entity
 @Builder
-@Table(name = "quality")
+@Table(name = "specimen_processing")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class QualityEntity {
+public class SpecimenProcessingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -38,5 +38,5 @@ public class QualityEntity {
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "item_id")
     @JsonIgnore
-    private MasterQualityEntity masterItem;
+    private MasterSpecimenProcessingEntity masterItem;
 }
