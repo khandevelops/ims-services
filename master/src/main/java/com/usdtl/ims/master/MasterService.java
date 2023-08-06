@@ -10,6 +10,8 @@ import com.usdtl.ims.master.responses.DeleteResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,19 +35,20 @@ public class MasterService {
         MasterEntity newMasterItem = MasterEntity.builder()
                 .item(request.masterItem().getItem())
                 .manufacturer(request.masterItem().getManufacturer())
-                .part_number(request.masterItem().getPart_number())
-                .recent_cn(request.masterItem().getRecent_cn())
-                .recent_vendor(request.masterItem().getRecent_vendor())
-                .fisher_cn(request.masterItem().getFisher_cn())
-                .vwr_cn(request.masterItem().getVwr_cn())
-                .lab_source_cn(request.masterItem().getLab_source_cn())
-                .other_cn(request.masterItem().getOther_cn())
-                .purchase_unit(request.masterItem().getPurchase_unit())
-                .unit_price(request.masterItem().getUnit_price())
+                .partNumber(request.masterItem().getPartNumber())
+                .recentCN(request.masterItem().getRecentCN())
+                .recentVendor(request.masterItem().getRecentVendor())
+                .fisherCN(request.masterItem().getFisherCN())
+                .vwrCN(request.masterItem().getVwrCN())
+                .labSourceCN(request.masterItem().getLabSourceCN())
+                .otherCN(request.masterItem().getOtherCN())
+                .purchaseUnit(request.masterItem().getPurchaseUnit())
+                .unitPrice(request.masterItem().getUnitPrice())
                 .category(request.masterItem().getCategory())
                 .comment(request.masterItem().getComment())
-                .type(request.masterItem().getType())
-                .group(request.masterItem().getGroup())
+                .itemType(request.masterItem().getItemType())
+                .itemGroup(request.masterItem().getItemGroup())
+                .drugClass(request.masterItem().getDrugClass())
                 .build();
 
         repository.save(newMasterItem);
@@ -156,19 +159,20 @@ public class MasterService {
         MasterEntity masterItem = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
         masterItem.setItem(request.getItem());
         masterItem.setManufacturer(request.getManufacturer());
-        masterItem.setPart_number(request.getPart_number());
-        masterItem.setRecent_cn(request.getRecent_cn());
-        masterItem.setRecent_vendor(request.getRecent_vendor());
-        masterItem.setFisher_cn(request.getFisher_cn());
-        masterItem.setVwr_cn(request.getVwr_cn());
-        masterItem.setLab_source_cn(request.getLab_source_cn());
-        masterItem.setOther_cn(request.getOther_cn());
-        masterItem.setPurchase_unit(request.getPurchase_unit());
-        masterItem.setUnit_price(request.getUnit_price());
+        masterItem.setPartNumber(request.getPartNumber());
+        masterItem.setRecentCN(request.getRecentCN());
+        masterItem.setRecentVendor(request.getRecentVendor());
+        masterItem.setFisherCN(request.getFisherCN());
+        masterItem.setVwrCN(request.getVwrCN());
+        masterItem.setLabSourceCN(request.getLabSourceCN());
+        masterItem.setOtherCN(request.getOtherCN());
+        masterItem.setPurchaseUnit(request.getPurchaseUnit());
+        masterItem.setUnitPrice(request.getUnitPrice());
         masterItem.setCategory(request.getCategory());
         masterItem.setComment(request.getComment());
-        masterItem.setType(request.getType());
-        masterItem.setGroup(request.getGroup());
+        masterItem.setItemType(request.getItemType());
+        masterItem.setItemGroup(request.getItemGroup());
+        masterItem.setDrugClass(request.getDrugClass());
 
         repository.save(masterItem);
 
@@ -184,16 +188,30 @@ public class MasterService {
         DeleteResponse deleteResponse = new DeleteResponse("SUCCESS", id);
         return ResponseEntity.status(HttpStatus.OK).body(deleteResponse);
     }
-
-    public Page<MasterEntity> getItemsByPage(Integer page) {
-        PageRequest pageRequest = PageRequest.of(page, 10);
+    public Page<MasterEntity> getItems(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10, Sort.by("id").ascending());
         return repository.findAll(pageRequest);
+    }
 
+    public Page<MasterEntity> sorItems(Integer page, String column, String direction) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        if(direction.isEmpty()) {
+            Sort sort = Sort.by("id").ascending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        if(direction.equals("ASC")) {
+            Sort sort = Sort.by(column).ascending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        if(direction.equals("DESC")) {
+            Sort sort = Sort.by(column).descending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        return repository.findAll(pageRequest);
     }
 
     public MasterEntity getItemById(Integer id) throws NotFoundException {
-        MasterEntity masterItem = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
-        return masterItem;
+        return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
 
     public Page<MasterEntity> getItemsByKeyword(String keyword, Integer page) {

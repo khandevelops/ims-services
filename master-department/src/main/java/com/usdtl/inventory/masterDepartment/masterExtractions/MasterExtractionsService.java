@@ -33,7 +33,7 @@ public class MasterExtractionsService {
 
     public Page<MasterExtractionsEntity> getMasterDepartmentItems(String keyword, Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        return masterExtractionsRepository.findAllByItemContainingIgnoreCaseAndPurchase_unitContainingIgnoreCase(keyword, pageRequest);
+        return masterExtractionsRepository.findAllByKeyword(keyword, pageRequest);
     }
 
     public Page<MasterDepartmentResponse> getMasterDepartmentItemsTransformed(Integer page) {
@@ -60,23 +60,21 @@ public class MasterExtractionsService {
                         .id(masterDepartmentItem.getId())
                         .item(masterDepartmentItem.getItem())
                         .manufacturer(masterDepartmentItem.getManufacturer())
-                        .part_number(masterDepartmentItem.getPart_number())
-                        .recent_cn(masterDepartmentItem.getRecent_cn())
-                        .recent_vendor(masterDepartmentItem.getRecent_vendor())
-                        .fisher_cn(masterDepartmentItem.getFisher_cn())
-                        .vwr_cn(masterDepartmentItem.getVwr_cn())
-                        .lab_source_cn(masterDepartmentItem.getLab_source_cn())
-                        .other_cn(masterDepartmentItem.getOther_cn())
-                        .purchase_unit(masterDepartmentItem.getPurchase_unit())
-                        .average_unit_price(masterDepartmentItem.getUnit_price())
+                        .partNumber(masterDepartmentItem.getPartNumber())
+                        .recentCN(masterDepartmentItem.getRecentCN())
+                        .recentVendor(masterDepartmentItem.getRecentVendor())
+                        .fisherCN(masterDepartmentItem.getFisherCN())
+                        .vwrCN(masterDepartmentItem.getVwrCN())
+                        .labSourceCN(masterDepartmentItem.getLabSourceCN())
+                        .otherCN(masterDepartmentItem.getOtherCN())
+                        .purchaseUnit(masterDepartmentItem.getPurchaseUnit())
+                        .unitPrice(masterDepartmentItem.getUnitPrice())
                         .category(masterDepartmentItem.getCategory())
                         .comment(masterDepartmentItem.getComment())
-                        .type(masterDepartmentItem.getType())
-                        .group(masterDepartmentItem.getGroup())
-                        .drug_class(masterDepartmentItem.getDrug_class())
+                        .itemType(masterDepartmentItem.getItemType())
+                        .itemGroup(masterDepartmentItem.getItemGroup())
+                        .druClass(masterDepartmentItem.getDrugClass())
                         .departmentItems(departmentItems)
-                        .total_price(getTotalQuantity(departmentItems) * masterDepartmentItem.getUnit_price())
-                        .total_quantity(getTotalQuantity(departmentItems))
                         .build();
                 masterDepartmentItemResponse.add(masterDepartmentResponseItem);
             }

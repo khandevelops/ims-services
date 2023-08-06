@@ -18,8 +18,7 @@ public class MasterStoreRoomService {
     private MasterStoreRoomRepository repository;
 
     public MasterStoreRoomEntity getItemById(Integer id) throws NotFoundException {
-        MasterStoreRoomEntity masterItem = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
-        return masterItem;
+        return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
 
     public Page<MasterStoreRoomEntity> getMasterDepartmentItems(Integer page) {
@@ -51,23 +50,21 @@ public class MasterStoreRoomService {
                         .id(masterDepartmentItem.getId())
                         .item(masterDepartmentItem.getItem())
                         .manufacturer(masterDepartmentItem.getManufacturer())
-                        .part_number(masterDepartmentItem.getPart_number())
-                        .recent_cn(masterDepartmentItem.getRecent_cn())
-                        .recent_vendor(masterDepartmentItem.getRecent_vendor())
-                        .fisher_cn(masterDepartmentItem.getFisher_cn())
-                        .vwr_cn(masterDepartmentItem.getVwr_cn())
-                        .lab_source_cn(masterDepartmentItem.getLab_source_cn())
-                        .other_cn(masterDepartmentItem.getOther_cn())
-                        .purchase_unit(masterDepartmentItem.getPurchase_unit())
-                        .average_unit_price(masterDepartmentItem.getUnit_price())
+                        .partNumber(masterDepartmentItem.getPartNumber())
+                        .recentCN(masterDepartmentItem.getRecentCN())
+                        .recentVendor(masterDepartmentItem.getRecentVendor())
+                        .fisherCN(masterDepartmentItem.getFisherCN())
+                        .vwrCN(masterDepartmentItem.getVwrCN())
+                        .labSourceCN(masterDepartmentItem.getLabSourceCN())
+                        .otherCN(masterDepartmentItem.getOtherCN())
+                        .purchaseUnit(masterDepartmentItem.getPurchaseUnit())
+                        .unitPrice(masterDepartmentItem.getUnitPrice())
                         .category(masterDepartmentItem.getCategory())
                         .comment(masterDepartmentItem.getComment())
-                        .type(masterDepartmentItem.getType())
-                        .group(masterDepartmentItem.getGroup())
-                        .drug_class(masterDepartmentItem.getDrug_class())
+                        .itemType(masterDepartmentItem.getItemType())
+                        .itemGroup(masterDepartmentItem.getItemGroup())
+                        .druClass(masterDepartmentItem.getDrugClass())
                         .departmentItems(departmentItems)
-                        .total_price(getTotalQuantity(departmentItems) * masterDepartmentItem.getUnit_price())
-                        .total_quantity(getTotalQuantity(departmentItems))
                         .build();
                 masterDepartmentItemResponse.add(masterDepartmentResponseItem);
             }

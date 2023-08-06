@@ -21,10 +21,13 @@ public class MasterController {
     public Page<MasterEntity> getItemsByKeyword(@RequestParam String keyword, @RequestParam Integer page) {
         return service.getItemsByKeyword(keyword, page);
     }
-
+    @GetMapping("sort")
+    public Page<MasterEntity> getItemsByPage(@RequestParam Integer page, @RequestParam String column, @RequestParam String direction) {
+        return service.sorItems(page, column, direction);
+    }
     @GetMapping("list")
     public Page<MasterEntity> getItemsByPage(@RequestParam Integer page) {
-        return service.getItemsByPage(page);
+        return service.getItems(page);
     }
 
     @GetMapping(path = "{id}")

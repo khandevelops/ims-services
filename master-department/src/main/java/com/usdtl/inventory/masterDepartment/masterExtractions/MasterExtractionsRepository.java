@@ -27,5 +27,5 @@ public interface MasterExtractionsRepository extends PagingAndSortingRepository<
             + " OR m.group LIKE %?1%"
             + " OR m.comment LIKE %?1%"
     )
-    Page<MasterExtractionsEntity> findAllByItemContainingIgnoreCaseAndPurchase_unitContainingIgnoreCase(String keyword, Pageable pageable);
+    Page<MasterExtractionsEntity> findAllByKeyword(String keyword, Pageable pageable);
 }

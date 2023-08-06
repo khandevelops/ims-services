@@ -21,34 +21,34 @@ public class MasterExtractionsEntity {
     private String item;
     @Column(name = "manufacturer")
     private String manufacturer;
-    @Column(name = "part_number")
-    private String part_number;
-    @Column(name = "recent_cn")
-    private String recent_cn;
-    @Column(name = "recent_vendor")
-    private String recent_vendor;
-    @Column(name = "fisher_cn")
-    private String fisher_cn;
-    @Column(name = "vwr_cn")
-    private String vwr_cn;
-    @Column(name = "lab_source_cn")
-    private String lab_source_cn;
-    @Column(name = "other_cn")
-    private String other_cn;
-    @Column(name = "purchase_unit")
-    private String purchase_unit;
-    @Column(name = "unit_price")
-    private Double unit_price;
+    @Column(name = "partNumber")
+    private String partNumber;
+    @Column(name = "recentCN")
+    private String recentCN;
+    @Column(name = "recentVendor")
+    private String recentVendor;
+    @Column(name = "fisherCN")
+    private String fisherCN;
+    @Column(name = "vwrCN")
+    private String vwrCN;
+    @Column(name = "labSourceCN")
+    private String labSourceCN;
+    @Column(name = "otherCN")
+    private String otherCN;
+    @Column(name = "purchaseUnit")
+    private String purchaseUnit;
+    @Column(name = "unitPrice")
+    private Double unitPrice;
     @Column(name = "category")
     private String category;
     @Column(name = "comment")
     private String comment;
-    @Column(name = "[type]")
-    private String type;
-    @Column(name = "[group]")
-    private String group;
-    @Column(name = "drug_class")
-    private String drug_class;
+    @Column(name = "itemType")
+    private String itemType;
+    @Column(name = "itemGroup")
+    private String itemGroup;
+    @Column(name = "drugClass")
+    private String drugClass;
     @OneToMany(mappedBy = "masterItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ExtractionsEntity> departmentItems;
 }
