@@ -1,7 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterExtractions;
-import com.usdtl.inventory.masterDepartment.common.entities.ExtractionsEntity;
-import lombok.*;
 
+import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
@@ -49,6 +48,6 @@ public class MasterExtractionsEntity {
     private String itemGroup;
     @Column(name = "drugClass")
     private String drugClass;
-    @OneToMany(mappedBy = "masterItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ExtractionsEntity> departmentItems;
 }

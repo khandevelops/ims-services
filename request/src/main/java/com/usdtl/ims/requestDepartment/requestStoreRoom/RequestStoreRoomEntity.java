@@ -1,6 +1,6 @@
 package com.usdtl.ims.requestDepartment.requestStoreRoom;
 
-import com.usdtl.ims.requestDepartment.master.MasterEntity;
+import com.usdtl.ims.master.MasterEntity;
 import lombok.*;
 
 import javax.persistence.*;

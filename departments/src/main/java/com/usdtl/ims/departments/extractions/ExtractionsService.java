@@ -1,8 +1,6 @@
 package com.usdtl.ims.departments.extractions;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
-import com.usdtl.ims.departments.department.DepartmentRequest;
-import com.usdtl.ims.departments.master.MasterRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,67 +15,46 @@ import java.util.List;
 @AllArgsConstructor
 public class ExtractionsService {
     private ExtractionsRepository repository;
-    private MasterRepository masterRepository;
-    public ExtractionsEntity createItem(DepartmentRequest request) {
+    public ExtractionsEntity createItem(ExtractionsEntity request) {
         ExtractionsEntity newItem = ExtractionsEntity.builder()
-                .location(request.location())
-                .quantity(request.quantity())
-                .minimum_quantity(request.min_quantity())
-                .maximum_quantity(request.max_quantity())
-                .usage_level(request.usage_level())
-                .lot_number(request.lot_number())
-                .expiration_date(request.expiration_date())
-                .received_date(request.received_date())
+                .location(request.getLocation())
+                .quantity(request.getQuantity())
+                .minimumQuantity(request.getMinimumQuantity())
+                .maximumQuantity(request.getMaximumQuantity())
+                .usageLevel(request.getUsageLevel())
+                .lotNumber(request.getLotNumber())
+                .expirationDate(request.getExpirationDate())
+                .receivedDate(request.getReceivedDate())
                 .build();
 
         repository.save(newItem);
         return newItem;
     };
 
-    public ExtractionsEntity updateItemById(Integer id, DepartmentRequest request) {
+    public ExtractionsEntity updateItem(Integer id, ExtractionsEntity request) {
         ExtractionsEntity item = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
-        item.setLocation(request.location());
-        item.setQuantity(request.quantity());
-        item.setMinimum_quantity(request.min_quantity());
-        item.setMaximum_quantity(request.max_quantity());
-        item.setUsage_level(request.usage_level());
-        item.setLot_number(request.lot_number());
-        item.setExpiration_date(request.expiration_date());
-        item.setReceived_date(request.received_date());
+        item.setLocation(request.getLocation());
+        item.setQuantity(request.getQuantity());
+        item.setMinimumQuantity(request.getMinimumQuantity());
+        item.setMaximumQuantity(request.getMaximumQuantity());
+        item.setUsageLevel(request.getUsageLevel());
+        item.setLotNumber(request.getLotNumber());
+        item.setExpirationDate(request.getExpirationDate());
+        item.setReceivedDate(request.getReceivedDate());
 
         repository.save(item);
 
         return item;
     }
 
-    public List<ExtractionsEntity> updateQuantity(List<DepartmentRequest> request) {
-        List<ExtractionsEntity> updateItems = new ArrayList<>();
-        request.forEach(departmentItem -> {
-            ExtractionsEntity item = repository.findById(departmentItem.id()).orElseThrow(() -> new NotFoundException("Item associated with id: " + departmentItem.id() + " not found"));
-            item.setLocation(departmentItem.location());
-            item.setQuantity(departmentItem.quantity());
-            item.setMinimum_quantity(departmentItem.min_quantity());
-            item.setMaximum_quantity(departmentItem.max_quantity());
-            item.setUsage_level(departmentItem.usage_level());
-            item.setLot_number(departmentItem.lot_number());
-            item.setExpiration_date(departmentItem.expiration_date());
-            item.setReceived_date(departmentItem.received_date());
-
-            updateItems.add(item);
-            repository.save(item);
-        });
-
-        return updateItems;
-    }
-    public Page<ExtractionsEntity> getItemsByPage(Integer page) {
+    public Page<ExtractionsEntity> getItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAll(pageRequest);
     }
-    public ExtractionsEntity getItemById(Integer id) throws NotFoundException {
-        ExtractionsEntity item = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
-        return item;
+    public ExtractionsEntity getItem(Integer id) throws NotFoundException {
+        return  repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
-    public ResponseEntity<String> deleteItemById(Integer id) {
+    public ResponseEntity<String> deleteItem(Integer id) {
         boolean exists = repository.existsById(id);
         if(!exists) {
             throw new NotFoundException("Item associated with id: " + id + " not found");

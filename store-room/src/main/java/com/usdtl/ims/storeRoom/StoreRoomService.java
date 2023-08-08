@@ -24,19 +24,18 @@ public class StoreRoomService {
     }
 
     public StoreRoomEntity getItem(Integer id) throws NotFoundException {
-        StoreRoomEntity item = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
-        return item;
+        return  repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
     public StoreRoomEntity createItem(StoreRoomEntity request) {
         StoreRoomEntity newItem = StoreRoomEntity.builder()
                 .location(request.getLocation())
                 .quantity(request.getQuantity())
-                .minimum_quantity(request.getMinimum_quantity())
-                .maximum_quantity(request.getMaximum_quantity())
-                .usage_level(request.getUsage_level())
-                .lot_number(request.getLot_number())
-                .expiration_date(request.getExpiration_date())
-                .received_date(request.getReceived_date())
+                .minimumQuantity(request.getMinimumQuantity())
+                .maximumQuantity(request.getMaximumQuantity())
+                .usageLevel(request.getUsageLevel())
+                .lotNumber(request.getLotNumber())
+                .expirationDate(request.getExpirationDate())
+                .receivedDate(request.getReceivedDate())
                 .build();
 
         repository.save(newItem);
@@ -47,37 +46,16 @@ public class StoreRoomService {
         StoreRoomEntity item = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
         item.setLocation(request.getLocation());
         item.setQuantity(request.getQuantity());
-        item.setMinimum_quantity(request.getMinimum_quantity());
-        item.setMaximum_quantity(request.getMaximum_quantity());
-        item.setUsage_level(request.getUsage_level());
-        item.setLot_number(request.getLot_number());
-        item.setExpiration_date(request.getExpiration_date());
-        item.setReceived_date(request.getReceived_date());
+        item.setMinimumQuantity(request.getMinimumQuantity());
+        item.setMaximumQuantity(request.getMaximumQuantity());
+        item.setUsageLevel(request.getUsageLevel());
+        item.setLotNumber(request.getLotNumber());
+        item.setExpirationDate(request.getExpirationDate());
+        item.setReceivedDate(request.getReceivedDate());
 
         repository.save(item);
 
         return item;
-    }
-
-    public List<StoreRoomEntity> updateItems(List<StoreRoomEntity> request) {
-        List<StoreRoomEntity> updateItems = new ArrayList<>();
-        request.forEach(departmentItem -> {
-            StoreRoomEntity item = repository.findById(departmentItem.getId()).orElseThrow(() ->
-                    new NotFoundException("Item associated with id: " + departmentItem.getId() + " not found"));
-            item.setLocation(departmentItem.getLocation());
-            item.setQuantity(departmentItem.getQuantity());
-            item.setMinimum_quantity(departmentItem.getMinimum_quantity());
-            item.setMaximum_quantity(departmentItem.getMaximum_quantity());
-            item.setUsage_level(departmentItem.getUsage_level());
-            item.setLot_number(departmentItem.getLot_number());
-            item.setExpiration_date(departmentItem.getExpiration_date());
-            item.setReceived_date(departmentItem.getReceived_date());
-
-            updateItems.add(item);
-            repository.save(item);
-        });
-
-        return updateItems;
     }
     public void deleteItem(Integer id) {
         boolean exists = repository.existsById(id);

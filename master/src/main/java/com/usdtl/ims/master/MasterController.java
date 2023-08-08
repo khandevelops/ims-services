@@ -36,13 +36,8 @@ public class MasterController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<MasterEntity> createItem(@RequestBody MasterRequest request) {
+    public ResponseEntity<MasterEntity> createItem(@RequestBody MasterEntity request) {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
-    }
-
-    @PatchMapping("{id}/{department}/assign")
-    public AssignResponse assignItem(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
-        return service.assignItem(id, department);
     }
 
     @PatchMapping(path = "{id}/update")

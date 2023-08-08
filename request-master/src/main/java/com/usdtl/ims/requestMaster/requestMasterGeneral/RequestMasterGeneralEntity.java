@@ -3,7 +3,7 @@ package com.usdtl.ims.requestMaster.requestMasterGeneral;
 import com.usdtl.ims.common.exceptions.constants.Confirmation;
 import com.usdtl.ims.common.exceptions.constants.Department;
 import com.usdtl.ims.common.exceptions.constants.Status;
-import com.usdtl.ims.requestMaster.master.MasterEntity;
+import com.usdtl.ims.master.MasterEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

@@ -16,27 +16,23 @@ import java.util.List;
 public class QualityController {
     private QualityService service;
     @GetMapping("list")
-    public Page<QualityEntity> getItemsByPage(@RequestParam Integer page) {
-        return service.getItemsByPage(page);
+    public Page<QualityEntity> getItems(@RequestParam Integer page) {
+        return service.getItems(page);
     }
     @GetMapping(path = "{id}")
-    public ResponseEntity<QualityEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
-        return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
+    public ResponseEntity<QualityEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
+        return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<QualityEntity> createItem(@RequestBody DepartmentRequest request) {
+    public ResponseEntity<QualityEntity> createItem(@RequestBody QualityEntity request) {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
     }
-    @PatchMapping("update-quantity")
-    public List<QualityEntity> updateQuantity(@RequestBody List<DepartmentRequest> request) {
-        return service.updateQuantity(request);
-    }
     @PatchMapping(path = "{id}")
-    public QualityEntity updateItemById(@PathVariable(value = "id") Integer id, @RequestBody DepartmentRequest request) {
-        return service.updateItemById(id, request);
+    public QualityEntity updateItem(@PathVariable(value = "id") Integer id, @RequestBody QualityEntity request) {
+        return service.updateItem(id, request);
     }
     @DeleteMapping(path = "{id}")
-    public void deleteItemById(@PathVariable(value = "id")Integer id) {
-        service.deleteItemById(id);
+    public void deleteItem(@PathVariable(value = "id")Integer id) {
+        service.deleteItem(id);
     }
 }

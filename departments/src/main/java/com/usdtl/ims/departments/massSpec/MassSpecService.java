@@ -2,6 +2,7 @@ package com.usdtl.ims.departments.massSpec;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.departments.department.DepartmentRequest;
+import com.usdtl.ims.departments.extractions.ExtractionsEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,59 +15,39 @@ import java.util.List;
 @AllArgsConstructor
 public class MassSpecService {
     private MassSpecRepository repository;
-    public MassSpecEntity createItem(DepartmentRequest request) {
+    public MassSpecEntity createItem(MassSpecEntity request) {
         MassSpecEntity newItem = MassSpecEntity.builder()
-                .location(request.location())
-                .quantity(request.quantity())
-                .minimum_quantity(request.min_quantity())
-                .maximum_quantity(request.max_quantity())
-                .usage_level(request.usage_level())
-                .lot_number(request.lot_number())
-                .expiration_date(request.expiration_date())
-                .received_date(request.received_date())
+                .location(request.getLocation())
+                .quantity(request.getQuantity())
+                .minimumQuantity(request.getMinimumQuantity())
+                .maximumQuantity(request.getMaximumQuantity())
+                .usageLevel(request.getUsageLevel())
+                .lotNumber(request.getLotNumber())
+                .expirationDate(request.getExpirationDate())
+                .receivedDate(request.getReceivedDate())
                 .build();
 
         repository.save(newItem);
         return newItem;
     };
 
-    public MassSpecEntity updateItemById(Integer id, DepartmentRequest request) {
+    public MassSpecEntity updateItem(Integer id, MassSpecEntity request) {
         MassSpecEntity item = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
-        item.setLocation(request.location());
-        item.setQuantity(request.quantity());
-        item.setMinimum_quantity(request.min_quantity());
-        item.setMaximum_quantity(request.max_quantity());
-        item.setUsage_level(request.usage_level());
-        item.setLot_number(request.lot_number());
-        item.setExpiration_date(request.expiration_date());
-        item.setReceived_date(request.received_date());
+        item.setLocation(request.getLocation());
+        item.setQuantity(request.getQuantity());
+        item.setMinimumQuantity(request.getMinimumQuantity());
+        item.setMaximumQuantity(request.getMaximumQuantity());
+        item.setUsageLevel(request.getUsageLevel());
+        item.setLotNumber(request.getLotNumber());
+        item.setExpirationDate(request.getExpirationDate());
+        item.setReceivedDate(request.getReceivedDate());
 
         repository.save(item);
 
         return item;
     }
 
-    public List<MassSpecEntity> updateQuantity(List<DepartmentRequest> request) {
-        List<MassSpecEntity> updateItems = new ArrayList<>();
-        request.forEach(departmentItem -> {
-            MassSpecEntity item = repository.findById(departmentItem.id()).orElseThrow(() -> new NotFoundException("Item associated with id: " + departmentItem.id() + " not found"));
-            item.setLocation(departmentItem.location());
-            item.setQuantity(departmentItem.quantity());
-            item.setMinimum_quantity(departmentItem.min_quantity());
-            item.setMaximum_quantity(departmentItem.max_quantity());
-            item.setUsage_level(departmentItem.usage_level());
-            item.setLot_number(departmentItem.lot_number());
-            item.setExpiration_date(departmentItem.expiration_date());
-            item.setReceived_date(departmentItem.received_date());
-
-            updateItems.add(item);
-            repository.save(item);
-        });
-
-        return updateItems;
-    }
-
-    public void deleteItemById(Integer id) {
+    public void deleteItem(Integer id) {
         boolean exists = repository.existsById(id);
         if(!exists) {
             throw new NotFoundException("Item associated with id: " + id + " not found");
@@ -75,13 +56,12 @@ public class MassSpecService {
 
     }
 
-    public Page<MassSpecEntity> getItemsByPage(Integer page) {
+    public Page<MassSpecEntity> getItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAll(pageRequest);
     }
 
-    public MassSpecEntity getItemById(Integer id) throws NotFoundException {
-        MassSpecEntity item = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
-        return item;
+    public MassSpecEntity getItem(Integer id) throws NotFoundException {
+        return  repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
 }

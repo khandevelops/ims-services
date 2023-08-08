@@ -1,7 +1,5 @@
 package com.usdtl.inventory.masterDepartment.masterRd;
 
-import com.usdtl.inventory.masterDepartment.masterMassSpec.MasterMassSpecEntity;
-import com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MasterRdRepository extends PagingAndSortingRepository<MasterRdEntity, Integer> {
     Page<MasterRdEntity> findByDepartmentItemsIsNotEmpty(Pageable pageable);
-    @Query(value = "SELECT m FROM MasterEntity AS m WHERE "
+    @Query(value = "SELECT m FROM MasterRdEntity AS m WHERE "
             + "m.item LIKE %?1%"
             + " OR m.purchaseUnit LIKE %?1%"
             + " OR m.manufacturer LIKE %?1%"

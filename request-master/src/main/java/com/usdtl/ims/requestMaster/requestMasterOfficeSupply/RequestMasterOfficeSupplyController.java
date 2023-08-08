@@ -5,6 +5,7 @@ import com.usdtl.ims.requestMaster.request.RequestMasterTransformedDepartmentReq
 import com.usdtl.ims.requestMaster.request.RequestMasterTransformedDepartmentResponse;
 import com.usdtl.ims.requestMaster.request.RequestMasterTransformedResponse;
 import com.usdtl.ims.requestMaster.requestMasterGeneral.RequestMasterGeneralEntity;
+import com.usdtl.ims.requestMaster.requestMasterStoreRoom.RequestMasterStoreRoomEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -20,19 +21,19 @@ public class RequestMasterOfficeSupplyController {
 
     private RequestMasterOfficeSupplyService service;
 
-    @GetMapping("list/transformed")
-    public Page<RequestMasterTransformedResponse> getRequestMasterTransformedItemsByPage(@RequestParam Integer page) {
-        return service.getRequestMasterTransformedItemsByPage(page);
+    @GetMapping("list")
+    public Page<RequestMasterOfficeSupplyEntity> getItems(@RequestParam Integer page) {
+        return service.getItems(page);
     }
 
-    @GetMapping("list/transformed/pending")
-    public Page<RequestMasterTransformedDepartmentResponse> getRequestMasterPendingTransformedItemsByPage(@RequestParam Integer page) {
-        return service.getRequestMasterPendingTransformedItemsByPage(page);
+    @GetMapping("list/pending")
+    public Page<RequestMasterOfficeSupplyEntity> getPendingItems(@RequestParam Integer page) {
+        return service.getPendingItems(page);
     }
 
-    @GetMapping("list/transformed/complete")
-    public Page<RequestMasterTransformedDepartmentResponse> getRequestMasterCompleteTransformedItemsByPage(@RequestParam Integer page) {
-        return service.getRequestMasterCompleteTransformedItemsByPage(page);
+    @GetMapping("list/complete")
+    public Page<RequestMasterOfficeSupplyEntity> getCompleteItems(@RequestParam Integer page) {
+        return service.getPendingItems(page);
     }
 
     @PostMapping("create")

@@ -16,12 +16,22 @@ public class MasterExtractionsController {
     private MasterExtractionsService service;
 
     @GetMapping(path = "{id}")
-    public  ResponseEntity<MasterExtractionsEntity> getMasterExtractionsItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
+    public  ResponseEntity<MasterExtractionsEntity> getMasterExtractionsItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
         return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
     }
 
     @GetMapping("list")
     public Page<MasterExtractionsEntity> getMasterDepartmentItems(@RequestParam Integer page) {
         return service.getMasterDepartmentItems(page);
+    }
+
+    @PostMapping("create/{department}")
+    public MasterExtractionsEntity create(@RequestBody MasterExtractionsEntity request, @PathVariable(value = "department") Department department) {
+        return create(request, department);
+    }
+
+    @PostMapping("assign/{id}/{department}")
+    public MasterExtractionsEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
+        return assign(id, department);
     }
 }

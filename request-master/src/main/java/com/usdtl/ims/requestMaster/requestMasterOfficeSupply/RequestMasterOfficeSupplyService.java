@@ -6,15 +6,14 @@ import com.usdtl.ims.clients.RequestItemRequest;
 import com.usdtl.ims.common.exceptions.constants.Confirmation;
 import com.usdtl.ims.common.exceptions.constants.Status;
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
-import com.usdtl.ims.requestMaster.master.MasterEntity;
-import com.usdtl.ims.requestMaster.master.MasterRepository;
+import com.usdtl.ims.master.MasterEntity;
+import com.usdtl.ims.master.MasterRepository;
 import com.usdtl.ims.requestMaster.request.RequestMasterTransformedDepartmentRequest;
 import com.usdtl.ims.requestMaster.request.RequestMasterTransformedDepartmentResponse;
 import com.usdtl.ims.requestMaster.request.RequestMasterTransformedResponse;
 import com.usdtl.ims.requestMaster.requestMasterGeneral.RequestMasterGeneralEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -100,19 +99,20 @@ public class RequestMasterOfficeSupplyService {
                     .id(item.getMasterItem().getId())
                     .item(item.getMasterItem().getItem())
                     .manufacturer(item.getMasterItem().getManufacturer())
-                    .part_number(item.getMasterItem().getPart_number())
-                    .recent_cn(item.getMasterItem().getRecent_cn())
-                    .recent_vendor(item.getMasterItem().getRecent_vendor())
-                    .fisher_cn(item.getMasterItem().getFisher_cn())
-                    .vwr_cn(item.getMasterItem().getVwr_cn())
-                    .lab_source_cn(item.getMasterItem().getLab_source_cn())
-                    .other_cn(item.getMasterItem().getLab_source_cn())
-                    .purchase_unit(item.getMasterItem().getPurchase_unit())
-                    .unit_price(item.getMasterItem().getUnit_price())
+                    .partNumber(item.getMasterItem().getPartNumber())
+                    .recentCN(item.getMasterItem().getRecentCN())
+                    .recentVendor(item.getMasterItem().getRecentVendor())
+                    .fisherCN(item.getMasterItem().getFisherCN())
+                    .vwrCN(item.getMasterItem().getVwrCN())
+                    .labSourceCN(item.getMasterItem().getLabSourceCN())
+                    .otherCN(item.getMasterItem().getOtherCN())
+                    .purchaseUnit(item.getMasterItem().getPurchaseUnit())
+                    .unitPrice(item.getMasterItem().getUnitPrice())
                     .category(item.getMasterItem().getCategory())
                     .comment(item.getMasterItem().getComment())
-                    .type(item.getMasterItem().getType())
-                    .group(item.getMasterItem().getGroup())
+                    .itemType(item.getMasterItem().getItemType())
+                    .itemGroup(item.getMasterItem().getItemGroup())
+                    .druClass(item.getMasterItem().getDrugClass())
                     .build();
 
             RequestItemRequest requestClientItem = RequestItemRequest.builder()
@@ -137,89 +137,18 @@ public class RequestMasterOfficeSupplyService {
         return requestClientItems;
     }
 
-    public Page<RequestMasterTransformedResponse> getRequestMasterTransformedItemsByPage(Integer page) {
+    public Page<RequestMasterOfficeSupplyEntity> getItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        List<RequestMasterTransformedResponse> requestMasterTransformedItems = new ArrayList<>();
-
-        Long requestMasterItemsCount = repository.count();
-        List<RequestMasterOfficeSupplyEntity> requestMasterItems = repository.findAll(pageRequest).getContent();
-
-        requestMasterItems.forEach(item -> {
-            RequestMasterTransformedResponse requestMasterTransformedItem = RequestMasterTransformedResponse.builder()
-                    .item(item.getMasterItem().getItem())
-                    .master_item_id(item.getMasterItem().getId())
-                    .request_item_id(item.getId())
-                    .recent_cn(item.getMasterItem().getRecent_cn())
-                    .purchase_unit(item.getMasterItem().getPurchase_unit())
-                    .department(item.getDepartment())
-                    .status(item.getStatus())
-                    .quantity(item.getQuantity())
-                    .time_requested(item.getTime_requested())
-                    .time_update(item.getTime_updated())
-                    .detail(item.getDetail())
-                    .custom_text(item.getCustom_text())
-                    .build();
-            requestMasterTransformedItems.add(requestMasterTransformedItem);
-        });
-
-        return new PageImpl<>(requestMasterTransformedItems, pageRequest, requestMasterItemsCount);
+        return repository.findAll(pageRequest);
     }
 
-    public Page<RequestMasterTransformedDepartmentResponse> getRequestMasterCompleteTransformedItemsByPage(Integer page) {
+    public Page<RequestMasterOfficeSupplyEntity> getCompleteItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        List<RequestMasterTransformedDepartmentResponse> requestMasterTransformedItems = new ArrayList<>();
-
-        Long requestMasterItemsCount = repository.findByConfirmation(Confirmation.COMPLETE, pageRequest).getTotalElements();
-        List<RequestMasterOfficeSupplyEntity> requestMasterItems = repository.findByConfirmation(Confirmation.COMPLETE, pageRequest).getContent();
-
-        requestMasterItems.forEach(item -> {
-            RequestMasterTransformedDepartmentResponse requestMasterTransformedItem = RequestMasterTransformedDepartmentResponse.builder()
-                    .item(item.getMasterItem().getItem())
-                    .master_item_id(item.getMasterItem().getId())
-                    .request_item_id(item.getId())
-                    .recent_cn(item.getMasterItem().getRecent_cn())
-                    .purchase_unit(item.getMasterItem().getPurchase_unit())
-                    .part_number(item.getMasterItem().getPart_number())
-                    .detail(item.getDetail())
-                    .status(item.getStatus())
-                    .quantity(item.getQuantity())
-                    .time_requested(item.getTime_requested())
-                    .time_update(item.getTime_updated())
-                    .custom_text(item.getCustom_text())
-                    .build();
-
-            requestMasterTransformedItems.add(requestMasterTransformedItem);
-        });
-
-        return new PageImpl<>(requestMasterTransformedItems, pageRequest, requestMasterItemsCount);
+        return repository.findByConfirmation(Confirmation.COMPLETE, pageRequest);
     }
 
-    public Page<RequestMasterTransformedDepartmentResponse> getRequestMasterPendingTransformedItemsByPage(Integer page) {
+    public Page<RequestMasterOfficeSupplyEntity> getPendingItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        List<RequestMasterTransformedDepartmentResponse> requestMasterTransformedItems = new ArrayList<>();
-
-        Long requestMasterItemsCount = repository.findByConfirmation(Confirmation.WAITING, pageRequest).getTotalElements();
-        List<RequestMasterOfficeSupplyEntity> requestMasterItems = repository.findByConfirmation(Confirmation.WAITING, pageRequest).getContent();
-
-        requestMasterItems.forEach(item -> {
-            RequestMasterTransformedDepartmentResponse requestMasterTransformedItem = RequestMasterTransformedDepartmentResponse.builder()
-                    .item(item.getMasterItem().getItem())
-                    .master_item_id(item.getMasterItem().getId())
-                    .request_item_id(item.getId())
-                    .recent_cn(item.getMasterItem().getRecent_cn())
-                    .purchase_unit(item.getMasterItem().getPurchase_unit())
-                    .part_number(item.getMasterItem().getPart_number())
-                    .detail(item.getDetail())
-                    .status(item.getStatus())
-                    .quantity(item.getQuantity())
-                    .time_requested(item.getTime_requested())
-                    .time_update(item.getTime_updated())
-                    .custom_text(item.getCustom_text())
-                    .build();
-
-            requestMasterTransformedItems.add(requestMasterTransformedItem);
-        });
-
-        return new PageImpl<>(requestMasterTransformedItems, pageRequest, requestMasterItemsCount);
+        return repository.findByConfirmation(Confirmation.WAITING, pageRequest);
     }
 }

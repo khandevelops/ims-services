@@ -16,27 +16,23 @@ import java.util.List;
 public class ShippingController {
     private ShippingService service;
     @GetMapping("list")
-    public Page<ShippingEntity> getItemsByPage(@RequestParam Integer page) {
-        return service.getItemsByPage(page);
+    public Page<ShippingEntity> getItems(@RequestParam Integer page) {
+        return service.getItems(page);
     }
     @GetMapping(path = "{id}")
-    public ResponseEntity<ShippingEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
-        return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
+    public ResponseEntity<ShippingEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
+        return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<ShippingEntity> createItem(@RequestBody DepartmentRequest request) {
+    public ResponseEntity<ShippingEntity> createItem(@RequestBody ShippingEntity request) {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
     }
-    @PatchMapping("update-quantity")
-    public List<ShippingEntity> updateQuantity(@RequestBody List<DepartmentRequest> request) {
-        return service.updateQuantity(request);
-    }
     @PatchMapping(path = "{id}")
-    public ShippingEntity updateItemById(@PathVariable(value = "id") Integer id, @RequestBody DepartmentRequest request) {
-        return service.updateItemById(id, request);
+    public ShippingEntity updateItem(@PathVariable(value = "id") Integer id, @RequestBody ShippingEntity request) {
+        return service.updateItem(id, request);
     }
     @DeleteMapping(path = "{id}")
-    public void deleteItemById(@PathVariable(value = "id")Integer id) {
-        service.deleteItemById(id);
+    public void deleteItem(@PathVariable(value = "id")Integer id) {
+        service.deleteItem(id);
     }
 }

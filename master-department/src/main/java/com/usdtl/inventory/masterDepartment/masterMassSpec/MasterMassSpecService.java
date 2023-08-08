@@ -1,16 +1,14 @@
 package com.usdtl.inventory.masterDepartment.masterMassSpec;
 
-import com.usdtl.ims.clients.response.DepartmentResponse;
-import com.usdtl.ims.clients.response.MasterDepartmentResponse;
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
+import com.usdtl.ims.common.exceptions.constants.Department;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 @AllArgsConstructor
@@ -18,8 +16,7 @@ public class MasterMassSpecService {
     private MasterMassSpecRepository repository;
 
     public MasterMassSpecEntity getItemById(Integer id) throws NotFoundException {
-        MasterMassSpecEntity masterItem = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
-        return masterItem;
+        return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
 
     public Page<MasterMassSpecEntity> getMasterDepartmentItems(Integer page) {
@@ -27,72 +24,45 @@ public class MasterMassSpecService {
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
 
-    public Page<MasterDepartmentResponse> getMasterDepartmentItemsTransformed(Integer page) {
-        PageRequest pageRequest = PageRequest.of(page, 10);
-        List<MasterDepartmentResponse> masterDepartmentItemResponse = new ArrayList<>();
+    public MasterMassSpecEntity create(MasterMassSpecEntity request, Department department) {
+        MasterMassSpecEntity master = MasterMassSpecEntity.builder()
+                .item(request.getItem())
+                .manufacturer(request.getManufacturer())
+                .partNumber(request.getPartNumber())
+                .recentCN(request.getRecentCN())
+                .recentVendor(request.getRecentVendor())
+                .fisherCN(request.getFisherCN())
+                .vwrCN(request.getVwrCN())
+                .labSourceCN(request.getLabSourceCN())
+                .otherCN(request.getOtherCN())
+                .purchaseUnit(request.getPurchaseUnit())
+                .unitPrice(request.getUnitPrice())
+                .category(request.getCategory())
+                .comment(request.getComment())
+                .itemType(request.getItemType())
+                .itemGroup(request.getItemGroup())
+                .drugClass(request.getDrugClass())
+                .build();
 
-        List<MasterMassSpecEntity> masterDepartmentItems = (List<MasterMassSpecEntity>) repository.findAll();
 
-        masterDepartmentItems.forEach(masterDepartmentItem -> {
-            if(!masterDepartmentItem.getDepartmentItems().isEmpty()) {
-                List<DepartmentResponse> departmentItems = new ArrayList<>();
-                masterDepartmentItem.getDepartmentItems().forEach(departmentItem -> {
-                    DepartmentResponse departmentItemResponse = DepartmentResponse.builder()
-                            .id(departmentItem.getId())
-                            .location(departmentItem.getLocation())
-                            .quantity(departmentItem.getQuantity())
-                            .lot_number(departmentItem.getLot_number())
-                            .expiration_date((departmentItem.getExpiration_date()))
-                            .received_date((departmentItem.getReceived_date()))
-                            .build();
-                    departmentItems.add(departmentItemResponse);
-                });
-                MasterDepartmentResponse masterDepartmentResponseItem = MasterDepartmentResponse.builder()
-                        .id(masterDepartmentItem.getId())
-                        .item(masterDepartmentItem.getItem())
-                        .manufacturer(masterDepartmentItem.getManufacturer())
-                        .partNumber(masterDepartmentItem.getPartNumber())
-                        .recentCN(masterDepartmentItem.getRecentCN())
-                        .recentVendor(masterDepartmentItem.getRecentVendor())
-                        .fisherCN(masterDepartmentItem.getFisherCN())
-                        .vwrCN(masterDepartmentItem.getVwrCN())
-                        .labSourceCN(masterDepartmentItem.getLabSourceCN())
-                        .otherCN(masterDepartmentItem.getOtherCN())
-                        .purchaseUnit(masterDepartmentItem.getPurchaseUnit())
-                        .unitPrice(masterDepartmentItem.getUnitPrice())
-                        .category(masterDepartmentItem.getCategory())
-                        .comment(masterDepartmentItem.getComment())
-                        .itemType(masterDepartmentItem.getItemType())
-                        .itemGroup(masterDepartmentItem.getItemGroup())
-                        .druClass(masterDepartmentItem.getDrugClass())
-                        .departmentItems(departmentItems)
-                        .build();
-                masterDepartmentItemResponse.add(masterDepartmentResponseItem);
-            }
-        });
-
-        List<MasterDepartmentResponse> pagedItems = masterDepartmentItemResponse.subList(page, page + 10);
-
-        return new PageImpl<>(pagedItems, pageRequest, masterDepartmentItemResponse.size());
+        return getMasterMassSpecEntity(department, master);
     }
 
-    private Integer getOrderQuantity(Integer max_quantity, Integer min_quantity, Integer quantity) {
-        if(max_quantity != null && min_quantity != null) {
-            if(min_quantity == 1 && max_quantity == 1) {
-                if(quantity < 1) {
-                    return 1;
-                }
-            } else if(quantity <= min_quantity) {
-                if(max_quantity - min_quantity < 0) {
-                    throw new RuntimeException();
-                }
-                return max_quantity - min_quantity;
-            }
+    public MasterMassSpecEntity assign(Integer id, Department department) {
+        MasterMassSpecEntity masterDepartment = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
+        return getMasterMassSpecEntity(department, masterDepartment);
+    }
+
+    private MasterMassSpecEntity getMasterMassSpecEntity(Department department, MasterMassSpecEntity masterDepartment) {
+        if(department == Department.MASS_SPEC) {
+            MassSpecEntity item = new MassSpecEntity();
+            List<MassSpecEntity> items = new ArrayList<>();
+            items.add(item);
+            masterDepartment.setDepartmentItems(items);
         }
-        return 0;
+
+        repository.save(masterDepartment);
+        return masterDepartment;
     }
 
-    private Integer getTotalQuantity(List<DepartmentResponse> departmentItems) {
-        return departmentItems.stream().mapToInt(DepartmentResponse::quantity).sum();
-    }
 }

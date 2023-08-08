@@ -16,27 +16,23 @@ import java.util.List;
 public class SpecimenProcessingController {
     private SpecimenProcessingService service;
     @GetMapping("list")
-    public Page<SpecimenProcessingEntity> getItemsByPage(@RequestParam Integer page) {
-        return service.getItemsByPage(page);
+    public Page<SpecimenProcessingEntity> getItems(@RequestParam Integer page) {
+        return service.getItems(page);
     }
     @GetMapping(path = "{id}")
-    public  ResponseEntity<SpecimenProcessingEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
-        return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
+    public  ResponseEntity<SpecimenProcessingEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
+        return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<SpecimenProcessingEntity> createItem(@RequestBody DepartmentRequest request) {
+    public ResponseEntity<SpecimenProcessingEntity> createItem(@RequestBody SpecimenProcessingEntity request) {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
     }
-    @PatchMapping("update-quantity")
-    public List<SpecimenProcessingEntity> updateQuantity(@RequestBody List<DepartmentRequest> request) {
-        return service.updateQuantity(request);
-    }
     @PatchMapping(path = "/{id}/update")
-    public SpecimenProcessingEntity updateItemById(@PathVariable(value = "id") Integer id, @RequestBody DepartmentRequest request) {
-        return service.updateItemById(id, request);
+    public SpecimenProcessingEntity updateItem(@PathVariable(value = "id") Integer id, @RequestBody SpecimenProcessingEntity request) {
+        return service.updateItem(id, request);
     }
     @DeleteMapping(path = "{id}")
-    public void deleteItemById(@PathVariable(value = "id")Integer id) {
-        service.deleteItemById(id);
+    public void deleteItem(@PathVariable(value = "id")Integer id) {
+        service.deleteItem(id);
     }
 }

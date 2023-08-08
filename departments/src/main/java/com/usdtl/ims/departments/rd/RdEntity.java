@@ -20,16 +20,18 @@ public class RdEntity {
     private String location;
     @Column(name = "quantity")
     private Integer quantity;
-    @Column(name = "minimum_quantity")
-    private Integer minimum_quantity;
-    @Column(name = "maximum_quantity")
-    private Integer maximum_quantity;
-    @Column(name = "usage_level")
-    private String usage_level;
-    @Column(name = "lot_number")
-    private String lot_number;
-    @Column(name = "expiration_date")
-    private Date expiration_date;
-    @Column(name = "received_date")
-    private Date received_date;
+    @Column(name = "minimumQuantity")
+    private Integer minimumQuantity;
+    @Column(name = "maximumQuantity")
+    private Integer maximumQuantity;
+    @Column(name = "usageLevel")
+    private String usageLevel;
+    @Column(name = "lotNumber")
+    private String lotNumber;
+    @Column(name = "expirationDate")
+    private Date expirationDate;
+    @Column(name = "receivedDate")
+    private Date receivedDate;
+    @Column(name = "itemId")
+    private Integer itemId;
 }

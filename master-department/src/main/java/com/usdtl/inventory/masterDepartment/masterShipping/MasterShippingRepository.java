@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MasterShippingRepository extends PagingAndSortingRepository<MasterShippingEntity, Integer> {
     Page<MasterShippingEntity> findByDepartmentItemsIsNotEmpty(Pageable pageable);
-    @Query(value = "SELECT m FROM MasterEntity AS m WHERE "
+    @Query(value = "SELECT m FROM MasterShippingEntity AS m WHERE "
             + "m.item LIKE %?1%"
             + " OR m.purchaseUnit LIKE %?1%"
             + " OR m.manufacturer LIKE %?1%"

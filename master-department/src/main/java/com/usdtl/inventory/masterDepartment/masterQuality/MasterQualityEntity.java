@@ -1,5 +1,5 @@
 package com.usdtl.inventory.masterDepartment.masterQuality;
-import com.usdtl.inventory.masterDepartment.common.entities.QualityEntity;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -49,7 +49,7 @@ public class MasterQualityEntity {
     private String itemGroup;
     @Column(name = "drugClass")
     private String drugClass;
-    @OneToMany(mappedBy = "masterItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<QualityEntity> departmentItems;
 
 }

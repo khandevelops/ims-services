@@ -1,8 +1,6 @@
 package com.usdtl.ims.departments.qcInternalStandards;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
-import com.usdtl.ims.departments.department.DepartmentRequest;
-import com.usdtl.ims.departments.master.MasterRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,60 +13,39 @@ import java.util.List;
 @AllArgsConstructor
 public class QcInternalStandardsService {
     private QcInternalStandardsRepository repository;
-    private MasterRepository masterRepository;
-    public QcInternalStandardsEntity createItem(DepartmentRequest request) {
+    public QcInternalStandardsEntity createItem(QcInternalStandardsEntity request) {
         QcInternalStandardsEntity newItem = QcInternalStandardsEntity.builder()
-                .location(request.location())
-                .quantity(request.quantity())
-                .minimum_quantity(request.min_quantity())
-                .maximum_quantity(request.max_quantity())
-                .usage_level(request.usage_level())
-                .lot_number(request.lot_number())
-                .expiration_date(request.expiration_date())
-                .received_date(request.received_date())
+                .location(request.getLocation())
+                .quantity(request.getQuantity())
+                .minimumQuantity(request.getMinimumQuantity())
+                .maximumQuantity(request.getMaximumQuantity())
+                .usageLevel(request.getUsageLevel())
+                .lotNumber(request.getLotNumber())
+                .expirationDate(request.getExpirationDate())
+                .receivedDate(request.getReceivedDate())
                 .build();
 
         repository.save(newItem);
         return newItem;
     };
 
-    public QcInternalStandardsEntity updateItemById(Integer id, DepartmentRequest request) {
+    public QcInternalStandardsEntity updateItem(Integer id, QcInternalStandardsEntity request) {
         QcInternalStandardsEntity item = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
-        item.setLocation(request.location());
-        item.setQuantity(request.quantity());
-        item.setMinimum_quantity(request.min_quantity());
-        item.setMaximum_quantity(request.max_quantity());
-        item.setUsage_level(request.usage_level());
-        item.setLot_number(request.lot_number());
-        item.setExpiration_date(request.expiration_date());
-        item.setReceived_date(request.received_date());
+        item.setLocation(request.getLocation());
+        item.setQuantity(request.getQuantity());
+        item.setMinimumQuantity(request.getMinimumQuantity());
+        item.setMaximumQuantity(request.getMaximumQuantity());
+        item.setUsageLevel(request.getUsageLevel());
+        item.setLotNumber(request.getLotNumber());
+        item.setExpirationDate(request.getExpirationDate());
+        item.setReceivedDate(request.getReceivedDate());
 
         repository.save(item);
 
         return item;
     }
 
-    public List<QcInternalStandardsEntity> updateQuantity(List<DepartmentRequest> request) {
-        List<QcInternalStandardsEntity> updateItems = new ArrayList<>();
-        request.forEach(departmentItem -> {
-            QcInternalStandardsEntity item = repository.findById(departmentItem.id()).orElseThrow(() -> new NotFoundException("Item associated with id: " + departmentItem.id() + " not found"));
-            item.setLocation(departmentItem.location());
-            item.setQuantity(departmentItem.quantity());
-            item.setMinimum_quantity(departmentItem.min_quantity());
-            item.setMaximum_quantity(departmentItem.max_quantity());
-            item.setUsage_level(departmentItem.usage_level());
-            item.setLot_number(departmentItem.lot_number());
-            item.setExpiration_date(departmentItem.expiration_date());
-            item.setReceived_date(departmentItem.received_date());
-
-            updateItems.add(item);
-            repository.save(item);
-        });
-
-        return updateItems;
-    }
-
-    public void deleteItemById(Integer id) {
+    public void deleteItem(Integer id) {
         boolean exists = repository.existsById(id);
         if(!exists) {
             throw new NotFoundException("Item associated with id: " + id + " not found");
@@ -77,14 +54,13 @@ public class QcInternalStandardsService {
 
     }
 
-    public Page<QcInternalStandardsEntity> getItemsByPage(Integer page) {
+    public Page<QcInternalStandardsEntity> getItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAll(pageRequest);
     }
 
-    public QcInternalStandardsEntity getItemById(Integer id) throws NotFoundException {
-        QcInternalStandardsEntity item = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
-        return item;
+    public QcInternalStandardsEntity getItem(Integer id) throws NotFoundException {
+        return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
 }
 

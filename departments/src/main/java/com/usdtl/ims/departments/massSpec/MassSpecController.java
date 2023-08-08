@@ -16,27 +16,23 @@ import java.util.List;
 public class MassSpecController  {
     private MassSpecService service;
     @GetMapping("list")
-    public Page<MassSpecEntity> getItemsByPage(@RequestParam Integer page) {
-        return service.getItemsByPage(page);
+    public Page<MassSpecEntity> getItems(@RequestParam Integer page) {
+        return service.getItems(page);
     }
     @GetMapping(path = "{id}")
-    public ResponseEntity<MassSpecEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
-        return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
+    public ResponseEntity<MassSpecEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
+        return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<MassSpecEntity> createItem(@RequestBody DepartmentRequest request) {
+    public ResponseEntity<MassSpecEntity> createItem(@RequestBody MassSpecEntity request) {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
     }
-    @PatchMapping("update-quantity")
-    public List<MassSpecEntity> updateQuantity(@RequestBody List<DepartmentRequest> request) {
-        return service.updateQuantity(request);
-    }
     @PatchMapping(path = "{id}")
-    public MassSpecEntity updateItemById(@PathVariable(value = "id") Integer id, @RequestBody DepartmentRequest request) {
-        return service.updateItemById(id, request);
+    public MassSpecEntity updateItem(@PathVariable(value = "id") Integer id, @RequestBody MassSpecEntity request) {
+        return service.updateItem(id, request);
     }
     @DeleteMapping(path = "{id}")
-    public void deleteItemById(@PathVariable(value = "id")Integer id) {
-        service.deleteItemById(id);
+    public void deleteItem(@PathVariable(value = "id")Integer id) {
+        service.deleteItem(id);
     }
 }

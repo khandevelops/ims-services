@@ -26,9 +26,9 @@ public class RequestGeneralService {
                     .item(item.getMasterItem().getItem())
                     .master_item_id(item.getMasterItem().getId())
                     .request_item_id(item.getId())
-                    .recent_cn(item.getMasterItem().getRecent_cn())
-                    .purchase_unit(item.getMasterItem().getPurchase_unit())
-                    .part_number(item.getMasterItem().getPart_number())
+                    .recent_cn(item.getMasterItem().getRecentCN())
+                    .purchase_unit(item.getMasterItem().getPurchaseUnit())
+                    .part_number(item.getMasterItem().getPartNumber())
                     .comment(item.getMasterItem().getComment())
                     .build();
             requestTransformedItems.add(requestMasterTransformedItem);

@@ -29,14 +29,9 @@ public class StoreRoomController {
     public ResponseEntity<StoreRoomEntity> createItem(@RequestBody StoreRoomEntity request) {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
     }
-    @PatchMapping(path = "/{id}/update")
-    public StoreRoomEntity updateItemById(@PathVariable(value = "id") Integer id, @RequestBody StoreRoomEntity request) {
+    @PatchMapping(path = "update/{id}")
+    public StoreRoomEntity updateItem(@PathVariable(value = "id") Integer id, @RequestBody StoreRoomEntity request) {
         return service.updateItem(id, request);
-    }
-
-    @PatchMapping(path = "/list/update")
-    public List<StoreRoomEntity> updateItemById(@PathVariable(value = "id") Integer id, @RequestBody List<StoreRoomEntity> request) {
-        return service.updateItems(request);
     }
     @DeleteMapping(path = "{id}")
     public void deleteItem(@PathVariable(value = "id")Integer id) {

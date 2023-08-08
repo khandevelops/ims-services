@@ -19,19 +19,19 @@ public class RequestMasterGeneralController {
 
     private RequestMasterGeneralService service;
 
-    @GetMapping("list/transformed")
-    public Page<RequestMasterTransformedResponse> getRequestMasterTransformedItemsByPage(@RequestParam Integer page) {
-        return service.getRequestMasterTransformedItemsByPage(page);
+    @GetMapping("list")
+    public Page<RequestMasterGeneralEntity> getItems(@RequestParam Integer page) {
+        return service.getItems(page);
     }
 
-    @GetMapping("list/transformed/pending")
-    public Page<RequestMasterTransformedDepartmentResponse> getRequestMasterPendingTransformedItemsByPage(@RequestParam Integer page) {
-        return service.getRequestMasterPendingTransformedItemsByPage(page);
+    @GetMapping("list/pending")
+    public Page<RequestMasterGeneralEntity> getPendingItems(@RequestParam Integer page) {
+        return service.getPendingItems(page);
     }
 
-    @GetMapping("list/transformed/complete")
-    public Page<RequestMasterTransformedDepartmentResponse> getRequestMasterCompleteTransformedItemsByPage(@RequestParam Integer page) {
-        return service.getRequestMasterCompleteTransformedItemsByPage(page);
+    @GetMapping("list/complete")
+    public Page<RequestMasterGeneralEntity> getCompleteItems(@RequestParam Integer page) {
+        return service.getCompleteItems(page);
     }
 
     @PostMapping("create")

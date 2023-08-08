@@ -1,7 +1,5 @@
 package com.usdtl.inventory.masterDepartment.masterStoreRoom;
-import com.usdtl.inventory.masterDepartment.common.entities.StoreRoomEntity;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -49,6 +47,6 @@ public class MasterStoreRoomEntity {
     private String itemGroup;
     @Column(name = "drugClass")
     private String drugClass;
-    @OneToMany(mappedBy = "masterItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StoreRoomEntity> departmentItems;
+    @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<StoreRoomEntity> storeRoomItems;
 }

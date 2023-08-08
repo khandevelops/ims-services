@@ -16,27 +16,23 @@ import java.util.List;
 public class QcInternalStandardsController {
     private QcInternalStandardsService service;
     @GetMapping("list")
-    public Page<QcInternalStandardsEntity> getItemsByPage(@RequestParam Integer page) {
-        return service.getItemsByPage(page);
+    public Page<QcInternalStandardsEntity> getItems(@RequestParam Integer page) {
+        return service.getItems(page);
     }
     @GetMapping(path = "{id}")
-    public  ResponseEntity<QcInternalStandardsEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
-        return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
+    public  ResponseEntity<QcInternalStandardsEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
+        return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<QcInternalStandardsEntity> createItem(@RequestBody DepartmentRequest request) {
+    public ResponseEntity<QcInternalStandardsEntity> createItem(@RequestBody QcInternalStandardsEntity request) {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
     }
-    @PatchMapping("update-quantity")
-    public List<QcInternalStandardsEntity> updateQuantity(@RequestBody List<DepartmentRequest> request) {
-        return service.updateQuantity(request);
-    }
     @PatchMapping(path = "/{id}/update")
-    public QcInternalStandardsEntity updateItemById(@PathVariable(value = "id") Integer id, @RequestBody DepartmentRequest request) {
-        return service.updateItemById(id, request);
+    public QcInternalStandardsEntity updateItem(@PathVariable(value = "id") Integer id, @RequestBody QcInternalStandardsEntity request) {
+        return service.updateItem(id, request);
     }
     @DeleteMapping(path = "{id}")
-    public void deleteItemById(@PathVariable(value = "id")Integer id) {
-        service.deleteItemById(id);
+    public void deleteItem(@PathVariable(value = "id")Integer id) {
+        service.deleteItem(id);
     }
 }

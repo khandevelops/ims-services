@@ -1,5 +1,5 @@
 package com.usdtl.inventory.masterDepartment.masterMassSpec;
-import com.usdtl.inventory.masterDepartment.common.entities.MassSpecEntity;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -49,6 +49,6 @@ public class MasterMassSpecEntity {
     private String itemGroup;
     @Column(name = "drugClass")
     private String drugClass;
-    @OneToMany(mappedBy = "masterItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MassSpecEntity> departmentItems;
 }

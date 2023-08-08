@@ -1,6 +1,5 @@
 package com.usdtl.inventory.masterDepartment.masterSpecimenProcessing;
 
-import com.usdtl.inventory.masterDepartment.common.entities.SpecimenProcessingEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -50,6 +49,6 @@ public class MasterSpecimenProcessingEntity {
     private String itemGroup;
     @Column(name = "drugClass")
     private String drugClass;
-    @OneToMany(mappedBy = "masterItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<SpecimenProcessingEntity> departmentItems;
 }
