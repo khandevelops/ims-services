@@ -1,6 +1,8 @@
 package com.usdtl.ims.profileDetails.departmentNames;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +19,17 @@ public class DepartmentNameController {
     }
 
     @PostMapping("create")
-    public DepartmentNameEntity createDepartmentName(@RequestBody DepartmentNameEntity departmentName) {
-        return service.createDepartmentName(departmentName);
+    public DepartmentNameEntity createDepartmentName(@RequestBody DepartmentNameEntity request) {
+        return service.createDepartmentName(request);
+    }
+
+    @PatchMapping("{id}/update")
+    public DepartmentNameEntity updateDepartmentName(@PathVariable(value = "id") Integer id, @RequestBody DepartmentNameEntity request) {
+        return service.updateDepartmentName(id, request);
+    }
+
+    @DeleteMapping("{id}/delete")
+    public ResponseEntity<String> deleteDepartmentName(@PathVariable(value = "id") Integer id) {
+        return service.deleteDepartmentName(id);
     }
 }
