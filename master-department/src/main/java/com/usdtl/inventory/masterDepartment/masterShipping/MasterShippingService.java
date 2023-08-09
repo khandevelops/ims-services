@@ -2,10 +2,15 @@ package com.usdtl.inventory.masterDepartment.masterShipping;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.common.exceptions.constants.Department;
+import com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityEntity;
+import com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityRepository;
+import com.usdtl.inventory.masterDepartment.masterQuality.QualityEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +19,34 @@ import java.util.List;
 public class MasterShippingService {
     private MasterShippingRepository repository;
 
-    public MasterShippingEntity getItemById(Integer id) throws NotFoundException {
-        MasterShippingEntity masterItem = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
-        return masterItem;
+    public MasterShippingEntity getItem(Integer id) throws NotFoundException {
+        return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
 
-    public Page<MasterShippingEntity> getMasterDepartmentItems(Integer page) {
+    public Page<MasterShippingEntity> getItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
+        return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
+    }
+
+    public Page<MasterShippingEntity> filterItems(String keyword, Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        return repository.findAllByKeyword(keyword, pageRequest);
+    }
+
+    public Page<MasterShippingEntity> sorItems(Integer page, String column, String direction) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        if(direction.isEmpty()) {
+            Sort sort = Sort.by("id").ascending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        if(direction.equals("ASC")) {
+            Sort sort = Sort.by(column).ascending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        if(direction.equals("DESC")) {
+            Sort sort = Sort.by(column).descending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
 
@@ -45,23 +71,23 @@ public class MasterShippingService {
                 .build();
 
 
-        return getMasterShippingEntity(department, master);
+        return getMasterDepartmentEntity(department, master);
     }
 
-    public MasterShippingEntity assign(Integer id, Department department) {
-        MasterShippingEntity masterDepartment = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
-        return getMasterShippingEntity(department, masterDepartment);
-    }
-
-    private MasterShippingEntity getMasterShippingEntity(Department department, MasterShippingEntity masterDepartment) {
+    private MasterShippingEntity getMasterDepartmentEntity(Department department, MasterShippingEntity master) {
         if(department == Department.SHIPPING) {
             ShippingEntity item = new ShippingEntity();
             List<ShippingEntity> items = new ArrayList<>();
             items.add(item);
-            masterDepartment.setDepartmentItems(items);
+            master.setDepartmentItems(items);
         }
 
-        repository.save(masterDepartment);
-        return masterDepartment;
+        repository.save(master);
+        return master;
+    }
+
+    public MasterShippingEntity assign(Integer id, Department department) {
+        MasterShippingEntity masterDepartment = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
+        return getMasterDepartmentEntity(department, masterDepartment);
     }
 }

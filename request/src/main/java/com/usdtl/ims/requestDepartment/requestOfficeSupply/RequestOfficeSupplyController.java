@@ -13,17 +13,7 @@ public class RequestOfficeSupplyController {
     private RequestOfficeSupplyService service;
 
     @GetMapping("list/transformed")
-    public Page<RequestDepartmentResponse> getRequestTranformedItemsByPage(@RequestParam Integer page) {
-        return service.getRequestTranformedItemsByPage(page);
+    public Page<RequestOfficeSupplyEntity> getRequestTranformedItemsByPage(@RequestParam Integer page) {
+        return service.getItems(page);
     }
-
-//    @PostMapping("create")
-//    public ResponseEntity<String> createRequestItem(@RequestBody List<RequestOfficeSupplyEntity> requests) {
-//        return new ResponseEntity<>(service.createRequestItem(requests), HttpStatus.CREATED);
-//    }
-//
-//    @PutMapping(path = "update")
-//    public RequestOfficeSupplyEntity updateRequestItem(@RequestBody RequestOfficeSupplyEntity request) {
-//        return service.updateRequestItem(request);
-//    }
 }

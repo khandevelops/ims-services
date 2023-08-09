@@ -2,6 +2,8 @@ package com.usdtl.inventory.masterDepartment.masterScreening;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.common.exceptions.constants.Department;
+import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity;
+import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,13 +17,23 @@ public class MasterScreeningController {
     private MasterScreeningService service;
 
     @GetMapping(path = "{id}")
-    public  ResponseEntity<MasterScreeningEntity> getMasterScreeningItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
-        return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
+    public  ResponseEntity<MasterScreeningEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
+        return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
+    }
+
+    @GetMapping("filter")
+    public Page<MasterScreeningEntity> filterItems(@RequestParam String keyword, @RequestParam Integer page) {
+        return service.filterItems(keyword, page);
+    }
+
+    @GetMapping("sort")
+    public Page<MasterScreeningEntity> sortItems(@RequestParam Integer page, @RequestParam String column, @RequestParam String direction) {
+        return service.sorItems(page, column, direction);
     }
 
     @GetMapping("list")
-    public Page<MasterScreeningEntity> getMasterDepartmentItems(@RequestParam Integer page) {
-        return service.getMasterDepartmentItems(page);
+    public Page<MasterScreeningEntity> getItems(@RequestParam Integer page) {
+        return service.getItems(page);
     }
 
     @PostMapping("create/{department}")
@@ -30,7 +42,7 @@ public class MasterScreeningController {
     }
 
     @PostMapping("assign/{id}/{department}")
-    public MasterScreeningEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
+    public MasterExtractionsEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
         return assign(id, department);
     }
 }

@@ -11,19 +11,8 @@ import org.springframework.web.bind.annotation.*;
 public class RequestStoreRoomController {
 
     private RequestStoreRoomService service;
-
     @GetMapping("list/transformed")
-    public Page<RequestDepartmentResponse> getRequestTranformedItemsByPage(@RequestParam Integer page) {
+    public Page<RequestStoreRoomEntity> getRequestTranformedItemsByPage(@RequestParam Integer page) {
         return service.getRequestTranformedItemsByPage(page);
     }
-
-//    @PostMapping("create")
-//    public ResponseEntity<List<RequestStoreRoomEntity>> createRequestItem(@RequestBody List<RequestStoreRoomEntity> requests) {
-//        return new ResponseEntity<>(service.createRequestItem(requests), HttpStatus.CREATED);
-//    }
-//
-//    @PutMapping(path = "update")
-//    public RequestStoreRoomEntity updateRequestItem(@RequestBody RequestStoreRoomEntity request) {
-//        return service.updateRequestItem(request);
-//    }
 }

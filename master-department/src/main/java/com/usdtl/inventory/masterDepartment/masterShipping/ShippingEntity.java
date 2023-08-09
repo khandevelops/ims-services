@@ -3,6 +3,7 @@ package com.usdtl.inventory.masterDepartment.masterShipping;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
+
 @Entity
 @Builder
 @Data

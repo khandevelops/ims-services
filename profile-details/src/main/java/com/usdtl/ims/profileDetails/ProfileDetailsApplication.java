@@ -13,5 +13,4 @@ public class ProfileDetailsApplication {
         SpringApplication.run(ProfileDetailsApplication.class, args);
     }
 
-
 }

@@ -1,6 +1,7 @@
 package com.usdtl.inventory.masterDepartment.masterScreening;
-import lombok.*;
 
+import com.usdtl.inventory.masterDepartment.masterQuality.QualityEntity;
+import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 

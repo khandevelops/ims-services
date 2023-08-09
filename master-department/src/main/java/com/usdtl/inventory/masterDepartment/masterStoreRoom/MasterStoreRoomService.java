@@ -2,10 +2,16 @@ package com.usdtl.inventory.masterDepartment.masterStoreRoom;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.common.exceptions.constants.Department;
+import com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityEntity;
+import com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityRepository;
+import com.usdtl.inventory.masterDepartment.masterQuality.QualityEntity;
+import com.usdtl.inventory.masterDepartment.masterSpecimenProcessing.MasterSpecimenProcessingEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +20,35 @@ import java.util.List;
 public class MasterStoreRoomService {
     private MasterStoreRoomRepository repository;
 
-    public MasterStoreRoomEntity getItemById(Integer id) throws NotFoundException {
+    public MasterStoreRoomEntity getItem(Integer id) throws NotFoundException {
         return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
 
-    public Page<MasterStoreRoomEntity> getMasterDepartmentItems(Integer page) {
+    public Page<MasterStoreRoomEntity> getItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        return repository.findByStoreRoomItemsNotEmpty(pageRequest);
+        return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
+    }
+
+    public Page<MasterStoreRoomEntity> filterItems(String keyword, Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        return repository.findAllByKeyword(keyword, pageRequest);
+    }
+
+    public Page<MasterStoreRoomEntity> sorItems(Integer page, String column, String direction) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        if(direction.isEmpty()) {
+            Sort sort = Sort.by("id").ascending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        if(direction.equals("ASC")) {
+            Sort sort = Sort.by(column).ascending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        if(direction.equals("DESC")) {
+            Sort sort = Sort.by(column).descending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
 
     public MasterStoreRoomEntity create(MasterStoreRoomEntity request, Department department) {
@@ -44,15 +72,15 @@ public class MasterStoreRoomService {
                 .build();
 
 
-        return getMasterStoreRoomEntity(department, master);
+        return getMasterDepartmentEntity(department, master);
     }
 
-    private MasterStoreRoomEntity getMasterStoreRoomEntity(Department department, MasterStoreRoomEntity master) {
+    private MasterStoreRoomEntity getMasterDepartmentEntity(Department department, MasterStoreRoomEntity master) {
         if(department == Department.STORE_ROOM) {
             StoreRoomEntity item = new StoreRoomEntity();
             List<StoreRoomEntity> items = new ArrayList<>();
             items.add(item);
-            master.setStoreRoomItems(items);
+            master.setDepartmentItems(items);
         }
 
         repository.save(master);
@@ -61,6 +89,6 @@ public class MasterStoreRoomService {
 
     public MasterStoreRoomEntity assign(Integer id, Department department) {
         MasterStoreRoomEntity masterDepartment = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
-        return getMasterStoreRoomEntity(department, masterDepartment);
+        return getMasterDepartmentEntity(department, masterDepartment);
     }
 }

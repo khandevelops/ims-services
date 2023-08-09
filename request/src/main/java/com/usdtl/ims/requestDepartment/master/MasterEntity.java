@@ -1,6 +1,6 @@
-package com.usdtl.inventory.masterDepartment.masterStoreRoom;
+package com.usdtl.ims.requestDepartment.master;
 
-import com.usdtl.inventory.masterDepartment.masterQuality.QualityEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,11 +9,11 @@ import java.util.List;
 @Entity
 @Builder
 @Table(name = "master")
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
-public class MasterStoreRoomEntity {
+public class MasterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -50,6 +50,4 @@ public class MasterStoreRoomEntity {
     private String itemGroup;
     @Column(name = "drugClass")
     private String drugClass;
-    @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StoreRoomEntity> departmentItems;
 }

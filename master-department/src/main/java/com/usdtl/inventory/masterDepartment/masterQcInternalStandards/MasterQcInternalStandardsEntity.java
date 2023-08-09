@@ -1,7 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterQcInternalStandards;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 

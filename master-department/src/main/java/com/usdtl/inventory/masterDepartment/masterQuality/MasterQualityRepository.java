@@ -1,6 +1,5 @@
 package com.usdtl.inventory.masterDepartment.masterQuality;
 
-import com.usdtl.inventory.masterDepartment.masterMassSpec.MasterMassSpecEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +10,8 @@ import org.springframework.stereotype.Repository;
 public interface MasterQualityRepository extends PagingAndSortingRepository<MasterQualityEntity, Integer> {
     Page<MasterQualityEntity> findByDepartmentItemsIsNotEmpty(Pageable pageable);
     @Query(value = "SELECT m FROM MasterQualityEntity AS m WHERE "
-            + "m.item LIKE %?1%"
+            + "m.departmentItems IS NOT EMPTY"
+            + " AND (m.item LIKE %?1%"
             + " OR m.purchaseUnit LIKE %?1%"
             + " OR m.manufacturer LIKE %?1%"
             + " OR m.recentCN LIKE %?1%"
@@ -26,7 +26,7 @@ public interface MasterQualityRepository extends PagingAndSortingRepository<Mast
             + " OR m.drugClass LIKE %?1%"
             + " OR m.itemType LIKE %?1%"
             + " OR m.itemGroup LIKE %?1%"
-            + " OR m.comment LIKE %?1%"
+            + " OR m.comment LIKE %?1%)"
     )
     Page<MasterQualityEntity> findAllByKeyword(String keyword, Pageable pageable);
 }

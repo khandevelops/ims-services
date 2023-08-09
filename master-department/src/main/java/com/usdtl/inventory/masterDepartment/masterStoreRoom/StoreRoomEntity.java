@@ -1,16 +1,17 @@
 package com.usdtl.inventory.masterDepartment.masterStoreRoom;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Builder
-@Table(name = "store_room")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name = "store_room")
 public class StoreRoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

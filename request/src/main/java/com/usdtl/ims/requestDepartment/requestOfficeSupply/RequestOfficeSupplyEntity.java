@@ -1,6 +1,5 @@
 package com.usdtl.ims.requestDepartment.requestOfficeSupply;
-
-import com.usdtl.ims.master.MasterEntity;
+import com.usdtl.ims.requestDepartment.master.MasterEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,6 +17,6 @@ public class RequestOfficeSupplyEntity {
     @Column(name = "id")
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "itemId")
     private MasterEntity masterItem;
 }

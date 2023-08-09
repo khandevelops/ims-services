@@ -1,5 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterRd;
 
+import com.usdtl.inventory.masterDepartment.masterQuality.QualityEntity;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;

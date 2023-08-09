@@ -2,10 +2,15 @@ package com.usdtl.inventory.masterDepartment.masterSpecimenProcessing;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.common.exceptions.constants.Department;
+import com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityEntity;
+import com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityRepository;
+import com.usdtl.inventory.masterDepartment.masterQuality.QualityEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +19,34 @@ import java.util.List;
 public class MasterSpecimenProcessingService {
     private MasterSpecimenProcessingRepository repository;
 
-    public MasterSpecimenProcessingEntity getItemById(Integer id) throws NotFoundException {
-        MasterSpecimenProcessingEntity masterItem = repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
-        return masterItem;
+    public MasterSpecimenProcessingEntity getItem(Integer id) throws NotFoundException {
+        return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
 
-    public Page<MasterSpecimenProcessingEntity> getMasterDepartmentItems(Integer page) {
+    public Page<MasterSpecimenProcessingEntity> getItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
+        return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
+    }
+
+    public Page<MasterSpecimenProcessingEntity> filterItems(String keyword, Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        return repository.findAllByKeyword(keyword, pageRequest);
+    }
+
+    public Page<MasterSpecimenProcessingEntity> sorItems(Integer page, String column, String direction) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        if(direction.isEmpty()) {
+            Sort sort = Sort.by("id").ascending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        if(direction.equals("ASC")) {
+            Sort sort = Sort.by(column).ascending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        if(direction.equals("DESC")) {
+            Sort sort = Sort.by(column).descending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
 
@@ -45,10 +71,10 @@ public class MasterSpecimenProcessingService {
                 .build();
 
 
-        return getMasterSpecimenProcessingEntity(department, master);
+        return getMasterDepartmentEntity(department, master);
     }
 
-    private MasterSpecimenProcessingEntity getMasterSpecimenProcessingEntity(Department department, MasterSpecimenProcessingEntity master) {
+    private MasterSpecimenProcessingEntity getMasterDepartmentEntity(Department department, MasterSpecimenProcessingEntity master) {
         if(department == Department.SPECIMEN_PROCESSING) {
             SpecimenProcessingEntity item = new SpecimenProcessingEntity();
             List<SpecimenProcessingEntity> items = new ArrayList<>();
@@ -62,6 +88,6 @@ public class MasterSpecimenProcessingService {
 
     public MasterSpecimenProcessingEntity assign(Integer id, Department department) {
         MasterSpecimenProcessingEntity masterDepartment = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
-        return getMasterSpecimenProcessingEntity(department, masterDepartment);
+        return getMasterDepartmentEntity(department, masterDepartment);
     }
 }

@@ -14,25 +14,35 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RequestMapping("rd")
 public class MasterRdController {
-    private MasterExtractionsService service;
+    private MasterRdService service;
 
     @GetMapping(path = "{id}")
-    public  ResponseEntity<com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
+    public  ResponseEntity<MasterRdEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
         return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
     }
 
+    @GetMapping("filter")
+    public Page<MasterRdEntity> filterItems(@RequestParam String keyword, @RequestParam Integer page) {
+        return service.filterItems(keyword, page);
+    }
+
+    @GetMapping("sort")
+    public Page<MasterRdEntity> sortItems(@RequestParam Integer page, @RequestParam String column, @RequestParam String direction) {
+        return service.sorItems(page, column, direction);
+    }
+
     @GetMapping("list")
-    public Page<com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity> getItems(@RequestParam Integer page) {
+    public Page<MasterRdEntity> getItems(@RequestParam Integer page) {
         return service.getItems(page);
     }
 
     @PostMapping("create/{department}")
-    public com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity create(@RequestBody com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity request, @PathVariable(value = "department") Department department) {
+    public MasterRdEntity create(@RequestBody MasterRdEntity request, @PathVariable(value = "department") Department department) {
         return create(request, department);
     }
 
     @PostMapping("assign/{id}/{department}")
-    public MasterExtractionsEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
+    public MasterRdEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
         return assign(id, department);
     }
 }

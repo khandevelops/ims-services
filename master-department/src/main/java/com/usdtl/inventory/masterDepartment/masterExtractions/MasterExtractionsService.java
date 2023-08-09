@@ -47,11 +47,6 @@ public class MasterExtractionsService {
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
 
-    public Page<MasterExtractionsEntity> getMasterDepartmentItems(String keyword, Integer page) {
-        PageRequest pageRequest = PageRequest.of(page, 10);
-        return repository.findAllByKeyword(keyword, pageRequest);
-    }
-
     public MasterExtractionsEntity create(MasterExtractionsEntity request, Department department) {
         MasterExtractionsEntity master = MasterExtractionsEntity.builder()
                 .item(request.getItem())
