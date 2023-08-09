@@ -5,6 +5,7 @@ import com.usdtl.ims.common.exceptions.constants.Department;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,12 +16,34 @@ import java.util.List;
 public class MasterExtractionsService {
     private MasterExtractionsRepository repository;
 
-    public MasterExtractionsEntity getItemById(Integer id) throws NotFoundException {
+    public MasterExtractionsEntity getItem(Integer id) throws NotFoundException {
         return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
 
-    public Page<MasterExtractionsEntity> getMasterDepartmentItems(Integer page) {
+    public Page<MasterExtractionsEntity> getItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
+        return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
+    }
+
+    public Page<MasterExtractionsEntity> filterItems(String keyword, Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        return repository.findAllByKeyword(keyword, pageRequest);
+    }
+
+    public Page<MasterExtractionsEntity> sorItems(Integer page, String column, String direction) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        if(direction.isEmpty()) {
+            Sort sort = Sort.by("id").ascending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        if(direction.equals("ASC")) {
+            Sort sort = Sort.by(column).ascending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        if(direction.equals("DESC")) {
+            Sort sort = Sort.by(column).descending();
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
 

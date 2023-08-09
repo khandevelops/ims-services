@@ -9,8 +9,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MasterExtractionsRepository extends PagingAndSortingRepository<MasterExtractionsEntity, Integer> {
     Page<MasterExtractionsEntity> findByDepartmentItemsIsNotEmpty(Pageable pageable);
-    @Query(value = "SELECT m FROM MasterRdEntity AS m WHERE "
-            + "m.item LIKE %?1%"
+    @Query(value = "SELECT m FROM MasterExtractionsEntity AS m WHERE "
+            + "m.departmentItems IS NOT EMPTY"
+            + " AND (m.item LIKE %?1%"
             + " OR m.purchaseUnit LIKE %?1%"
             + " OR m.manufacturer LIKE %?1%"
             + " OR m.recentCN LIKE %?1%"
@@ -25,7 +26,7 @@ public interface MasterExtractionsRepository extends PagingAndSortingRepository<
             + " OR m.drugClass LIKE %?1%"
             + " OR m.itemType LIKE %?1%"
             + " OR m.itemGroup LIKE %?1%"
-            + " OR m.comment LIKE %?1%"
+            + " OR m.comment LIKE %?1%)"
     )
     Page<MasterExtractionsEntity> findAllByKeyword(String keyword, Pageable pageable);
 }

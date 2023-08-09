@@ -16,13 +16,23 @@ public class MasterExtractionsController {
     private MasterExtractionsService service;
 
     @GetMapping(path = "{id}")
-    public  ResponseEntity<MasterExtractionsEntity> getMasterExtractionsItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
-        return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
+    public  ResponseEntity<MasterExtractionsEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
+        return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
+    }
+
+    @GetMapping("filter")
+    public Page<MasterExtractionsEntity> filterItems(@RequestParam String keyword, @RequestParam Integer page) {
+        return service.filterItems(keyword, page);
+    }
+
+    @GetMapping("sort")
+    public Page<MasterExtractionsEntity> sortItems(@RequestParam Integer page, @RequestParam String column, @RequestParam String direction) {
+        return service.sorItems(page, column, direction);
     }
 
     @GetMapping("list")
-    public Page<MasterExtractionsEntity> getMasterDepartmentItems(@RequestParam Integer page) {
-        return service.getMasterDepartmentItems(page);
+    public Page<MasterExtractionsEntity> getItems(@RequestParam Integer page) {
+        return service.getItems(page);
     }
 
     @PostMapping("create/{department}")

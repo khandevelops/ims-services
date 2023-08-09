@@ -17,13 +17,13 @@ public class MasterRdController {
     private MasterExtractionsService service;
 
     @GetMapping(path = "{id}")
-    public  ResponseEntity<com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity> getMasterExtractionsItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
-        return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
+    public  ResponseEntity<com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
+        return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
     }
 
     @GetMapping("list")
-    public Page<com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity> getMasterDepartmentItems(@RequestParam Integer page) {
-        return service.getMasterDepartmentItems(page);
+    public Page<com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity> getItems(@RequestParam Integer page) {
+        return service.getItems(page);
     }
 
     @PostMapping("create/{department}")
