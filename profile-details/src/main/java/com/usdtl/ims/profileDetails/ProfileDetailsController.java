@@ -1,6 +1,8 @@
 package com.usdtl.ims.profileDetails;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,13 +14,18 @@ public class ProfileDetailsController {
     private ProfileDetailsService service;
 
     @GetMapping("list")
-    public List<ProfileDetailsEntity> getProfileDetails() {
-        return service.getProfileDetails();
+    public Page<ProfileDetailsEntity> getProfileDetails(@RequestParam(value = "page") Integer page) {
+         return service.getProfileDetails(page);
+    }
+
+    @GetMapping("filter")
+    public Page<ProfileDetailsEntity> filterProfileDetails(@RequestParam(value = "displayName") String displayName, @RequestParam(value = "page") Integer page) {
+        return service.filterProfileDetails(displayName, page);
     }
 
     @PostMapping("sync")
-    public List<ProfileDetailsEntity> syncProfileDetails(@RequestBody List<ProfileDetailsEntity> profileDetailsRequest) {
-        return service.syncProfileDetails(profileDetailsRequest);
+    public Page<ProfileDetailsEntity> syncProfileDetails(@RequestBody List<ProfileDetailsEntity> profileDetailsRequest, @RequestParam(value = "page") Integer page) {
+        return service.syncProfileDetails(profileDetailsRequest, page);
     }
 
     @GetMapping("{id}")

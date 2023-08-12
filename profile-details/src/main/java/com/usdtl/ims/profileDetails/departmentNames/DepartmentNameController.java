@@ -1,5 +1,6 @@
 package com.usdtl.ims.profileDetails.departmentNames;
 
+import com.usdtl.ims.profileDetails.response.DeleteResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class DepartmentNameController {
     }
 
     @DeleteMapping("{id}/delete")
-    public ResponseEntity<String> deleteDepartmentName(@PathVariable(value = "id") Integer id) {
+    public ResponseEntity<DeleteResponse> deleteDepartmentName(@PathVariable(value = "id") Integer id) {
         return service.deleteDepartmentName(id);
     }
 }

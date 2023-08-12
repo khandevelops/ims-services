@@ -18,8 +18,12 @@ public class ProfileDetailsEntity {
     @Id
     @Column(name="id")
     private String id;
+    @Column(name = "displayName")
+    private String displayName;
+    @Column(name = "userPrincipalName")
+    private String userPrincipalName;
     @Column(name = "department")
-    private Department department;
+    private String department;
     @Column(name = "role")
     private Role role;
     @Column(name = "permission")

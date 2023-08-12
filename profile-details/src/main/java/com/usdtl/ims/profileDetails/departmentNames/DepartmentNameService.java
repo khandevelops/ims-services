@@ -1,4 +1,6 @@
 package com.usdtl.ims.profileDetails.departmentNames;
+import com.usdtl.ims.common.exceptions.common.NotFoundException;
+import com.usdtl.ims.profileDetails.response.DeleteResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +30,13 @@ public class DepartmentNameService {
         return departmentNameEntity;
     }
 
-    public ResponseEntity<String> deleteDepartmentName(Integer id) {
+    public ResponseEntity<DeleteResponse> deleteDepartmentName(Integer id) {
+        boolean exists = repository.existsById(id);
+        if(!exists) {
+            throw new NotFoundException("Item associated with id: " + id + " not found");
+        }
         repository.deleteById(id);
-        return new ResponseEntity<>("SUCCESS", HttpStatus.ACCEPTED);
+        DeleteResponse response = new DeleteResponse("SUCCESS", id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
 }

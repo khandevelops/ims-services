@@ -1,8 +1,14 @@
 package com.usdtl.ims.profileDetails;
 
+import com.usdtl.ims.common.exceptions.constants.Permission;
+import com.usdtl.ims.common.exceptions.constants.Role;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -10,8 +16,14 @@ import java.util.List;
 public class ProfileDetailsService {
     private ProfileDetailsRepository repository;
 
-    public List<ProfileDetailsEntity> getProfileDetails() {
-        return (List<ProfileDetailsEntity>) repository.findAll();
+    public Page<ProfileDetailsEntity> getProfileDetails(Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 50, Sort.by("displayName").ascending());
+         return repository.findAll(pageRequest);
+    }
+
+    public Page<ProfileDetailsEntity> filterProfileDetails(String displayName, Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 50, Sort.by("displayName").ascending());
+        return repository.findByDisplayNameIsContainingIgnoreCase(displayName, pageRequest);
     }
 
     public ProfileDetailsEntity getProfileDetail(String id) {
@@ -33,32 +45,45 @@ public class ProfileDetailsService {
         return (List<ProfileDetailsEntity>) repository.findAll();
     }
 
-    public List<ProfileDetailsEntity> syncProfileDetails(List<ProfileDetailsEntity> profileDetailsRequest) {
+    public Page<ProfileDetailsEntity> syncProfileDetails(List<ProfileDetailsEntity> profileDetailsRequest, Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 50, Sort.by("displayName").ascending());
         profileDetailsRequest.forEach(profileDetail -> {
-            boolean profileDetailExist = repository.existsById(profileDetail.getId());
-            if(profileDetailExist) {
-                ProfileDetailsEntity existingProfileDetail = repository.findById(profileDetail.getId()).orElseThrow();
-                existingProfileDetail.setId(profileDetail.getId());
-                repository.save(existingProfileDetail);
-            }
-            if(!profileDetailExist) {
+            boolean exits = repository.existsById(profileDetail.getId());
+            if(!exits) {
                 ProfileDetailsEntity newUser = ProfileDetailsEntity.builder()
                         .id(profileDetail.getId())
+                        .displayName(profileDetail.getDisplayName())
+                        .userPrincipalName(profileDetail.getUserPrincipalName())
                         .department(null)
-                        .role(null)
-                        .permission(null)
+                        .role(Role.USER)
+                        .permission(Permission.ALLOW)
                         .build();
                 repository.save(newUser);
-            }
-            if(profileDetailExist) {
+            } else {
                 ProfileDetailsEntity profileDetailsEntity = repository.findById(profileDetail.getId()).orElseThrow();
-                profileDetailsEntity.setDepartment(profileDetail.getDepartment());
-                profileDetailsEntity.setRole(profileDetail.getRole());
-                profileDetailsEntity.setPermission(profileDetail.getPermission());
+                if(profileDetail.getDisplayName() != null) {
+                    profileDetailsEntity.setDisplayName(profileDetail.getDisplayName());
+                }
+                if(profileDetail.getUserPrincipalName() != null) {
+                    profileDetailsEntity.setUserPrincipalName(profileDetail.getUserPrincipalName());
+                }
+                if(profileDetail.getDepartment() != null) {
+                    profileDetailsEntity.setDepartment(profileDetail.getDepartment());
+                }
+                if(profileDetail.getRole() != null) {
+                    profileDetailsEntity.setRole(profileDetail.getRole());
+                } else {
+                    profileDetailsEntity.setRole(Role.USER);
+                }
+                if(profileDetail.getPermission() != null) {
+                    profileDetailsEntity.setPermission(profileDetail.getPermission());
+                } else {
+                    profileDetailsEntity.setPermission(Permission.ALLOW);
+                }
                 repository.save(profileDetailsEntity);
             }
         });
-        return (List<ProfileDetailsEntity>) repository.findAll();
+        return repository.findAll(pageRequest);
     }
 
     public ProfileDetailsEntity updateProfileDetail(String id, ProfileDetailsEntity profileDetailRequest) {
