@@ -3,7 +3,7 @@ package com.usdtl.ims.requestMaster.requestMasterGeneral;
 import com.usdtl.ims.common.exceptions.constants.Confirmation;
 import com.usdtl.ims.common.exceptions.constants.Department;
 import com.usdtl.ims.common.exceptions.constants.Status;
-import com.usdtl.ims.master.MasterEntity;
+import com.usdtl.ims.requestMaster.master.MasterEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -33,17 +33,17 @@ public class RequestMasterGeneralEntity {
     @Column(name = "location")
     private String location;
     @CreationTimestamp
-    @Column(name = "time_requested")
-    private Date time_requested;
-    @Column(name = "time_updated")
-    private Date time_updated;
+    @Column(name = "timeRequested")
+    private Date timeRequested;
+    @Column(name = "timeUpdated")
+    private Date timeUpdated;
     @Column(name = "confirmation")
     private Confirmation confirmation;
     @Column(name = "user")
     private String user;
-    @Column(name = "custom_text")
-    private String custom_text;
+    @Column(name = "customText")
+    private String customText;
     @ManyToOne
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "itemId")
     private MasterEntity masterItem;
 }

@@ -8,8 +8,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>master</artifactId>
-    <name>master</name>
-    <description>master</description>
+    <packaging>jar</packaging>
     <properties>
         <java.version>17</java.version>
     </properties>

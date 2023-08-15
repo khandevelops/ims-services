@@ -34,23 +34,23 @@ public class RequestMasterGeneralController {
         return service.getCompleteItems(page);
     }
 
-    @PostMapping("create")
-    public ResponseEntity<List<RequestMasterTransformedResponse>> createRequestItem(@RequestBody List<RequestMasterTransformedDepartmentRequest> requests) {
-        return new ResponseEntity<>(service.createRequestItem(requests), HttpStatus.CREATED);
+    @PostMapping("list/create")
+    public List<RequestMasterGeneralEntity> createItems(@RequestBody List<RequestMasterGeneralEntity> requests) {
+        return service.createItems(requests);
     }
 
-    @PatchMapping(path = "update/item")
-    public RequestMasterGeneralEntity updateRequestItem(@PathVariable Integer id, @RequestBody RequestMasterTransformedDepartmentRequest requestItems) {
-        return service.updateRequestItem(id, requestItems);
+    @PatchMapping(path = "{id}/update")
+    public RequestMasterGeneralEntity updateItem(@PathVariable Integer id, @RequestBody RequestMasterGeneralEntity requestItems) {
+        return service.updateItem(id, requestItems);
     }
 
-    @PatchMapping(path = "update/items")
-    public List<RequestMasterTransformedDepartmentResponse> updateRequestItems(@RequestBody List<RequestMasterTransformedDepartmentRequest> requestItems) {
-        return service.updateRequestItems(requestItems);
+    @PatchMapping(path = "list/update")
+    public List<RequestMasterGeneralEntity> updateItems(@RequestBody List<RequestMasterGeneralEntity> requestItems) {
+        return service.updateItems(requestItems);
     }
 
     @PatchMapping(path = "confirm")
-    public List<RequestItemRequest> confirmRequestItems(@RequestBody List<RequestMasterGeneralEntity> request) {
-        return service.confirmRequestItems(request);
+    public List<RequestMasterGeneralEntity> confirmItems(@RequestBody List<RequestMasterGeneralEntity> request) {
+        return service.confirmItems(request);
     }
 }

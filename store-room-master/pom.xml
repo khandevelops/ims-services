@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>store-room-master</artifactId>
-
+    <packaging>jar</packaging>
     <build>
         <plugins>
             <plugin>

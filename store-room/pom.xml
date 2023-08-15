@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>store-room</artifactId>
-
+    <packaging>jar</packaging>
     <build>
         <plugins>
             <plugin>
