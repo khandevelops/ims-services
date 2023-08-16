@@ -3,6 +3,7 @@ package com.usdtl.ims.departmentMaster.common;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Builder

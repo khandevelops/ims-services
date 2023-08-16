@@ -6,6 +6,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 @org.springframework.stereotype.Repository
 public interface RdMasterRepository extends PagingAndSortingRepository<RdMasterEntity, Integer> {
-    @Query(value = "SELECT ROUND(SUM(quantity * unit_price), 2) FROM inventory.rd JOIN inventory.master on inventory.rd.item_id = inventory.master.id", nativeQuery = true)
+    @Query(
+            value = "SELECT ROUND(SUM(em.quantity* em.masterItem.unitPrice), 2) " +
+                    "FROM RdMasterEntity em"
+    )
     Double getGrandTotal();
 }
