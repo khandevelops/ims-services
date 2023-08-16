@@ -12,37 +12,37 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("qc_internal_standards")
+@RequestMapping("qc-internal-standards")
 public class MasterQcInternalStandardsController {
-    private MasterExtractionsService service;
+    private MasterQcInternalStandardsService service;
 
     @GetMapping(path = "{id}")
-    public  ResponseEntity<MasterExtractionsEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
+    public  ResponseEntity<MasterQcInternalStandardsEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
         return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
     }
 
     @GetMapping("filter")
-    public Page<MasterExtractionsEntity> filterItems(@RequestParam String keyword, @RequestParam Integer page) {
+    public Page<MasterQcInternalStandardsEntity> filterItems(@RequestParam String keyword, @RequestParam Integer page) {
         return service.filterItems(keyword, page);
     }
 
     @GetMapping("sort")
-    public Page<MasterExtractionsEntity> sortItems(@RequestParam Integer page, @RequestParam String column, @RequestParam String direction) {
+    public Page<MasterQcInternalStandardsEntity> sortItems(@RequestParam Integer page, @RequestParam String column, @RequestParam String direction) {
         return service.sorItems(page, column, direction);
     }
 
     @GetMapping("list")
-    public Page<MasterExtractionsEntity> getItems(@RequestParam Integer page) {
+    public Page<MasterQcInternalStandardsEntity> getItems(@RequestParam Integer page) {
         return service.getItems(page);
     }
 
     @PostMapping("create/{department}")
-    public MasterExtractionsEntity create(@RequestBody MasterExtractionsEntity request, @PathVariable(value = "department") Department department) {
+    public MasterQcInternalStandardsEntity create(@RequestBody MasterQcInternalStandardsEntity request, @PathVariable(value = "department") Department department) {
         return create(request, department);
     }
 
     @PostMapping("assign/{id}/{department}")
-    public MasterExtractionsEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
+    public MasterQcInternalStandardsEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
         return assign(id, department);
     }
 }

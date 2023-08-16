@@ -12,37 +12,37 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("mass_spec")
+@RequestMapping("mass-spec")
 public class MasterMassSpecController {
-    private MasterExtractionsService service;
+    private MasterMassSpecService service;
 
     @GetMapping(path = "{id}")
-    public  ResponseEntity<MasterExtractionsEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
+    public  ResponseEntity<MasterMassSpecEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
         return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
     }
 
     @GetMapping("filter")
-    public Page<MasterExtractionsEntity> filterItems(@RequestParam String keyword, @RequestParam Integer page) {
+    public Page<MasterMassSpecEntity> filterItems(@RequestParam String keyword, @RequestParam Integer page) {
         return service.filterItems(keyword, page);
     }
 
     @GetMapping("sort")
-    public Page<MasterExtractionsEntity> sortItems(@RequestParam Integer page, @RequestParam String column, @RequestParam String direction) {
+    public Page<MasterMassSpecEntity> sortItems(@RequestParam Integer page, @RequestParam String column, @RequestParam String direction) {
         return service.sorItems(page, column, direction);
     }
 
     @GetMapping("list")
-    public Page<MasterExtractionsEntity> getItems(@RequestParam Integer page) {
+    public Page<MasterMassSpecEntity> getItems(@RequestParam Integer page) {
         return service.getItems(page);
     }
 
     @PostMapping("create/{department}")
-    public MasterExtractionsEntity create(@RequestBody MasterExtractionsEntity request, @PathVariable(value = "department") Department department) {
+    public MasterMassSpecEntity create(@RequestBody MasterMassSpecEntity request, @PathVariable(value = "department") Department department) {
         return create(request, department);
     }
 
     @PostMapping("assign/{id}/{department}")
-    public MasterExtractionsEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
+    public MasterMassSpecEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
         return assign(id, department);
     }
 }

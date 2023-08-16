@@ -68,10 +68,10 @@ public class MasterMassSpecService {
                 .build();
 
 
-        return getMasterExtractionsEntity(department, master);
+        return getMasterDepartmentEntity(department, master);
     }
 
-    private MasterMassSpecEntity getMasterExtractionsEntity(Department department, MasterMassSpecEntity master) {
+    private MasterMassSpecEntity getMasterDepartmentEntity(Department department, MasterMassSpecEntity master) {
         if(department == Department.EXTRACTIONS) {
             MassSpecEntity item = new MassSpecEntity();
             List<MassSpecEntity> items = new ArrayList<>();
@@ -85,6 +85,6 @@ public class MasterMassSpecService {
 
     public MasterMassSpecEntity assign(Integer id, Department department) {
         MasterMassSpecEntity masterDepartment = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
-        return getMasterExtractionsEntity(department, masterDepartment);
+        return getMasterDepartmentEntity(department, masterDepartment);
     }
 }
