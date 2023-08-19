@@ -2,9 +2,6 @@ package com.usdtl.inventory.masterDepartment.masterScreening;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.common.exceptions.constants.Department;
-import com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityEntity;
-import com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityRepository;
-import com.usdtl.inventory.masterDepartment.masterQuality.QualityEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

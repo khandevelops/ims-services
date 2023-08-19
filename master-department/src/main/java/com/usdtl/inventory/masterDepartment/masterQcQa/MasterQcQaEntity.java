@@ -1,7 +1,6 @@
-package com.usdtl.inventory.masterDepartment.masterStoreRoom;
+package com.usdtl.inventory.masterDepartment.masterQcQa;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @ToString
-public class MasterStoreRoomEntity {
+public class MasterQcQaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -50,5 +49,5 @@ public class MasterStoreRoomEntity {
     @Column(name = "drugClass")
     private String drugClass;
     @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StoreRoomEntity> departmentItems;
+    private List<QcQaEntity> departmentItems;
 }

@@ -2,9 +2,7 @@ package com.usdtl.inventory.masterDepartment.masterRd;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.common.exceptions.constants.Department;
-import com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityEntity;
-import com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityRepository;
-import com.usdtl.inventory.masterDepartment.masterQuality.QualityEntity;
+import com.usdtl.inventory.masterDepartment.masterQcQa.MasterQcQaEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,7 +48,7 @@ public class MasterRdService {
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
 
-    public MasterRdEntity create(com.usdtl.inventory.masterDepartment.masterQuality.MasterQualityEntity request, Department department) {
+    public MasterRdEntity create(MasterQcQaEntity request, Department department) {
         MasterRdEntity master = new MasterRdEntity().builder()
                 .item(request.getItem())
                 .manufacturer(request.getManufacturer())

@@ -1,13 +1,13 @@
-package com.usdtl.ims.departmentMaster.storeRoom;
+package com.usdtl.ims.departmentMaster.qcqa;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 @org.springframework.stereotype.Repository
-public interface StoreRoomMasterRepository extends PagingAndSortingRepository<StoreRoomMasterEntity, Integer> {
+public interface QcQaMasterRepository extends PagingAndSortingRepository<QcQaMasterEntity, Integer> {
     @Query(
             value = "SELECT ROUND(SUM(em.quantity* em.masterItem.unitPrice), 2) " +
-                    "FROM StoreRoomMasterEntity em"
+                    "FROM QcQaMasterEntity em"
     )
     Double getGrandTotal();
 }

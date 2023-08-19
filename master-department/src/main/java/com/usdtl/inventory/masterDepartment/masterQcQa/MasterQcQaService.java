@@ -1,4 +1,4 @@
-package com.usdtl.inventory.masterDepartment.masterShipping;
+package com.usdtl.inventory.masterDepartment.masterQcQa;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.common.exceptions.constants.Department;
@@ -13,24 +13,24 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class MasterShippingService {
-    private MasterShippingRepository repository;
+public class MasterQcQaService {
+    private MasterQcQaRepository repository;
 
-    public MasterShippingEntity getItem(Integer id) throws NotFoundException {
+    public MasterQcQaEntity getItem(Integer id) throws NotFoundException {
         return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
 
-    public Page<MasterShippingEntity> getItems(Integer page) {
+    public Page<MasterQcQaEntity> getItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
 
-    public Page<MasterShippingEntity> filterItems(String keyword, Integer page) {
+    public Page<MasterQcQaEntity> filterItems(String keyword, Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAllByKeyword(keyword, pageRequest);
     }
 
-    public Page<MasterShippingEntity> sorItems(Integer page, String column, String direction) {
+    public Page<MasterQcQaEntity> sorItems(Integer page, String column, String direction) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         if(direction.isEmpty()) {
             Sort sort = Sort.by("id").ascending();
@@ -46,9 +46,8 @@ public class MasterShippingService {
         }
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
-
-    public MasterShippingEntity create(MasterShippingEntity request, Department department) {
-        MasterShippingEntity master = MasterShippingEntity.builder()
+    public MasterQcQaEntity create(MasterQcQaEntity request, Department department) {
+        MasterQcQaEntity master = MasterQcQaEntity.builder()
                 .item(request.getItem())
                 .manufacturer(request.getManufacturer())
                 .partNumber(request.getPartNumber())
@@ -68,13 +67,13 @@ public class MasterShippingService {
                 .build();
 
 
-        return getMasterDepartmentEntity(department, master);
+        return getMasterExtractionsEntity(department, master);
     }
 
-    private MasterShippingEntity getMasterDepartmentEntity(Department department, MasterShippingEntity master) {
-        if(department == Department.SHIPPING) {
-            ShippingEntity item = new ShippingEntity();
-            List<ShippingEntity> items = new ArrayList<>();
+    private MasterQcQaEntity getMasterExtractionsEntity(Department department, MasterQcQaEntity master) {
+        if(department == Department.EXTRACTIONS) {
+            QcQaEntity item = new QcQaEntity();
+            List<QcQaEntity> items = new ArrayList<>();
             items.add(item);
             master.setDepartmentItems(items);
         }
@@ -83,8 +82,8 @@ public class MasterShippingService {
         return master;
     }
 
-    public MasterShippingEntity assign(Integer id, Department department) {
-        MasterShippingEntity masterDepartment = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
-        return getMasterDepartmentEntity(department, masterDepartment);
+    public MasterQcQaEntity assign(Integer id, Department department) {
+        MasterQcQaEntity masterDepartment = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
+        return getMasterExtractionsEntity(department, masterDepartment);
     }
 }

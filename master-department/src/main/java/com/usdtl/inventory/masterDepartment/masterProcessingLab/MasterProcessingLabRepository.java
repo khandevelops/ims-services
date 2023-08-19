@@ -1,4 +1,4 @@
-package com.usdtl.inventory.masterDepartment.masterExtractions;
+package com.usdtl.inventory.masterDepartment.masterProcessingLab;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,8 +7,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MasterExtractionsRepository extends PagingAndSortingRepository<MasterExtractionsEntity, Integer> {
-    Page<MasterExtractionsEntity> findByDepartmentItemsIsNotEmpty(Pageable pageable);
+public interface MasterProcessingLabRepository extends PagingAndSortingRepository<MasterProcessingLabEntity, Integer> {
+    Page<MasterProcessingLabEntity> findByDepartmentItemsIsNotEmpty(Pageable pageable);
     @Query(value = "SELECT m FROM MasterProcessingLabEntity AS m WHERE "
             + "m.departmentItems IS NOT EMPTY"
             + " AND (m.item LIKE %?1%"
@@ -28,5 +28,5 @@ public interface MasterExtractionsRepository extends PagingAndSortingRepository<
             + " OR m.itemGroup LIKE %?1%"
             + " OR m.comment LIKE %?1%)"
     )
-    Page<MasterExtractionsEntity> findAllByKeyword(String keyword, Pageable pageable);
+    Page<MasterProcessingLabEntity> findAllByKeyword(String keyword, Pageable pageable);
 }

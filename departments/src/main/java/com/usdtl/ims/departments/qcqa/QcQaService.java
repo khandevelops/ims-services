@@ -1,4 +1,4 @@
-package com.usdtl.ims.departments.screening;
+package com.usdtl.ims.departments.qcqa;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import lombok.AllArgsConstructor;
@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class ScreeningService {
-    private ScreeningRepository repository;
-    public ScreeningEntity createItem(ScreeningEntity request) {
-        ScreeningEntity newItem = ScreeningEntity.builder()
+public class QcQaService {
+    private QcQaRepository repository;
+    public QcQaEntity createItem(QcQaEntity request) {
+        QcQaEntity newItem = QcQaEntity.builder()
                 .location(request.getLocation())
                 .quantity(request.getQuantity())
                 .minimumQuantity(request.getMinimumQuantity())
@@ -26,8 +26,8 @@ public class ScreeningService {
         return newItem;
     };
 
-    public ScreeningEntity updateItem(Integer id, ScreeningEntity request) {
-        ScreeningEntity item = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
+    public QcQaEntity updateItem(Integer id, QcQaEntity request) {
+        QcQaEntity item = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
         item.setLocation(request.getLocation());
         item.setQuantity(request.getQuantity());
         item.setMinimumQuantity(request.getMinimumQuantity());
@@ -51,12 +51,12 @@ public class ScreeningService {
 
     }
 
-    public Page<ScreeningEntity> getItems(Integer page) {
+    public Page<QcQaEntity> getItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAll(pageRequest);
     }
 
-    public ScreeningEntity getItem(Integer id) throws NotFoundException {
+    public QcQaEntity getItem(Integer id) throws NotFoundException {
         return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
 }

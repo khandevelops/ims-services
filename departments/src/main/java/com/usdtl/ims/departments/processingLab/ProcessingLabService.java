@@ -1,4 +1,4 @@
-package com.usdtl.ims.departments.screening;
+package com.usdtl.ims.departments.processingLab;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import lombok.AllArgsConstructor;
@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class ScreeningService {
-    private ScreeningRepository repository;
-    public ScreeningEntity createItem(ScreeningEntity request) {
-        ScreeningEntity newItem = ScreeningEntity.builder()
+public class ProcessingLabService {
+    private ProcessingLabRepository repository;
+
+    public ProcessingLabEntity createItem(ProcessingLabEntity request) {
+        ProcessingLabEntity newItem = ProcessingLabEntity.builder()
                 .location(request.getLocation())
                 .quantity(request.getQuantity())
                 .minimumQuantity(request.getMinimumQuantity())
@@ -26,8 +27,8 @@ public class ScreeningService {
         return newItem;
     };
 
-    public ScreeningEntity updateItem(Integer id, ScreeningEntity request) {
-        ScreeningEntity item = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
+    public ProcessingLabEntity updateItem(Integer id, ProcessingLabEntity request) {
+        ProcessingLabEntity item = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
         item.setLocation(request.getLocation());
         item.setQuantity(request.getQuantity());
         item.setMinimumQuantity(request.getMinimumQuantity());
@@ -41,7 +42,6 @@ public class ScreeningService {
 
         return item;
     }
-
     public void deleteItem(Integer id) {
         boolean exists = repository.existsById(id);
         if(!exists) {
@@ -51,12 +51,13 @@ public class ScreeningService {
 
     }
 
-    public Page<ScreeningEntity> getItems(Integer page) {
+    public Page<ProcessingLabEntity> getItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAll(pageRequest);
     }
 
-    public ScreeningEntity getItem(Integer id) throws NotFoundException {
+    public ProcessingLabEntity getItem(Integer id) throws NotFoundException {
         return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
     }
 }
+

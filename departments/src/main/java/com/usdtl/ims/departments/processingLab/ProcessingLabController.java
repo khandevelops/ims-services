@@ -1,4 +1,4 @@
-package com.usdtl.ims.departments.rd;
+package com.usdtl.ims.departments.processingLab;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import lombok.AllArgsConstructor;
@@ -7,25 +7,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("rd")
+@RequestMapping("processing_lab")
 @AllArgsConstructor
 @RestController
-public class RdController {
-    private RdService service;
+public class ProcessingLabController {
+    private ProcessingLabService service;
     @GetMapping("list")
-    public Page<RdEntity> getItems(@RequestParam Integer page) {
+    public Page<ProcessingLabEntity> getItems(@RequestParam Integer page) {
         return service.getItems(page);
     }
     @GetMapping(path = "{id}")
-    public ResponseEntity<RdEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
+    public  ResponseEntity<ProcessingLabEntity> getItem(@PathVariable(value = "id") Integer id) throws NotFoundException {
         return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<RdEntity> createItem(@RequestBody RdEntity request) {
+    public ResponseEntity<ProcessingLabEntity> createItem(@RequestBody ProcessingLabEntity request) {
         return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
     }
-    @PatchMapping(path = "{id}")
-    public RdEntity updateItem(@PathVariable(value = "id") Integer id, @RequestBody RdEntity request) {
+    @PatchMapping(path = "/{id}/update")
+    public ProcessingLabEntity updateItem(@PathVariable(value = "id") Integer id, @RequestBody ProcessingLabEntity request) {
         return service.updateItem(id, request);
     }
     @DeleteMapping(path = "{id}")
