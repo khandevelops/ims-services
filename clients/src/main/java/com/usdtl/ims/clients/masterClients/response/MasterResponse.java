@@ -1,10 +1,9 @@
-package com.usdtl.ims.clients;
+package com.usdtl.ims.clients.masterClients.response;
 
-import com.usdtl.ims.common.exceptions.constants.Category;
 import lombok.Builder;
 
 @Builder
-public record MasterItemRequest(
+public record MasterResponse(
         Integer id,
         String item,
         String manufacturer,
@@ -21,6 +20,6 @@ public record MasterItemRequest(
         String comment,
         String itemType,
         String itemGroup,
-        String druClass
+        String drugClass
 ) {
 }

@@ -1,6 +1,6 @@
 package com.usdtl.ims.departmentMaster.qcInternalStandardsMaster;
 
-import com.usdtl.ims.clients.MasterDepartmentClient;
+import com.usdtl.ims.clients.responseRecord.MasterDepartmentClient;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

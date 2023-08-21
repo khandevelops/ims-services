@@ -1,27 +1,30 @@
 package com.usdtl.ims.departmentMaster.extractionsMaster;
 
-import com.usdtl.ims.clients.MasterDepartmentClient;
-import com.usdtl.ims.departmentMaster.common.GrandTotal;
+import com.usdtl.ims.departmentMaster.common.MasterEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
 public class ExtractionsMasterService {
-    private ExtractionsMasterRepository extractionsMasterRepository;
-    private MasterDepartmentClient client;
+    private ExtractionsMasterRepository repository;
 
     public Page<ExtractionsMasterEntity> getDepartmentMasterItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        return extractionsMasterRepository.findAll(pageRequest);
+        return repository.findAll(pageRequest);
+    }
+
+    public ExtractionsMasterEntity createDepartmentMasterItem(MasterEntity masterItem) {
+        ExtractionsMasterEntity newDepartmentItems = ExtractionsMasterEntity.builder().build();
+        newDepartmentItems.setMasterItem(masterItem);
+        repository.save(newDepartmentItems);
+        return newDepartmentItems;
     }
 
     public Double getTotal() {
-        return extractionsMasterRepository.getGrandTotal();
+        return repository.getGrandTotal();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.usdtl.ims.clients;
+package com.usdtl.ims.clients.responseRecord;
 
 import java.util.Date;
 

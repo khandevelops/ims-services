@@ -1,8 +1,6 @@
 package com.usdtl.ims.requestMaster.requestMasterGeneral;
 
-import com.usdtl.ims.clients.ConfirmationEmailClient;
-import com.usdtl.ims.clients.MasterItemRequest;
-import com.usdtl.ims.requestMaster.requestMasterGeneral.RequestMasterGeneralEntity;
+import com.usdtl.ims.clients.responseRecord.ConfirmationEmailClient;
 import com.usdtl.ims.common.exceptions.constants.Confirmation;
 import com.usdtl.ims.common.exceptions.constants.Status;
 import com.usdtl.ims.common.exceptions.common.NotFoundException;

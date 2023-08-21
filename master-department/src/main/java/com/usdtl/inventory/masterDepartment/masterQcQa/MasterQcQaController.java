@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("qcqa")
+@RequestMapping("qc-qa")
 public class MasterQcQaController {
     private MasterQcQaService service;
 

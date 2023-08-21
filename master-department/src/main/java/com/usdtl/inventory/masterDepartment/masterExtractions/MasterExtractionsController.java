@@ -37,11 +37,11 @@ public class MasterExtractionsController {
 
     @PostMapping("create/{department}")
     public MasterExtractionsEntity create(@RequestBody MasterExtractionsEntity request, @PathVariable(value = "department") Department department) {
-        return create(request, department);
+        return service.create(request, department);
     }
 
     @PostMapping("assign/{id}/{department}")
     public MasterExtractionsEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
-        return assign(id, department);
+        return service.assign(id, department);
     }
 }

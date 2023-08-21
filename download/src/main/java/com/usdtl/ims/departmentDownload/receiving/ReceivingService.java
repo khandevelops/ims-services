@@ -1,7 +1,7 @@
 package com.usdtl.ims.departmentDownload.receiving;
 
-import com.usdtl.ims.clients.DepartmentResponse;
-import com.usdtl.ims.clients.MasterDepartmentClient;
+import com.usdtl.ims.clients.responseRecord.DepartmentResponse;
+import com.usdtl.ims.clients.responseRecord.MasterDepartmentClient;
 import com.usdtl.ims.clients.MasterDepartmentResponse;
 import com.usdtl.ims.clients.responseClass.DepartmentDownloadResponse;
 import lombok.AllArgsConstructor;

@@ -72,7 +72,7 @@ public class MasterProcessingLabService {
     }
 
     private MasterProcessingLabEntity getMasterDepartmentEntity(Department department, MasterProcessingLabEntity master) {
-        if(department == Department.SPECIMEN_PROCESSING) {
+        if(department == Department.PROCESSING_LAB) {
             ProcessingLabEntity item = new ProcessingLabEntity();
             List<ProcessingLabEntity> items = new ArrayList<>();
             items.add(item);

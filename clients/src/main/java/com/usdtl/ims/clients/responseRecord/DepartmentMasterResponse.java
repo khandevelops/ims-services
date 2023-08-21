@@ -1,4 +1,4 @@
-package com.usdtl.ims.clients;
+package com.usdtl.ims.clients.responseRecord;
 
 import com.usdtl.ims.common.exceptions.constants.Category;
 import lombok.Builder;

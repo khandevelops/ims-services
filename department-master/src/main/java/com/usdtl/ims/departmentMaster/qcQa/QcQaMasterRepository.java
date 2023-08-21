@@ -1,4 +1,4 @@
-package com.usdtl.ims.departmentMaster.qcqa;
+package com.usdtl.ims.departmentMaster.qcQa;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;

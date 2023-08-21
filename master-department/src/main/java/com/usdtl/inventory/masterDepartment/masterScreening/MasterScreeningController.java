@@ -36,13 +36,13 @@ public class MasterScreeningController {
         return service.getItems(page);
     }
 
-    @PostMapping("create/{department}")
+    @PostMapping("{department}/create")
     public MasterScreeningEntity create(@RequestBody MasterScreeningEntity request, @PathVariable(value = "department") Department department) {
-        return create(request, department);
+        return service.create(request, department);
     }
 
-    @PostMapping("assign/{id}/{department}")
-    public MasterExtractionsEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
-        return assign(id, department);
+    @PostMapping("{id}/{department}/assign")
+    public MasterScreeningEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
+        return service.assign(id, department);
     }
 }

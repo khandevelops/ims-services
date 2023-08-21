@@ -1,4 +1,4 @@
-package com.usdtl.ims.clients;
+package com.usdtl.ims.clients.responseRecord;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;

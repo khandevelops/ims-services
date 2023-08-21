@@ -3,6 +3,7 @@ package com.usdtl.ims.master;
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.common.exceptions.constants.Department;
 import com.usdtl.ims.master.requests.AssignRequest;
+import com.usdtl.ims.master.requests.MasterDepartmentsCreateRequest;
 import com.usdtl.ims.master.responses.AssignResponse;
 import com.usdtl.ims.master.responses.DeleteResponse;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -34,10 +37,9 @@ public class MasterController {
     public  ResponseEntity<MasterEntity> getItemById(@PathVariable(value = "id") Integer id) throws NotFoundException {
         return new ResponseEntity<>(service.getItemById(id), HttpStatus.OK);
     }
-
     @PostMapping("create")
-    public ResponseEntity<MasterEntity> createItem(@RequestBody MasterEntity request) {
-        return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
+    public MasterEntity createItem(@RequestBody MasterDepartmentsCreateRequest request) {
+        return service.createMasterDepartments(request);
     }
 
     @PatchMapping(path = "{id}/update")

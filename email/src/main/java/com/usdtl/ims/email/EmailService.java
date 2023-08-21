@@ -1,6 +1,6 @@
 package com.usdtl.ims.email;
-import com.usdtl.ims.clients.DepartmentTransformedRequest;
-import com.usdtl.ims.clients.RequestItemRequest;
+import com.usdtl.ims.clients.departmentMasterClients.common.response.DepartmentMasterResponse;
+import com.usdtl.ims.clients.responseRecord.RequestItemRequest;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class EmailService {
     private JavaMailSender mailSender;
     private Configuration config;
 
-    public void sendScheduledEmail(List<DepartmentTransformedRequest> request, Model model) throws MessagingException, IOException, TemplateException {
+    public void sendScheduledEmail(List<DepartmentMasterResponse> request, Model model) throws MessagingException, IOException, TemplateException {
         Template template = config.getTemplate("scheduled-email-template.ftl");
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();

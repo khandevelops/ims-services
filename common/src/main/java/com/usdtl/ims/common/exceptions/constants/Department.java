@@ -6,10 +6,10 @@ public enum Department {
     RD,
     SCREENING,
     SHIPPING,
-    SPECIMEN_PROCESSING,
+    PROCESSING_LAB,
     STORE_ROOM,
     QC_INTERNAL_STANDARDS,
-    QUALITY,
+    QC_QA,
     GENERAL,
     OFFICE_SUPPLY
 }

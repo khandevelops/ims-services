@@ -1,6 +1,10 @@
 package com.usdtl.ims.master;
 
+import com.usdtl.ims.clients.departmentMasterClients.ExtractionsMasterClient;
+import com.usdtl.ims.clients.masterClients.response.MasterResponse;
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
+import com.usdtl.ims.common.exceptions.constants.Department;
+import com.usdtl.ims.master.requests.MasterDepartmentsCreateRequest;
 import com.usdtl.ims.master.responses.DeleteResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,11 +14,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class MasterService {
 
     private MasterRepository repository;
+    private ExtractionsMasterClient extractionsMasterClient;
     public MasterEntity createItem(MasterEntity request) {
         MasterEntity master = MasterEntity.builder()
                 .item(request.getItem())
@@ -37,6 +44,69 @@ public class MasterService {
 
         repository.save(master);
         return master;
+    }
+
+    public MasterEntity createMasterDepartments(MasterDepartmentsCreateRequest request) {
+        MasterEntity newMasterItem = createItem(request.masterItem());
+        repository.save(newMasterItem);
+        MasterResponse newMasterResponse = MasterResponse.builder()
+                .item(newMasterItem.getItem())
+                .manufacturer(newMasterItem.getManufacturer())
+                .partNumber(newMasterItem.getPartNumber())
+                .recentCN(newMasterItem.getRecentCN())
+                .recentVendor(newMasterItem.getRecentVendor())
+                .fisherCN(newMasterItem.getFisherCN())
+                .vwrCN(newMasterItem.getVwrCN())
+                .labSourceCN(newMasterItem.getLabSourceCN())
+                .otherCN(newMasterItem.getOtherCN())
+                .purchaseUnit(newMasterItem.getPurchaseUnit())
+                .unitPrice(newMasterItem.getUnitPrice())
+                .category(newMasterItem.getCategory())
+                .comment(newMasterItem.getComment())
+                .itemType(newMasterItem.getItemType())
+                .itemGroup(newMasterItem.getItemGroup())
+                .drugClass(newMasterItem.getDrugClass())
+                .build();
+
+        if(!request.departments().isEmpty()) {
+            request.departments().forEach(department -> {
+                if(department == Department.EXTRACTIONS) {
+                    extractionsMasterClient.createDepartmentMasterItem(newMasterResponse);
+                }
+//                if(department == Department.MASS_SPEC) {
+//                    MassSpecEntity newDepartmentItem = new MassSpecEntity();
+//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
+//                }
+//                if(department == Department.RD) {
+//                    ExtractionsEntity newDepartmentItem = new ExtractionsEntity();
+//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
+//                }
+//                if(department == Department.SCREENING) {
+//                    ExtractionsEntity newDepartmentItem = new ExtractionsEntity();
+//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
+//                }
+//                if(department == Department.SHIPPING) {
+//                    ExtractionsEntity newDepartmentItem = new ExtractionsEntity();
+//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
+//                }
+//                if(department == Department.PROCESSING_LAB) {
+//                    ExtractionsEntity newDepartmentItem = new ExtractionsEntity();
+//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
+//                }
+//                if(department == Department.QC_INTERNAL_STANDARDS) {
+//                    ExtractionsEntity newDepartmentItem = new ExtractionsEntity();
+//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
+//                }
+//                if(department == Department.QC-QA) {
+//                    ExtractionsEntity newDepartmentItem = new ExtractionsEntity();
+//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
+//                }
+
+            });
+
+        }
+
+        return newMasterItem;
     }
 
     public MasterEntity updateItem(Integer id, MasterEntity request) {

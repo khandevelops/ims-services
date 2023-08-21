@@ -1,4 +1,4 @@
-package com.usdtl.ims.departmentMaster.qcqa;
+package com.usdtl.ims.departmentMaster.qcQa;
 
 import com.usdtl.ims.departmentMaster.common.MasterEntity;
 import lombok.*;
@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 
-@Table(name = "qcqa")
+@Table(name = "qc_qa")
 @Builder
 @Data
 @NoArgsConstructor

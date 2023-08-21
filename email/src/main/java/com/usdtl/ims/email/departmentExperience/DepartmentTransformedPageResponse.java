@@ -1,6 +1,6 @@
 package com.usdtl.ims.email.departmentExperience;
 
-import com.usdtl.ims.clients.DepartmentMasterResponse;
+import com.usdtl.ims.clients.responseRecord.DepartmentMasterResponse;
 import lombok.Builder;
 
 import java.util.List;

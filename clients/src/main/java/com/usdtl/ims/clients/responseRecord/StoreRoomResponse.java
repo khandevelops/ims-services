@@ -1,4 +1,4 @@
-package com.usdtl.ims.clients;
+package com.usdtl.ims.clients.responseRecord;
 
 
 public record StoreRoomResponse(

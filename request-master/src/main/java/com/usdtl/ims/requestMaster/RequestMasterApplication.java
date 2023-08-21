@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableEurekaClient
-@ComponentScan(basePackages = {"com.usdtl.ims"})
 @EnableFeignClients(
         basePackages = "com.usdtl.ims.clients"
 )

@@ -24,8 +24,8 @@ public class ExtractionsController  {
         return new ResponseEntity<>(service.getItem(id), HttpStatus.OK);
     }
     @PostMapping("create")
-    public ResponseEntity<ExtractionsEntity> createItem(@RequestBody ExtractionsEntity request) {
-        return new ResponseEntity<>(service.createItem(request), HttpStatus.CREATED);
+    public ExtractionsEntity createItem(@RequestBody ExtractionsEntity request) {
+        return service.createItem(request);
     }
     @PatchMapping(path = "/{id}/update")
     public ExtractionsEntity updateItem(@PathVariable(value = "id") Integer id, @RequestBody ExtractionsEntity request) {
