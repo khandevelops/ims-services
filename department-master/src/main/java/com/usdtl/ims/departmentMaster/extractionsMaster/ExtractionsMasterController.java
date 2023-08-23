@@ -21,7 +21,6 @@ public class ExtractionsMasterController {
         log.info("List extractions master transformed items");
         return service.getDepartmentMasterItems(page);
     }
-
     @PostMapping("create")
     public ExtractionsMasterEntity createDepartmentMasterItem(@RequestBody MasterEntity masterItem) {
         return service.createDepartmentMasterItem(masterItem);

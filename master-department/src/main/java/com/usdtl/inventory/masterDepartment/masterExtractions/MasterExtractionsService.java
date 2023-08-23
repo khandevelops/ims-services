@@ -47,6 +47,21 @@ public class MasterExtractionsService {
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
 
+    public Page<MasterExtractionsEntity> sortTotalQuantity(Integer page, String direction) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+
+
+//        if(direction.equals("ASC")) {
+//            Sort sort = Sort.by(column).ascending();
+//            pageRequest = PageRequest.of(page, 10, sort);
+//        }
+//        if(direction.equals("DESC")) {
+//            Sort sort = Sort.by(column).descending();
+//            pageRequest = PageRequest.of(page, 10, sort);
+//        }
+        return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
+    }
+
     public MasterExtractionsEntity create(MasterExtractionsEntity request, Department department) {
         MasterExtractionsEntity master = MasterExtractionsEntity.builder()
                 .item(request.getItem())

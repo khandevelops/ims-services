@@ -15,14 +15,12 @@ public class ExtractionsMasterService {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAll(pageRequest);
     }
-
     public ExtractionsMasterEntity createDepartmentMasterItem(MasterEntity masterItem) {
         ExtractionsMasterEntity newDepartmentItems = ExtractionsMasterEntity.builder().build();
         newDepartmentItems.setMasterItem(masterItem);
         repository.save(newDepartmentItems);
         return newDepartmentItems;
     }
-
     public Double getTotal() {
         return repository.getGrandTotal();
     }

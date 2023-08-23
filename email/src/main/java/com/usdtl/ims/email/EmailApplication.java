@@ -12,9 +12,6 @@ import org.springframework.context.annotation.PropertySources;
 @EnableFeignClients(
         basePackages = "com.usdtl.ims.clients"
 )
-@PropertySources({
-        @PropertySource("classpath:clients-${spring.profiles.active}.properties")
-})
 public class EmailApplication {
     public static void main(String[] args) {
         SpringApplication.run(EmailApplication.class, args);

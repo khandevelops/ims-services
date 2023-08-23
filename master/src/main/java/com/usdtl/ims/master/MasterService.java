@@ -1,6 +1,6 @@
 package com.usdtl.ims.master;
 
-import com.usdtl.ims.clients.departmentMasterClients.ExtractionsMasterClient;
+import com.usdtl.ims.clients.departmentMasterClients.DepartmentMasterClient;
 import com.usdtl.ims.clients.masterClients.response.MasterResponse;
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.common.exceptions.constants.Department;
@@ -14,14 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
 public class MasterService {
 
     private MasterRepository repository;
-    private ExtractionsMasterClient extractionsMasterClient;
+    private DepartmentMasterClient departmentMasterClient;
     public MasterEntity createItem(MasterEntity request) {
         MasterEntity master = MasterEntity.builder()
                 .item(request.getItem())
@@ -71,36 +69,29 @@ public class MasterService {
         if(!request.departments().isEmpty()) {
             request.departments().forEach(department -> {
                 if(department == Department.EXTRACTIONS) {
-                    extractionsMasterClient.createDepartmentMasterItem(newMasterResponse);
+                    departmentMasterClient.createExtractionsMasterItem(newMasterResponse);
                 }
-//                if(department == Department.MASS_SPEC) {
-//                    MassSpecEntity newDepartmentItem = new MassSpecEntity();
-//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
-//                }
-//                if(department == Department.RD) {
-//                    ExtractionsEntity newDepartmentItem = new ExtractionsEntity();
-//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
-//                }
-//                if(department == Department.SCREENING) {
-//                    ExtractionsEntity newDepartmentItem = new ExtractionsEntity();
-//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
-//                }
-//                if(department == Department.SHIPPING) {
-//                    ExtractionsEntity newDepartmentItem = new ExtractionsEntity();
-//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
-//                }
-//                if(department == Department.PROCESSING_LAB) {
-//                    ExtractionsEntity newDepartmentItem = new ExtractionsEntity();
-//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
-//                }
-//                if(department == Department.QC_INTERNAL_STANDARDS) {
-//                    ExtractionsEntity newDepartmentItem = new ExtractionsEntity();
-//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
-//                }
-//                if(department == Department.QC-QA) {
-//                    ExtractionsEntity newDepartmentItem = new ExtractionsEntity();
-//                    newMasterItem.getDepartmentItems().add(newDepartmentItem);
-//                }
+                if(department == Department.MASS_SPEC) {
+                    departmentMasterClient.createMassSpecMasterItem(newMasterResponse);
+                }
+                if(department == Department.RD) {
+                    departmentMasterClient.createRdMasterItem(newMasterResponse);
+                }
+                if(department == Department.SCREENING) {
+                    departmentMasterClient.createScreeningMasterItem(newMasterResponse);
+                }
+                if(department == Department.SHIPPING) {
+                    departmentMasterClient.createShippingMasterItem(newMasterResponse);
+                }
+                if(department == Department.PROCESSING_LAB) {
+                    departmentMasterClient.createProcessingLabMasterItem(newMasterResponse);
+                }
+                if(department == Department.QC_INTERNAL_STANDARDS) {
+                    departmentMasterClient.createQcInternalStandardsMasterItem(newMasterResponse);
+                }
+                if(department == Department.QC_QA) {
+                    departmentMasterClient.createQcQaMasterItem(newMasterResponse);
+                }
 
             });
 

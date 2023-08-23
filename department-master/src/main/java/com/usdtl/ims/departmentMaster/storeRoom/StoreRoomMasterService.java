@@ -1,6 +1,8 @@
 package com.usdtl.ims.departmentMaster.storeRoom;
 
 import com.usdtl.ims.clients.responseRecord.MasterDepartmentClient;
+import com.usdtl.ims.departmentMaster.common.MasterEntity;
+import com.usdtl.ims.departmentMaster.extractionsMaster.ExtractionsMasterEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -8,15 +10,19 @@ import org.springframework.data.domain.PageRequest;
 @org.springframework.stereotype.Service
 @AllArgsConstructor
 public class StoreRoomMasterService {
-    private StoreRoomMasterRepository storeRoomMasterRepository;
-    private MasterDepartmentClient client;
+    private StoreRoomMasterRepository repository;
 
     public Page<StoreRoomMasterEntity> getDepartmentMasterItems(Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        return storeRoomMasterRepository.findAll(pageRequest);
+        return repository.findAll(pageRequest);
     }
-
+    public StoreRoomMasterEntity createDepartmentMasterItem(MasterEntity masterItem) {
+        StoreRoomMasterEntity newDepartmentItems = StoreRoomMasterEntity.builder().build();
+        newDepartmentItems.setMasterItem(masterItem);
+        repository.save(newDepartmentItems);
+        return newDepartmentItems;
+    }
     public Double getTotal() {
-        return storeRoomMasterRepository.getGrandTotal();
+        return repository.getGrandTotal();
     }
 }

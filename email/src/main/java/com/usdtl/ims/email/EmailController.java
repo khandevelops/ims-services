@@ -1,5 +1,5 @@
 package com.usdtl.ims.email;
-import com.usdtl.ims.clients.departmentMasterClients.ExtractionsMasterClient;
+import com.usdtl.ims.clients.departmentMasterClients.DepartmentMasterClient;
 import com.usdtl.ims.clients.departmentMasterClients.common.response.DepartmentMasterResponse;
 import com.usdtl.ims.clients.responseRecord.RequestItemRequest;
 import freemarker.template.TemplateException;
@@ -17,12 +17,12 @@ import java.util.List;
 public class EmailController {
 
     private EmailService service;
-    private ExtractionsMasterClient extractionsMasterClient;
+    private DepartmentMasterClient departmentMasterClient;
 
     @GetMapping("scheduled-email")
     public List<DepartmentMasterResponse> sendScheduledEmail(Model model) throws MessagingException, TemplateException, IOException {
-        service.sendScheduledEmail(extractionsMasterClient.getEmailItems(), model);
-        return extractionsMasterClient.getEmailItems();
+        service.sendScheduledEmail(departmentMasterClient.emailExtractionsItems(), model);
+        return departmentMasterClient.emailExtractionsItems();
     }
 
     @PostMapping("confirmation-email")

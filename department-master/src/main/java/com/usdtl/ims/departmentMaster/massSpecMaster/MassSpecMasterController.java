@@ -1,28 +1,30 @@
 package com.usdtl.ims.departmentMaster.massSpecMaster;
 
+import com.usdtl.ims.departmentMaster.common.MasterEntity;
+import com.usdtl.ims.departmentMaster.extractionsMaster.ExtractionsMasterEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @AllArgsConstructor
 @RestController
 @RequestMapping("mass-spec")
 public class MassSpecMasterController {
-    private MassSpecMasterService massSpecMasterService;
+    private MassSpecMasterService service;
 
     @GetMapping("list")
     public Page<MassSpecMasterEntity> getItemsByPage(@RequestParam Integer page) {
         log.info("List extractions master transformed items");
-        return massSpecMasterService.getDepartmentMasterItems(page);
+        return service.getDepartmentMasterItems(page);
     }
-
+    @PostMapping("create")
+    public MassSpecMasterEntity createDepartmentMasterItem(@RequestBody MasterEntity masterItem) {
+        return service.createDepartmentMasterItem(masterItem);
+    }
     @GetMapping("grand-total")
     public Double getTotal() {
-        return massSpecMasterService.getTotal();
+        return service.getTotal();
     }
 }
