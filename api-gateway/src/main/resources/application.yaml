@@ -1,11 +1,11 @@
 server:
   port: 8443
   ssl:
-    key-store: classpath:ims_keystore.jks
-    key-store-password: Y91permhjwb%
+    key-store: classpath:ims_cert_with_key.jks
+    key-store-password: changeit
     key-store-type: JKS
-    key-alias: ims.usdtl.services
-    key-password: Y91permhjwb%
+    key-alias: ims_key_cert
+    key-password: changeit
     enabled: true
 spring:
   main:
