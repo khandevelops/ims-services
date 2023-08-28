@@ -1,12 +1,9 @@
 server:
   port: 8443
   ssl:
-    key-store: classpath:ims_cert_with_key.jks
+    key-store: classpath:ims_key_cert.pfx
     key-store-password: changeit
-    key-store-type: JKS
-    key-alias: ims_key_cert
-    key-password: changeit
-    enabled: true
+    keyStoreType: PKCS12
 spring:
   main:
     web-application-type: reactive
@@ -70,6 +67,10 @@ spring:
           uri: lb://REQUEST
           predicates:
             - Path=/ims/api/v1/request/**
+        - id: request
+          uri: lb://MASTER-TOTAL
+          predicates:
+            - Path=/ims/api/v1/master-total/**
 eureka:
   client:
     service-url:

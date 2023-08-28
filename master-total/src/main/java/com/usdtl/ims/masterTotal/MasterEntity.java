@@ -1,17 +1,17 @@
-package com.usdtl.inventory.masterDepartment.masterExtractions;
+package com.usdtl.ims.masterTotal;
 
 import lombok.*;
+
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Builder
 @Table(name = "master")
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
-public class MasterExtractionsEntity {
+public class MasterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -48,8 +48,4 @@ public class MasterExtractionsEntity {
     private String itemGroup;
     @Column(name = "drugClass")
     private String drugClass;
-    @OneToOne(mappedBy = "itemId", cascade = CascadeType.ALL)
-    private MasterTotalEntity masterTotalItem;
-    @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ExtractionsEntity> departmentItems;
 }

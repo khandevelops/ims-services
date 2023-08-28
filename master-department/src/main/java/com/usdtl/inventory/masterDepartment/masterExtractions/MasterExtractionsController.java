@@ -27,7 +27,7 @@ public class MasterExtractionsController {
 
     @GetMapping("sort")
     public Page<MasterExtractionsEntity> sortItems(@RequestParam Integer page, @RequestParam String column, @RequestParam String direction) {
-        return service.sorItems(page, column, direction);
+        return service.sortItems(page, column, direction);
     }
 
     @GetMapping("list")

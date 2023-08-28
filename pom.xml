@@ -24,6 +24,7 @@
         <module>profile-details</module>
         <module>store-room</module>
         <module>store-room-master</module>
+        <module>master-total</module>
     </modules>
 
     <properties>
