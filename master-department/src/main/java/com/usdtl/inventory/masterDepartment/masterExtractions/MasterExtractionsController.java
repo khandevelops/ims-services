@@ -44,4 +44,9 @@ public class MasterExtractionsController {
     public MasterExtractionsEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
         return service.assign(id, department);
     }
+
+    @GetMapping("sync-order-details")
+    public String syncOrderDetails() {
+        return service.syncOrderDetails();
+    }
 }

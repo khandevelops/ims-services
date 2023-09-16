@@ -6,21 +6,24 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface MasterExtractionsRepository extends PagingAndSortingRepository<MasterExtractionsEntity, Integer> {
     Page<MasterExtractionsEntity> findByDepartmentItemsIsNotEmpty(Pageable pageable);
+    List<MasterExtractionsEntity> findByDepartmentItemsIsNotEmpty();
 
-    @Query(value = "SELECT md FROM MasterExtractionsEntity AS md WHERE md.departmentItems IS NOT EMPTY ORDER BY md.masterTotal.totalQuantity ASC")
-    Page<MasterExtractionsEntity> findAllByTotalQuantityOrderByAsc(Pageable pageable);
-
-    @Query(value = "SELECT md FROM MasterExtractionsEntity AS md WHERE md.departmentItems IS NOT EMPTY ORDER BY md.masterTotal.totalPrice ASC")
-    Page<MasterExtractionsEntity> findAllByTotalPriceOrderByAsc(Pageable pageable);
-
-    @Query(value = "SELECT md FROM MasterExtractionsEntity AS md WHERE md.departmentItems IS NOT EMPTY ORDER BY md.masterTotal.totalQuantity DESC")
-    Page<MasterExtractionsEntity> findAllByTotalQuantityOrderByDesc(Pageable pageable);
-
-    @Query(value = "SELECT md FROM MasterExtractionsEntity AS md WHERE md.departmentItems IS NOT EMPTY ORDER BY md.masterTotal.totalPrice DESC")
-    Page<MasterExtractionsEntity> findAllByTotalPriceOrderByDesc(Pageable pageable);
+//    @Query(value = "SELECT md FROM MasterExtractionsEntity AS md WHERE md.departmentItems IS NOT EMPTY ORDER BY md.masterTotalItem.totalQuantity ASC")
+//    Page<MasterExtractionsEntity> findAllByTotalQuantityOrderByAsc(Pageable pageable);
+//
+//    @Query(value = "SELECT md FROM MasterExtractionsEntity AS md WHERE md.departmentItems IS NOT EMPTY ORDER BY md.masterTotalItem.totalPrice ASC")
+//    Page<MasterExtractionsEntity> findAllByTotalPriceOrderByAsc(Pageable pageable);
+//
+//    @Query(value = "SELECT md FROM MasterExtractionsEntity AS md WHERE md.departmentItems IS NOT EMPTY ORDER BY md.masterTotalItem.totalQuantity DESC")
+//    Page<MasterExtractionsEntity> findAllByTotalQuantityOrderByDesc(Pageable pageable);
+//
+//    @Query(value = "SELECT md FROM MasterExtractionsEntity AS md WHERE md.departmentItems IS NOT EMPTY ORDER BY md.masterTotalItem.totalPrice DESC")
+//    Page<MasterExtractionsEntity> findAllByTotalPriceOrderByDesc(Pageable pageable);
 
     @Query(value = "SELECT m FROM MasterExtractionsEntity AS m WHERE "
             + "m.departmentItems IS NOT EMPTY"
@@ -39,9 +42,7 @@ public interface MasterExtractionsRepository extends PagingAndSortingRepository<
             + " OR m.drugClass LIKE %?1%"
             + " OR m.itemType LIKE %?1%"
             + " OR m.itemGroup LIKE %?1%"
-            + " OR m.comment LIKE %?1%"
-            + " OR cast(m.masterTotal.totalQuantity as string) LIKE %?1%"
-            + " OR cast(m.masterTotal.totalPrice as string) LIKE %?1%)"
+            + " OR m.comment LIKE %?1%)"
     )
     Page<MasterExtractionsEntity> findAllByKeyword(String keyword, Pageable pageable);
 }

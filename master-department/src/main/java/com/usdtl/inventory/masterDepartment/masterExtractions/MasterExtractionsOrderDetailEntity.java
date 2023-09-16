@@ -1,6 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterExtractions;
 
-import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,8 +11,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "master_total")
-public class MasterTotalEntity {
+@Table(name = "extractions_order_detail")
+public class MasterExtractionsOrderDetailEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,6 +20,11 @@ public class MasterTotalEntity {
     private Integer totalQuantity;
     @Column(name = "totalPrice")
     private Double totalPrice;
-    @OneToOne(mappedBy = "masterTotalItem")
+    @Column(name = "orderQuantity")
+    private Integer orderQuantity;
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "itemId")
+    @JsonIgnore
     private MasterExtractionsEntity masterExtractionsItem;
 }
