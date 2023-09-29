@@ -32,11 +32,11 @@ public class RequestMasterGeneralService {
             RequestMasterGeneralEntity newItem = RequestMasterGeneralEntity.builder()
                     .quantity(request.getQuantity())
                     .department(request.getDepartment())
-                    .user(request.getUser())
+                    .requester(request.getRequester())
                     .detail(request.getDetail())
                     .customText(request.getCustomText())
                     .location(request.getLocation())
-                    .status(Status.PENDING)
+                    .orderStatus(Status.PENDING)
                     .timeRequested(new Date())
                     .timeRequested(new Date())
                     .confirmation(Confirmation.WAITING)
@@ -54,11 +54,11 @@ public class RequestMasterGeneralService {
             RequestMasterGeneralEntity requestItem = repository.findById(item.getId()).orElseThrow(() -> new NotFoundException("cannot find this item"));
             requestItem.setQuantity(item.getQuantity());
             requestItem.setDepartment(item.getDepartment());
-            requestItem.setStatus(item.getStatus());
+            requestItem.setOrderStatus(item.getOrderStatus());
             requestItem.setLocation(item.getLocation());
             requestItem.setTimeUpdated(new Date());
             requestItem.setConfirmation(item.getConfirmation());
-            requestItem.setUser(item.getUser());
+            requestItem.setRequester(item.getRequester());
             requestItem.setDetail(item.getDetail());
             requestItem.setCustomText(item.getCustomText());
             repository.save(requestItem);
@@ -71,11 +71,11 @@ public class RequestMasterGeneralService {
         RequestMasterGeneralEntity requestMasterItem = repository.findById(id).orElseThrow(() -> new NotFoundException("cannot find this item"));
         requestMasterItem.setQuantity(requestItem.getQuantity());
         requestMasterItem.setDepartment(requestItem.getDepartment());
-        requestMasterItem.setStatus(requestItem.getStatus());
+        requestMasterItem.setOrderStatus(requestItem.getOrderStatus());
         requestMasterItem.setLocation(requestItem.getLocation());
         requestMasterItem.setTimeUpdated(new Date());
         requestMasterItem.setConfirmation(requestItem.getConfirmation());
-        requestMasterItem.setUser(requestItem.getUser());
+        requestMasterItem.setRequester(requestItem.getRequester());
         requestMasterItem.setDetail(requestItem.getDetail());
         requestMasterItem.setCustomText(requestItem.getCustomText());
         repository.save(requestMasterItem);
@@ -110,11 +110,11 @@ public class RequestMasterGeneralService {
 
             RequestMasterGeneralEntity requestClientItem = RequestMasterGeneralEntity.builder()
                     .department(requestItem.getDepartment())
-                    .status(requestItem.getStatus())
+                    .orderStatus(requestItem.getOrderStatus())
                     .location(requestItem.getLocation())
                     .timeUpdated(new Date())
                     .confirmation(requestItem.getConfirmation())
-                    .user(requestItem.getUser())
+                    .requester(requestItem.getRequester())
                     .detail(requestItem.getDetail())
                     .customText(requestItem.getCustomText())
                     .masterItem(masterItem)

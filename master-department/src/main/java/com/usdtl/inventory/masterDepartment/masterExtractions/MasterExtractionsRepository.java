@@ -12,19 +12,6 @@ import java.util.List;
 public interface MasterExtractionsRepository extends PagingAndSortingRepository<MasterExtractionsEntity, Integer> {
     Page<MasterExtractionsEntity> findByDepartmentItemsIsNotEmpty(Pageable pageable);
     List<MasterExtractionsEntity> findByDepartmentItemsIsNotEmpty();
-
-//    @Query(value = "SELECT md FROM MasterExtractionsEntity AS md WHERE md.departmentItems IS NOT EMPTY ORDER BY md.masterTotalItem.totalQuantity ASC")
-//    Page<MasterExtractionsEntity> findAllByTotalQuantityOrderByAsc(Pageable pageable);
-//
-//    @Query(value = "SELECT md FROM MasterExtractionsEntity AS md WHERE md.departmentItems IS NOT EMPTY ORDER BY md.masterTotalItem.totalPrice ASC")
-//    Page<MasterExtractionsEntity> findAllByTotalPriceOrderByAsc(Pageable pageable);
-//
-//    @Query(value = "SELECT md FROM MasterExtractionsEntity AS md WHERE md.departmentItems IS NOT EMPTY ORDER BY md.masterTotalItem.totalQuantity DESC")
-//    Page<MasterExtractionsEntity> findAllByTotalQuantityOrderByDesc(Pageable pageable);
-//
-//    @Query(value = "SELECT md FROM MasterExtractionsEntity AS md WHERE md.departmentItems IS NOT EMPTY ORDER BY md.masterTotalItem.totalPrice DESC")
-//    Page<MasterExtractionsEntity> findAllByTotalPriceOrderByDesc(Pageable pageable);
-
     @Query(value = "SELECT m FROM MasterExtractionsEntity AS m WHERE "
             + "m.departmentItems IS NOT EMPTY"
             + " AND (m.item LIKE %?1%"

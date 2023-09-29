@@ -29,19 +29,6 @@ public class MasterExtractionsService {
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
 
-//    public void getMasterTotal(Page<MasterExtractionsEntity> masterDepartmentItems) {
-//        List<OrderDetailEntity> orderDetailEntityList = new ArrayList<>();
-//        masterDepartmentItems.forEach(masterDepartmentItem -> {
-//            Integer totalQuantity = masterDepartmentItem.getDepartmentItems().stream().mapToInt(ExtractionsEntity::getQuantity).sum();
-//            OrderDetailEntity masterTotal = OrderDetailEntity.builder()
-//                    .totalQuantity(totalQuantity)
-//                    .totalPrice(masterDepartmentItem.getUnitPrice() * totalQuantity)
-//                    .build();
-//            orderDetailEntityList.add(masterTotal);
-//        });
-//        orderDetailRepository.saveAll(orderDetailEntityList);
-//    }
-
     public Page<MasterExtractionsEntity> filterItems(String keyword, Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 10);
         return repository.findAllByKeyword(keyword, pageRequest);
@@ -49,30 +36,35 @@ public class MasterExtractionsService {
 
     public Page<MasterExtractionsEntity> sortItems(Integer page, String column, String direction) {
         PageRequest pageRequest = PageRequest.of(page, 10);
+        Sort sort = null;
         if(direction.isEmpty()) {
-            Sort sort = Sort.by("id").ascending();
+            sort = Sort.by("id").ascending();
             pageRequest = PageRequest.of(page, 10, sort);
         }
-//        if(direction.equals("ASC")) {
-//            if(column.equals("totalQuantity")) {
-//                return repository.findAllByTotalQuantityOrderByAsc(pageRequest);
-//            } else if (column.equals("totalPrice")) {
-//                return repository.findAllByTotalPriceOrderByAsc(pageRequest);
-//            } else {
-//                Sort sort = Sort.by(column).ascending();
-//                pageRequest = PageRequest.of(page, 10, sort);
-//            }
-//        }
-//        if(direction.equals("DESC")) {
-//            if(column.equals("totalQuantity")) {
-//                return repository.findAllByTotalQuantityOrderByDesc(pageRequest);
-//            } else if (column.equals("totalPrice")) {
-//                return repository.findAllByTotalPriceOrderByDesc(pageRequest);
-//            } else {
-//                Sort sort = Sort.by(column).descending();
-//                pageRequest = PageRequest.of(page, 10, sort);
-//            }
-//        }
+        if(direction.equals("ASC")) {
+            if(column.equals("totalQuantity")) {
+                sort = Sort.by("orderDetail.totalQuantity").ascending();
+            } else if (column.equals("orderQuantity")) {
+                sort = Sort.by("orderDetail.orderQuantity").ascending();
+            } else if (column.equals("totalPrice")) {
+                sort = Sort.by("orderDetail.totalPrice").ascending();
+            } else {
+                sort = Sort.by(column).ascending();
+            }
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
+        if(direction.equals("DESC")) {
+            if(column.equals("totalQuantity")) {
+                sort = Sort.by("orderDetail.totalQuantity").descending();
+            } else if (column.equals("orderQuantity")) {
+                sort = Sort.by("orderDetail.orderQuantity").descending();
+            } else if (column.equals("totalPrice")) {
+                sort = Sort.by("orderDetail.totalPrice").descending();
+            } else {
+                sort = Sort.by(column).descending();
+            }
+            pageRequest = PageRequest.of(page, 10, sort);
+        }
         return repository.findByDepartmentItemsIsNotEmpty(pageRequest);
     }
 
@@ -135,7 +127,7 @@ public class MasterExtractionsService {
                 orderQuantity = 0;
             }
 
-            MasterExtractionsOrderDetailEntity newOrderDetail = MasterExtractionsOrderDetailEntity.builder()
+            MasterExtractionsOrderDetailEntity newOrderDetail = com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsOrderDetailEntity.builder()
                     .totalPrice(totalPrice)
                     .totalQuantity(totalQuantity)
                     .orderQuantity(orderQuantity)

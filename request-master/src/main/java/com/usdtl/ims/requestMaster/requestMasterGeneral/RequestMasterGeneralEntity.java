@@ -28,8 +28,8 @@ public class RequestMasterGeneralEntity {
     private String detail;
     @Column(name = "department")
     private Department department;
-    @Column(name = "status")
-    private Status status;
+    @Column(name = "orderStatus")
+    private Status orderStatus;
     @Column(name = "location")
     private String location;
     @CreationTimestamp
@@ -39,8 +39,8 @@ public class RequestMasterGeneralEntity {
     private Date timeUpdated;
     @Column(name = "confirmation")
     private Confirmation confirmation;
-    @Column(name = "user")
-    private String user;
+    @Column(name = "requester")
+    private String requester;
     @Column(name = "customText")
     private String customText;
     @ManyToOne
