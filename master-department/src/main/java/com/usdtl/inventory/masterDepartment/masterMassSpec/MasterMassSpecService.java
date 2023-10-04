@@ -109,35 +109,37 @@ public class MasterMassSpecService {
     public String syncOrderDetails() {
         List<MasterMassSpecEntity> masterDepartmentItems = repository.findByDepartmentItemsIsNotEmpty();
         masterDepartmentItems.forEach(masterDepartmentItem -> {
-            Integer maximumQuantity = masterDepartmentItem.getDepartmentItems().get(0).getMaximumQuantity();
-            Integer minimumQuantity = masterDepartmentItem.getDepartmentItems().get(0).getMinimumQuantity();
-            Integer totalQuantity = masterDepartmentItem.getDepartmentItems().stream()
-                    .peek(item -> {
-                        if(item.getQuantity() == null)
-                            item.setQuantity(0);
+            if(masterDepartmentItem.getOrderDetail() == null) {
+                Integer maximumQuantity = masterDepartmentItem.getDepartmentItems().get(0).getMaximumQuantity();
+                Integer minimumQuantity = masterDepartmentItem.getDepartmentItems().get(0).getMinimumQuantity();
+                Integer totalQuantity = masterDepartmentItem.getDepartmentItems().stream()
+                        .peek(item -> {
+                            if (item.getQuantity() == null)
+                                item.setQuantity(0);
 
-                    })
-                    .mapToInt(MassSpecEntity::getQuantity).sum();
-            double totalPrice = masterDepartmentItem.getUnitPrice() * totalQuantity;
-            Integer orderQuantity = 0;
-            if (maximumQuantity == null || minimumQuantity == null) {
-                orderQuantity = null;
-            } else if (maximumQuantity == 1 && minimumQuantity == 1 && totalQuantity < 1) {
-                orderQuantity = 1;
-            } else if (totalQuantity < minimumQuantity) {
-                orderQuantity = maximumQuantity - totalQuantity;
-            } else {
-                orderQuantity = 0;
+                        })
+                        .mapToInt(MassSpecEntity::getQuantity).sum();
+                double totalPrice = masterDepartmentItem.getUnitPrice() * totalQuantity;
+                Integer orderQuantity = 0;
+                if (maximumQuantity == null || minimumQuantity == null) {
+                    orderQuantity = null;
+                } else if (maximumQuantity == 1 && minimumQuantity == 1 && totalQuantity < 1) {
+                    orderQuantity = 1;
+                } else if (totalQuantity < minimumQuantity) {
+                    orderQuantity = maximumQuantity - totalQuantity;
+                } else {
+                    orderQuantity = 0;
+                }
+
+                MasterMassSpecOrderDetailEntity newOrderDetail = MasterMassSpecOrderDetailEntity.builder()
+                        .totalPrice(Precision.round(totalPrice, 2))
+                        .totalQuantity(totalQuantity)
+                        .orderQuantity(orderQuantity)
+                        .masterDepartmentItem(masterDepartmentItem)
+                        .build();
+                masterDepartmentItem.setOrderDetail(newOrderDetail);
+                repository.save(masterDepartmentItem);
             }
-
-            MasterMassSpecOrderDetailEntity newOrderDetail = MasterMassSpecOrderDetailEntity.builder()
-                    .totalPrice(Precision.round(totalPrice, 2))
-                    .totalQuantity(totalQuantity)
-                    .orderQuantity(orderQuantity)
-                    .masterDepartmentItem(masterDepartmentItem)
-                    .build();
-            masterDepartmentItem.setOrderDetail(newOrderDetail);
-            repository.save(masterDepartmentItem);
         });
         return "SUCCESS";
     }

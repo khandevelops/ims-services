@@ -2,17 +2,12 @@ package com.usdtl.inventory.masterDepartment.masterExtractions;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.common.exceptions.constants.Department;
-//import com.usdtl.inventory.masterDepartment.masterTotal.MasterTotalRepository;
-//import com.usdtl.inventory.masterDepartment.orderDetail.OrderDetailEntity;
-//import com.usdtl.inventory.masterDepartment.orderDetail.OrderDetailRepository;
 import lombok.AllArgsConstructor;
 import org.apache.commons.math3.util.Precision;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,7 +132,7 @@ public class MasterExtractionsService {
                         .totalPrice(Precision.round(totalPrice, 2))
                         .totalQuantity(totalQuantity)
                         .orderQuantity(orderQuantity)
-                        .masterExtractionsEntity(masterDepartmentItem)
+                        .masterDepartmentEntity(masterDepartmentItem)
                         .build();
                 masterDepartmentItem.setOrderDetail(newOrderDetail);
                 repository.save(masterDepartmentItem);

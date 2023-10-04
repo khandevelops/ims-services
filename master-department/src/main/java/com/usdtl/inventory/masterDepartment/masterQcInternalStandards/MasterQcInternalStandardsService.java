@@ -107,7 +107,7 @@ public class MasterQcInternalStandardsService {
 
                         })
                         .mapToInt(QcInternalStandardsEntity::getQuantity).sum();
-                Double totalPrice = masterDepartmentItem.getUnitPrice() * totalQuantity;
+                double totalPrice = masterDepartmentItem.getUnitPrice() * totalQuantity;
                 Integer orderQuantity = 0;
                 if (maximumQuantity == null || minimumQuantity == null) {
                     orderQuantity = null;

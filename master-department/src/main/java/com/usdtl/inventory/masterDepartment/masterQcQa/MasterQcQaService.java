@@ -104,7 +104,7 @@ public class MasterQcQaService {
 
                         })
                         .mapToInt(QcQaEntity::getQuantity).sum();
-                Double totalPrice = masterDepartmentItem.getUnitPrice() * totalQuantity;
+                double totalPrice = masterDepartmentItem.getUnitPrice() * totalQuantity;
                 Integer orderQuantity = 0;
                 if (maximumQuantity == null || minimumQuantity == null) {
                     orderQuantity = null;
@@ -122,7 +122,7 @@ public class MasterQcQaService {
                         .orderQuantity(orderQuantity)
                         .build();
                 masterDepartmentItem.setOrderDetail(newOrderDetail);
-                orderDetailRepository.save(newOrderDetail);
+                repository.save(masterDepartmentItem);
             }
         });
         return "SUCCESS";
