@@ -2,7 +2,9 @@ package com.usdtl.inventory.masterDepartment.masterQcInternalStandards;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.common.exceptions.constants.Department;
+import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsOrderDetailEntity;
 import lombok.AllArgsConstructor;
+import org.apache.commons.math3.util.Precision;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -15,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MasterQcInternalStandardsService {
     private MasterQcInternalStandardsRepository repository;
+    private MasterQcInternalStandardsOrderDetailRepository orderDetailRepository;
 
     public MasterQcInternalStandardsEntity getItem(Integer id) throws NotFoundException {
         return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
@@ -73,16 +76,14 @@ public class MasterQcInternalStandardsService {
                 .build();
 
 
-        return getMasterExtractionsEntity(department, master);
+        return getMasterDepartmentEntity(department, master);
     }
 
-    private MasterQcInternalStandardsEntity getMasterExtractionsEntity(Department department, MasterQcInternalStandardsEntity master) {
-        if(department == Department.EXTRACTIONS) {
-            QcInternalStandardsEntity item = new QcInternalStandardsEntity();
-            List<QcInternalStandardsEntity> items = new ArrayList<>();
-            items.add(item);
-            master.setDepartmentItems(items);
-        }
+    private MasterQcInternalStandardsEntity getMasterDepartmentEntity(Department department, MasterQcInternalStandardsEntity master) {
+        QcInternalStandardsEntity item = new QcInternalStandardsEntity();
+        List<QcInternalStandardsEntity> items = new ArrayList<>();
+        items.add(item);
+        master.setDepartmentItems(items);
 
         repository.save(master);
         return master;
@@ -90,6 +91,45 @@ public class MasterQcInternalStandardsService {
 
     public MasterQcInternalStandardsEntity assign(Integer id, Department department) {
         MasterQcInternalStandardsEntity masterDepartment = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
-        return getMasterExtractionsEntity(department, masterDepartment);
+        return getMasterDepartmentEntity(department, masterDepartment);
+    }
+
+    public String syncOrderDetails() {
+        List<MasterQcInternalStandardsEntity> masterDepartmentItems = repository.findByDepartmentItemsIsNotEmpty();
+        masterDepartmentItems.forEach(masterDepartmentItem -> {
+            if(masterDepartmentItem.getOrderDetail() == null) {
+                Integer maximumQuantity = masterDepartmentItem.getDepartmentItems().get(0).getMaximumQuantity();
+                Integer minimumQuantity = masterDepartmentItem.getDepartmentItems().get(0).getMinimumQuantity();
+                Integer totalQuantity = masterDepartmentItem.getDepartmentItems().stream()
+                        .peek(item -> {
+                            if(item.getQuantity() == null)
+                                item.setQuantity(0);
+
+                        })
+                        .mapToInt(QcInternalStandardsEntity::getQuantity).sum();
+                Double totalPrice = masterDepartmentItem.getUnitPrice() * totalQuantity;
+                Integer orderQuantity = 0;
+                if (maximumQuantity == null || minimumQuantity == null) {
+                    orderQuantity = null;
+                } else if (maximumQuantity == 1 && minimumQuantity == 1 && totalQuantity < 1) {
+                    orderQuantity = 1;
+                } else if (totalQuantity < minimumQuantity) {
+                    orderQuantity = maximumQuantity - totalQuantity;
+                } else {
+                    orderQuantity = 0;
+                }
+
+                MasterQcInternalStandardsOrderDetailEntity newOrderDetail = MasterQcInternalStandardsOrderDetailEntity.builder()
+                        .totalPrice(Precision.round(totalPrice, 2))
+                        .totalQuantity(totalQuantity)
+                        .orderQuantity(orderQuantity)
+                        .masterDepartmentItem(masterDepartmentItem)
+                        .build();
+                masterDepartmentItem.setOrderDetail(newOrderDetail);
+                repository.save(masterDepartmentItem);
+            }
+
+        });
+        return "SUCCESS";
     }
 }

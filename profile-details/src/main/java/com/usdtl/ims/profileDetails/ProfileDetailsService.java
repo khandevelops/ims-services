@@ -2,14 +2,13 @@ package com.usdtl.ims.profileDetails;
 
 import com.usdtl.ims.common.exceptions.constants.Permission;
 import com.usdtl.ims.common.exceptions.constants.Role;
-import com.usdtl.ims.profileDetails.common.Status;
+import com.usdtl.ims.profileDetails.common.OrderStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -39,7 +38,7 @@ public class ProfileDetailsService {
                         .id(profileDetail.getId())
                         .department(null)
                         .role(null)
-                        .status(Status.ACTIVE)
+                        .orderStatus(OrderStatus.ACTIVE)
                         .build();
                 repository.save(newUser);
             }
@@ -59,7 +58,7 @@ public class ProfileDetailsService {
                         .department(null)
                         .role(Role.USER)
                         .permission(Permission.ALLOW)
-                        .status(Status.ACTIVE)
+                        .orderStatus(OrderStatus.ACTIVE)
                         .build();
                 repository.save(newUser);
             } else {
@@ -83,10 +82,10 @@ public class ProfileDetailsService {
                 } else {
                     profileDetailsEntity.setPermission(Permission.ALLOW);
                 }
-                if(profileDetail.getStatus() != null) {
-                    profileDetailsEntity.setStatus(profileDetail.getStatus());
+                if(profileDetail.getOrderStatus() != null) {
+                    profileDetailsEntity.setOrderStatus(profileDetail.getOrderStatus());
                 } else {
-                    profileDetailsEntity.setStatus(Status.ACTIVE);
+                    profileDetailsEntity.setOrderStatus(OrderStatus.ACTIVE);
                 }
                 repository.save(profileDetailsEntity);
             }
@@ -99,7 +98,7 @@ public class ProfileDetailsService {
         profileDetails.setDepartment(profileDetailRequest.getDepartment());
         profileDetails.setRole(profileDetailRequest.getRole());
         profileDetails.setPermission(profileDetailRequest.getPermission());
-        profileDetails.setStatus(profileDetailRequest.getStatus());
+        profileDetails.setOrderStatus(profileDetailRequest.getOrderStatus());
         repository.save(profileDetails);
 
         return profileDetails;

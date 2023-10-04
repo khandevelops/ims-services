@@ -16,6 +16,7 @@ import javax.persistence.*;
 public class MasterProcessingLabOrderDetailEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
     @Column(name = "totalQuantity")
     private Integer totalQuantity;
@@ -24,8 +25,7 @@ public class MasterProcessingLabOrderDetailEntity {
     @Column(name = "orderQuantity")
     private Integer orderQuantity;
     @OneToOne
-    @MapsId
     @JoinColumn(name = "itemId")
     @JsonIgnore
-    private MasterExtractionsEntity masterExtractionsItem;
+    private MasterProcessingLabEntity masterDepartmentItem;
 }

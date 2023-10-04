@@ -41,8 +41,13 @@ public class MasterQcInternalStandardsController {
         return create(request, department);
     }
 
-    @PostMapping("assign/{id}/{department}")
+    @PatchMapping("{id}/assign")
     public MasterQcInternalStandardsEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
         return assign(id, department);
+    }
+
+    @GetMapping("sync-order-details")
+    public String syncOrderDetails() {
+        return service.syncOrderDetails();
     }
 }

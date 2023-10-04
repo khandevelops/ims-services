@@ -5,5 +5,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MasterQcQaOrderDetailRepository extends JpaRepository<MasterQcQaOrderDetailEntity, Integer> {
-//    MasterShippingOrderDetailEntity findExtractionsMasterOrderDetailEntityBy (Integer extractionsMasterId);
 }

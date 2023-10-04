@@ -6,9 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface MasterProcessingLabRepository extends PagingAndSortingRepository<MasterProcessingLabEntity, Integer> {
     Page<MasterProcessingLabEntity> findByDepartmentItemsIsNotEmpty(Pageable pageable);
+    List<MasterProcessingLabEntity> findByDepartmentItemsIsNotEmpty();
     @Query(value = "SELECT m FROM MasterProcessingLabEntity AS m WHERE "
             + "m.departmentItems IS NOT EMPTY"
             + " AND (m.item LIKE %?1%"

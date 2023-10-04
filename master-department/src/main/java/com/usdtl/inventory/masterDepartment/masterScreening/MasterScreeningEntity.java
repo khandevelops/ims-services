@@ -1,5 +1,8 @@
 package com.usdtl.inventory.masterDepartment.masterScreening;
 
+import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsOrderDetailEntity;
+import com.usdtl.inventory.masterDepartment.masterRd.MasterRdOrderDetailEntity;
+import com.usdtl.inventory.masterDepartment.masterShipping.MasterShippingOrderDetailEntity;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;
@@ -48,6 +51,8 @@ public class MasterScreeningEntity {
     private String itemGroup;
     @Column(name = "drugClass")
     private String drugClass;
+    @OneToOne(mappedBy = "masterDepartmentItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private MasterScreeningOrderDetailEntity orderDetail;
     @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ScreeningEntity> departmentItems;
 }

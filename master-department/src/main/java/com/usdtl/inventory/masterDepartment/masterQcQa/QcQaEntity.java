@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "qa_qa")
+@Table(name = "qC_qa")
 public class QcQaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

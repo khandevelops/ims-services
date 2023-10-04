@@ -26,6 +26,7 @@ public class DepartmentNameService {
         DepartmentNameEntity departmentNameEntity = repository.findById(id).orElseThrow();
         departmentNameEntity.setName(departmentName.getName().toUpperCase());
         departmentNameEntity.setMapping(departmentName.getMapping().replaceAll(" ", "_").toUpperCase());
+        departmentNameEntity.setHasInventory(departmentName.getHasInventory());
         repository.save(departmentNameEntity);
         return departmentNameEntity;
     }

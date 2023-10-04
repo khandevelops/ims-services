@@ -28,7 +28,7 @@ public class MasterMassSpecController {
 
     @GetMapping("sort")
     public Page<MasterMassSpecEntity> sortItems(@RequestParam Integer page, @RequestParam String column, @RequestParam String direction) {
-        return service.sorItems(page, column, direction);
+        return service.sortItems(page, column, direction);
     }
 
     @GetMapping("list")
@@ -41,8 +41,13 @@ public class MasterMassSpecController {
         return create(request, department);
     }
 
-    @PostMapping("assign/{id}/{department}")
+    @PatchMapping("{id}/assign")
     public MasterMassSpecEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
         return assign(id, department);
+    }
+
+    @GetMapping("sync-order-details")
+    public String syncOrderDetails() {
+        return service.syncOrderDetails();
     }
 }

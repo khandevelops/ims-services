@@ -2,6 +2,9 @@ package com.usdtl.inventory.masterDepartment.masterQcQa;
 
 import com.usdtl.ims.common.exceptions.common.NotFoundException;
 import com.usdtl.ims.common.exceptions.constants.Department;
+import com.usdtl.inventory.masterDepartment.masterProcessingLab.MasterProcessingLabEntity;
+import com.usdtl.inventory.masterDepartment.masterProcessingLab.MasterProcessingLabOrderDetailEntity;
+import com.usdtl.inventory.masterDepartment.masterProcessingLab.ProcessingLabEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MasterQcQaService {
     private MasterQcQaRepository repository;
+    private MasterQcQaOrderDetailRepository orderDetailRepository;
 
     public MasterQcQaEntity getItem(Integer id) throws NotFoundException {
         return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
@@ -85,5 +89,42 @@ public class MasterQcQaService {
     public MasterQcQaEntity assign(Integer id, Department department) {
         MasterQcQaEntity masterDepartment = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
         return getMasterExtractionsEntity(department, masterDepartment);
+    }
+
+    public String syncOrderDetails() {
+        List<MasterQcQaEntity> masterDepartmentItems = repository.findByDepartmentItemsIsNotEmpty();
+        masterDepartmentItems.forEach(masterDepartmentItem -> {
+            if(masterDepartmentItem.getOrderDetail() == null) {
+                Integer maximumQuantity = masterDepartmentItem.getDepartmentItems().get(0).getMaximumQuantity();
+                Integer minimumQuantity = masterDepartmentItem.getDepartmentItems().get(0).getMinimumQuantity();
+                Integer totalQuantity = masterDepartmentItem.getDepartmentItems().stream()
+                        .peek(item -> {
+                            if (item.getQuantity() == null)
+                                item.setQuantity(0);
+
+                        })
+                        .mapToInt(QcQaEntity::getQuantity).sum();
+                Double totalPrice = masterDepartmentItem.getUnitPrice() * totalQuantity;
+                Integer orderQuantity = 0;
+                if (maximumQuantity == null || minimumQuantity == null) {
+                    orderQuantity = null;
+                } else if (maximumQuantity == 1 && minimumQuantity == 1 && totalQuantity < 1) {
+                    orderQuantity = 1;
+                } else if (totalQuantity < minimumQuantity) {
+                    orderQuantity = maximumQuantity - totalQuantity;
+                } else {
+                    orderQuantity = 0;
+                }
+
+                MasterQcQaOrderDetailEntity newOrderDetail = MasterQcQaOrderDetailEntity.builder()
+                        .totalPrice(totalPrice)
+                        .totalQuantity(totalQuantity)
+                        .orderQuantity(orderQuantity)
+                        .build();
+                masterDepartmentItem.setOrderDetail(newOrderDetail);
+                orderDetailRepository.save(newOrderDetail);
+            }
+        });
+        return "SUCCESS";
     }
 }

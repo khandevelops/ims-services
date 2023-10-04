@@ -41,8 +41,13 @@ public class MasterScreeningController {
         return service.create(request, department);
     }
 
-    @PostMapping("{id}/{department}/assign")
+    @PatchMapping("{id}/assign")
     public MasterScreeningEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
         return service.assign(id, department);
+    }
+
+    @GetMapping("sync-order-details")
+    public String syncOrderDetails() {
+        return service.syncOrderDetails();
     }
 }

@@ -1,5 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterShipping;
 
+import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsOrderDetailEntity;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;
@@ -48,6 +49,8 @@ public class MasterShippingEntity {
     private String itemGroup;
     @Column(name = "drugClass")
     private String drugClass;
+    @OneToOne(mappedBy = "masterDepartmentItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private MasterShippingOrderDetailEntity orderDetail;
     @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ShippingEntity> departmentItems;
 }

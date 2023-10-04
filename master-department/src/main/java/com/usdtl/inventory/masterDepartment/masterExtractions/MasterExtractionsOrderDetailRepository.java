@@ -4,6 +4,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MasterExtractionsOrderDetailRepository extends JpaRepository<MasterExtractionsOrderDetailEntity, Integer> {
-//    MasterShippingOrderDetailEntity findExtractionsMasterOrderDetailEntityBy (Integer extractionsMasterId);
-}
+public interface MasterExtractionsOrderDetailRepository extends JpaRepository<MasterExtractionsOrderDetailEntity, Integer> { }

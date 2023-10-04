@@ -22,4 +22,6 @@ public class DepartmentNameEntity {
     private String name;
     @Column(name = "mapping")
     private String mapping;
+    @Column(name = "hasInventory")
+    private Boolean hasInventory;
 }

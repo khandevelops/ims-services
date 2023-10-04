@@ -1,5 +1,6 @@
 package com.usdtl.inventory.masterDepartment.masterStoreRoom;
 
+import com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsOrderDetailEntity;
 import lombok.*;
 
 import javax.persistence.*;

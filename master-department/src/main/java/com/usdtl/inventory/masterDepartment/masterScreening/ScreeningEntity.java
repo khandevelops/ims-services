@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "qc_internal_standards")
+@Table(name = "screening")
 public class ScreeningEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

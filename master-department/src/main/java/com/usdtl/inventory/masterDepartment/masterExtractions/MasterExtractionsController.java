@@ -40,9 +40,9 @@ public class MasterExtractionsController {
         return service.create(request, department);
     }
 
-    @PostMapping("assign/{id}/{department}")
-    public MasterExtractionsEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
-        return service.assign(id, department);
+    @PatchMapping("{id}/assign")
+    public MasterExtractionsEntity assign(@PathVariable(value = "id") Integer id) {
+        return service.assign(id);
     }
 
     @GetMapping("sync-order-details")

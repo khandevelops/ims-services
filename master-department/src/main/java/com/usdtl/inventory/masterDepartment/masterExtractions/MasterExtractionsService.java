@@ -6,11 +6,13 @@ import com.usdtl.ims.common.exceptions.constants.Department;
 //import com.usdtl.inventory.masterDepartment.orderDetail.OrderDetailEntity;
 //import com.usdtl.inventory.masterDepartment.orderDetail.OrderDetailRepository;
 import lombok.AllArgsConstructor;
+import org.apache.commons.math3.util.Precision;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,6 @@ import java.util.List;
 @AllArgsConstructor
 public class MasterExtractionsService {
     private MasterExtractionsRepository repository;
-    private MasterExtractionsOrderDetailRepository orderDetailRepository;
 
     public MasterExtractionsEntity getItem(Integer id) throws NotFoundException {
         return repository.findById(id).orElseThrow(() ->  new NotFoundException("Item associated with id: " + id + " not found"));
@@ -89,51 +90,58 @@ public class MasterExtractionsService {
                 .build();
 
 
-        return getMasterExtractionsEntity(department, master);
+        return getMasterExtractionsEntity(master);
     }
 
-    private MasterExtractionsEntity getMasterExtractionsEntity(Department department, MasterExtractionsEntity master) {
-        if(department == Department.EXTRACTIONS) {
-            ExtractionsEntity item = new ExtractionsEntity();
-            List<ExtractionsEntity> items = new ArrayList<>();
-            items.add(item);
-            master.setDepartmentItems(items);
-        }
+    private MasterExtractionsEntity getMasterExtractionsEntity(MasterExtractionsEntity master) {
+        ExtractionsEntity item = new ExtractionsEntity();
+        List<ExtractionsEntity> items = new ArrayList<>();
+        items.add(item);
+        master.setDepartmentItems(items);
 
         repository.save(master);
         return master;
     }
 
-    public MasterExtractionsEntity assign(Integer id, Department department) {
+    public MasterExtractionsEntity assign(Integer id) {
         MasterExtractionsEntity masterDepartment = repository.findById(id).orElseThrow(() -> new NotFoundException("Item associated with id: " + id + " not found"));
-        return getMasterExtractionsEntity(department, masterDepartment);
+        return getMasterExtractionsEntity(masterDepartment);
     }
 
     public String syncOrderDetails() {
-        List<MasterExtractionsEntity> masterExtractionsItems = repository.findByDepartmentItemsIsNotEmpty();
-        masterExtractionsItems.forEach(masterExtractionsItem -> {
-            Integer maximumQuantity = masterExtractionsItem.getDepartmentItems().get(0).getMaximumQuantity();
-            Integer minimumQuantity = masterExtractionsItem.getDepartmentItems().get(0).getMinimumQuantity();
-            Integer totalQuantity = masterExtractionsItem.getDepartmentItems().stream().mapToInt(ExtractionsEntity::getQuantity).sum();
-            Double totalPrice = masterExtractionsItem.getUnitPrice() * totalQuantity;
-            Integer orderQuantity = 0;
-            if (maximumQuantity == null || minimumQuantity == null) {
-                orderQuantity = null;
-            } else if (maximumQuantity == 1 && minimumQuantity == 1 && totalQuantity < 1) {
-                orderQuantity = 1;
-            } else if (totalQuantity < minimumQuantity) {
-                orderQuantity = maximumQuantity - totalQuantity;
-            } else {
-                orderQuantity = 0;
-            }
+        List<MasterExtractionsEntity> masterDepartmentItems = repository.findByDepartmentItemsIsNotEmpty();
+        masterDepartmentItems.forEach(masterDepartmentItem -> {
+            if(masterDepartmentItem.getOrderDetail() == null) {
+                Integer maximumQuantity = masterDepartmentItem.getDepartmentItems().get(0).getMaximumQuantity();
+                Integer minimumQuantity = masterDepartmentItem.getDepartmentItems().get(0).getMinimumQuantity();
+                Integer totalQuantity = masterDepartmentItem.getDepartmentItems().stream()
+                        .peek(item -> {
+                            if(item.getQuantity() == null)
+                                item.setQuantity(0);
 
-            MasterExtractionsOrderDetailEntity newOrderDetail = com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsOrderDetailEntity.builder()
-                    .totalPrice(totalPrice)
-                    .totalQuantity(totalQuantity)
-                    .orderQuantity(orderQuantity)
-                    .masterExtractionsItem(masterExtractionsItem)
-                    .build();
-            orderDetailRepository.save(newOrderDetail);
+                        })
+                        .mapToInt(ExtractionsEntity::getQuantity).sum();
+                double totalPrice = masterDepartmentItem.getUnitPrice() * totalQuantity;
+                Integer orderQuantity = 0;
+                if (maximumQuantity == null || minimumQuantity == null) {
+                    orderQuantity = null;
+                } else if (maximumQuantity == 1 && minimumQuantity == 1 && totalQuantity < 1) {
+                    orderQuantity = 1;
+                } else if (totalQuantity < minimumQuantity) {
+                    orderQuantity = maximumQuantity - totalQuantity;
+                } else {
+                    orderQuantity = 0;
+                }
+
+                MasterExtractionsOrderDetailEntity newOrderDetail = com.usdtl.inventory.masterDepartment.masterExtractions.MasterExtractionsOrderDetailEntity.builder()
+                        .totalPrice(Precision.round(totalPrice, 2))
+                        .totalQuantity(totalQuantity)
+                        .orderQuantity(orderQuantity)
+                        .masterExtractionsEntity(masterDepartmentItem)
+                        .build();
+                masterDepartmentItem.setOrderDetail(newOrderDetail);
+                repository.save(masterDepartmentItem);
+            }
         });
         return "SUCCESS";
     }

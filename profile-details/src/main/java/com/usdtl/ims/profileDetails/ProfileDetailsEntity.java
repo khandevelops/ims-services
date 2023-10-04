@@ -1,9 +1,8 @@
 package com.usdtl.ims.profileDetails;
 
-import com.usdtl.ims.common.exceptions.constants.Department;
 import com.usdtl.ims.common.exceptions.constants.Permission;
 import com.usdtl.ims.common.exceptions.constants.Role;
-import com.usdtl.ims.profileDetails.common.Status;
+import com.usdtl.ims.profileDetails.common.OrderStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,5 +29,5 @@ public class ProfileDetailsEntity {
     @Column(name = "permission")
     private Permission permission;
     @Column(name = "status")
-    private Status status;
+    private OrderStatus orderStatus;
 }

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MasterMassSpecOrderDetailRepository extends JpaRepository<MasterMassSpecOrderDetailEntity, Integer> {
-//    MasterShippingOrderDetailEntity findExtractionsMasterOrderDetailEntityBy (Integer extractionsMasterId);
+
 }

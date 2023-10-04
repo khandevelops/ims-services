@@ -41,7 +41,7 @@ public class MasterStoreRoomController {
         return create(request, department);
     }
 
-    @PostMapping("assign/{id}/{department}")
+    @PostMapping("{id}/assign")
     public MasterStoreRoomEntity assign(@PathVariable(value = "id") Integer id, @PathVariable(value = "department") Department department) {
         return assign(id, department);
     }

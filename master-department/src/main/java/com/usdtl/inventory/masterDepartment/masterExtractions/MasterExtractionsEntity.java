@@ -48,9 +48,8 @@ public class MasterExtractionsEntity {
     private String itemGroup;
     @Column(name = "drugClass")
     private String drugClass;
-    @OneToOne(mappedBy = "masterExtractionsItem", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "masterDepartmentEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private MasterExtractionsOrderDetailEntity orderDetail;
-    @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "itemId", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<ExtractionsEntity> departmentItems;
 }
