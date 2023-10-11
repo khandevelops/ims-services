@@ -15,15 +15,9 @@ import java.util.List;
 @RequestMapping("extractions")
 public class ExtractionsMasterController {
     private ExtractionsMasterService service;
-
-    @GetMapping("list")
-    public Page<ExtractionsMasterEntity> getItemsByPage(@RequestParam Integer page) {
-        log.info("List extractions master transformed items");
-        return service.getDepartmentMasterItems(page);
-    }
-    @PostMapping("create")
-    public ExtractionsMasterEntity createDepartmentMasterItem(@RequestBody MasterEntity masterItem) {
-        return service.createDepartmentMasterItem(masterItem);
+    @PostMapping("assign")
+    public ExtractionsMasterEntity assignItem(@RequestBody MasterEntity masterItem) {
+        return service.assignItem(masterItem);
     }
     @GetMapping("grand-total")
     public Double getTotal() {

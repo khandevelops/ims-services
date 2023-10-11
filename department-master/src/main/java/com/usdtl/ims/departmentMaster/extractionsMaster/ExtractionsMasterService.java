@@ -10,16 +10,12 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ExtractionsMasterService {
     private ExtractionsMasterRepository repository;
+    public ExtractionsMasterEntity assignItem(MasterEntity masterItem) {
+        return ExtractionsMasterEntity
+                .builder()
+                .masterItem(masterItem)
+                .build();
 
-    public Page<ExtractionsMasterEntity> getDepartmentMasterItems(Integer page) {
-        PageRequest pageRequest = PageRequest.of(page, 10);
-        return repository.findAll(pageRequest);
-    }
-    public ExtractionsMasterEntity createDepartmentMasterItem(MasterEntity masterItem) {
-        ExtractionsMasterEntity newDepartmentItems = ExtractionsMasterEntity.builder().build();
-        newDepartmentItems.setMasterItem(masterItem);
-        repository.save(newDepartmentItems);
-        return newDepartmentItems;
     }
     public Double getTotal() {
         return repository.getGrandTotal();
